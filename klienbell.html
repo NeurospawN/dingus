@@ -447,7 +447,6 @@ body {
     text-decoration: none;
 }
 
-/* Modals */
 .modal {
     position: fixed;
     top: 0;
@@ -506,7 +505,6 @@ body {
     color: white;
 }
 
-/* Toast */
 .toast {
     position: fixed;
     bottom: 30px;
@@ -527,7 +525,6 @@ body {
     opacity: 1;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .title {
         font-size: 32px;
@@ -567,7 +564,6 @@ body {
         <div class="tab" data-tab="games"><i class="fas fa-gamepad"></i> Games</div>
     </div>
     
-    <!-- Home Tab -->
     <div class="tab-content active" id="home-tab">
         <div class="card">
             <div class="clock-container">
@@ -583,7 +579,6 @@ body {
         </div>
     </div>
     
-    <!-- Schedule Tab -->
     <div class="tab-content" id="schedule-tab">
         <div class="card">
             <h2 class="card-title"><i class="fas fa-clock"></i> Schedule Countdown</h2>
@@ -607,7 +602,6 @@ body {
         </div>
     </div>
     
-    <!-- Notes Tab -->
     <div class="tab-content" id="notes-tab">
         <div class="card">
             <div class="notes-container">
@@ -644,7 +638,6 @@ body {
         </div>
     </div>
     
-    <!-- Games Tab -->
     <div class="tab-content" id="games-tab">
         <div class="card">
             <div class="games-container">
@@ -664,7 +657,6 @@ body {
     </div>
 </div>
 
-<!-- Modals -->
 <div class="modal" id="lunch-modal">
     <div class="modal-content">
         <button class="modal-close">&times;</button>
@@ -778,14 +770,12 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== GLOBAL VARIABLES =====
 let lunchType = null;
 let schoolStartTime = "07:10";
 let schoolEndTime = "14:35";
 let currentNoteId = null;
 let notes = [];
 
-// Schedule data
 const scheduleBase = [
     {name:"1st Period", start:"07:10", end:"08:00"},
     {name:"Passing Period", start:"08:00", end:"08:06", isPassing: true},
@@ -823,7 +813,6 @@ const afterLunch = [
     {name:"7th Period", start:"13:50", end:"14:40"},
 ];
 
-// ===== SNOWFALL ANIMATION =====
 function createSnowflakes() {
     const snowflakes = document.querySelector('.snowflakes');
     const snowflakeCount = 100;
@@ -832,39 +821,30 @@ function createSnowflakes() {
         const snowflake = document.createElement('div');
         snowflake.classList.add('snowflake');
         
-        // Random size between 2 and 6px
         const size = Math.random() * 4 + 2;
         snowflake.style.width = `${size}px`;
         snowflake.style.height = `${size}px`;
         
-        // Random position
         snowflake.style.left = `${Math.random() * 100}vw`;
         snowflake.style.top = `${Math.random() * -100}px`;
         
-        // Random opacity
         snowflake.style.opacity = Math.random() * 0.6 + 0.4;
         
-        // Random animation duration between 5 and 15 seconds
         const duration = Math.random() * 10 + 5;
         snowflake.style.animationDuration = `${duration}s`;
         
-        // Random animation delay
         snowflake.style.animationDelay = `${Math.random() * 5}s`;
         
         snowflakes.appendChild(snowflake);
     }
 }
 
-// ===== INITIALIZATION =====
 function init() {
-    // Initialize snowfall animation
     createSnowflakes();
     
-    // Load saved settings and notes
     loadSettings();
     loadNotes();
     
-    // Set up tab navigation
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
             const tabName = tab.getAttribute('data-tab');
@@ -872,7 +852,6 @@ function init() {
         });
     });
     
-    // Set up modal buttons
     document.getElementById('schedule-btn').addEventListener('click', () => openModal('schedule-modal'));
     document.getElementById('settings-btn').addEventListener('click', () => openModal('settings-modal'));
     document.getElementById('info-btn').addEventListener('click', () => openModal('discord-modal'));
@@ -881,69 +860,56 @@ function init() {
         openModal('discord-modal');
     });
     
-    // Set up note events
     document.getElementById('create-note-btn').addEventListener('click', createNewNote);
     document.getElementById('save-note-btn').addEventListener('click', saveCurrentNote);
     document.getElementById('cancel-note-btn').addEventListener('click', cancelNoteEdit);
     
-    // Set up settings events
     document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
     document.getElementById('export-data-btn').addEventListener('click', exportData);
     document.getElementById('import-data-btn').addEventListener('click', () => document.getElementById('import-file').click());
     document.getElementById('import-file').addEventListener('change', importData);
     
-    // Set up Discord button
     document.getElementById('join-discord-btn').addEventListener('click', () => {
         window.open('https://discord.gg/Tpz6Rg3q8M', '_blank');
     });
     
-    // Set up warning modal button
     document.getElementById('understand-btn').addEventListener('click', closeWarningModal);
     
-    // Set up modal close buttons
     document.querySelectorAll('.modal-close').forEach(button => {
         button.addEventListener('click', () => {
             button.closest('.modal').classList.remove('active');
         });
     });
     
-    // Start clock and countdown
     updateClock();
     updateCountdown();
     setInterval(updateClock, 1000);
     setInterval(updateCountdown, 1000);
     
-    // Show lunch modal if not set
     if (!lunchType) {
         setTimeout(() => {
             openModal('lunch-modal');
         }, 1000);
     }
     
-    // Show warning modal if needed
     checkWarningModal();
 }
 
-// ===== TAB NAVIGATION =====
 function switchTab(tabName) {
-    // Update active tab
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
     });
     document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
     
-    // Update active content
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
     document.getElementById(`${tabName}-tab`).classList.add('active');
 }
 
-// ===== MODAL FUNCTIONS =====
 function openModal(id) {
     document.getElementById(id).classList.add('active');
     
-    // Update schedule if it's the schedule modal
     if (id === 'schedule-modal') {
         updateModalScheduleTable();
     }
@@ -953,7 +919,6 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('active');
 }
 
-// ===== LUNCH SELECTION =====
 function selectLunch(type) {
     lunchType = type;
     localStorage.setItem('lunchType', type);
@@ -1069,11 +1034,9 @@ function saveCurrentNote() {
 }
 
 function cancelNoteEdit() {
-    // Just clear the editor
     createNewNote();
 }
 
-// ===== DATA EXPORT/IMPORT =====
 function exportData() {
     const data = {
         lunchType: localStorage.getItem('lunchType'),
@@ -1120,11 +1083,9 @@ function importData(event) {
     };
     reader.readAsText(file);
     
-    // Reset the file input
     event.target.value = '';
 }
 
-// ===== WARNING MODAL FUNCTIONS =====
 function checkWarningModal() {
     const lastWarning = localStorage.getItem('lastWarning');
     const remindLater = localStorage.getItem('remindLater');
@@ -1145,7 +1106,6 @@ function closeWarningModal() {
     closeModal('warning-modal');
 }
 
-// ===== BELL SCHEDULE FUNCTIONS =====
 function buildSchedule() {
     if (!lunchType) return [];
     return [...scheduleBase, ...lunchSchedules[lunchType], ...afterLunch];
@@ -1165,7 +1125,6 @@ function formatDiff(sec) {
     return (h > 0 ? h + "h " : "") + (m > 0 ? m + "m " : "") + s + "s";
 }
 
-// ===== CLOCK FUNCTION =====
 function updateClock() {
     const now = new Date();
     document.getElementById("clock").textContent = now.toLocaleTimeString();
@@ -1174,7 +1133,6 @@ function updateClock() {
     });
 }
 
-// ===== COUNTDOWN FUNCTION =====
 function updateCountdown() {
     const now = new Date();
     const todaySchedule = buildSchedule();
@@ -1324,7 +1282,6 @@ function updateModalScheduleTable() {
     updateScheduleTable();
 }
 
-// ===== TOAST FUNCTION =====
 function showToast(message) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
@@ -1335,7 +1292,6 @@ function showToast(message) {
     }, 3000);
 }
 
-// ===== INITIALIZE APP =====
 window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
