@@ -1,0 +1,20 @@
+[
+  {
+    "gameicon": "https://example.com/icons/game1.png",
+    "gamename": "Puzzle Quest",
+    "gameurl": "https://example.com/puzzle-quest",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/game2.png",
+    "gamename": "Action Hero X",
+    "gameurl": "https://example.com/action-hero-x",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/game3.png",
+    "gamename": "Maze Runner",
+    "gameurl": "https://example.com/maze-runner",
+    "gameclass": ["puzzle", "action"]
+  }
+]
