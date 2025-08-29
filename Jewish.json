@@ -1,20 +1,248 @@
 [
   {
-    "gameicon": "https://example.com/icons/game1.png",
-    "gamename": "Puzzle Quest",
-    "gameurl": "https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/test.html",
+    "gameicon": "https://example.com/icons/baldis-basics.png",
+    "gamename": "Baldi's Basics",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Baldi's%20Basics.html",
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://example.com/icons/game2.png",
-    "gamename": "Action Hero X",
-    "gameurl": "https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/test.html",
+    "gameicon": "https://example.com/icons/basketball-stars.png",
+    "gamename": "Basketball Stars",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Basketball%20Stars.html",
     "gameclass": ["action"]
   },
   {
-    "gameicon": "https://example.com/icons/game3.png",
-    "gamename": "Maze Runner",
-    "gameurl": "https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/test.html",
-    "gameclass": ["puzzle", "action"]
+    "gameicon": "https://example.com/icons/big-tower-tiny-square-2.png",
+    "gamename": "Big Tower Tiny Square 2",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Big%20Tower%20Tiny%20Square%202.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/big-tower-tiny-square.png",
+    "gamename": "Big Tower Tiny Square",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Big%20Tower%20Tiny%20Square.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/binding-of-isaac.png",
+    "gamename": "Binding of Isaac: Wrath of the Lamb",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Binding%20of%20Issac_%20Wrath%20of%20the%20Lamb.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/buckshot-roulette.png",
+    "gamename": "Buckshot Roulette",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Buckshot%20Roulette.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/burrito-bison.png",
+    "gamename": "Burrito Bison",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Burrito%20Bison.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/cookie-clicker.png",
+    "gamename": "Cookie Clicker",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Cookie%20Clicker.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/crazy-cattle-3d.png",
+    "gamename": "Crazy Cattle 3D",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Crazy%20Cattle%203D.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/crazy-chicken-3d.png",
+    "gamename": "Crazy Chicken 3D",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Crazy%20Chicken%203D.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/crazy-kitty-3d.png",
+    "gamename": "Crazy Kitty 3D",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Crazy%20Kitty%203D.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/drive-mad.png",
+    "gamename": "Drive Mad",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Drive%20Mad.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/endoparasitic.png",
+    "gamename": "Endoparasitic",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Endoparasitic.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fireboy-watergirl-3.png",
+    "gamename": "Fireboy and Watergirl 3",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Fireboy%20and%20Watergirl%203.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf.png",
+    "gamename": "Five Nights at Freddy's",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf2.png",
+    "gamename": "Five Nights at Freddy's 2",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's%202.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf3.png",
+    "gamename": "Five Nights at Freddy's 3",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's%203.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf4.png",
+    "gamename": "Five Nights at Freddy's 4",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's%204.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf4-halloween.png",
+    "gamename": "Five Nights at Freddy's 4: Halloween",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's%204_%20Halloween.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf-pizza-simulator.png",
+    "gamename": "Five Nights at Freddy's: Pizza Simulator",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Pizza%20Simulator.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf-sister-location.png",
+    "gamename": "Five Nights at Freddy's: Sister Location",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Sister%20Location.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/fnaf-ucn.png",
+    "gamename": "Five Nights at Freddy's: Ultimate Custom Night",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Ultimate%20Custom%20Night.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/idle-breakout.png",
+    "gamename": "Idle Breakout",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Idle%20Breakout.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/idle-dice.png",
+    "gamename": "Idle Dice",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Idle%20Dice.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/jetpack-joyride.png",
+    "gamename": "Jetpack Joyride",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Jetpack%20Joyride.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://example.com/icons/kindergarten2.png",
+    "gamename": "Kindergarten 2",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Kindergarten%202.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/kindergarten.png",
+    "gamename": "Kindergarten",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Kindergarten.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/monkey-mart.png",
+    "gamename": "Monkey Mart",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Monkey%20Mart.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/pixel-gun-survival.png",
+    "gamename": "Pixel Gun Survival",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Pixel%20Gun%20Survival.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://the-official-worldbox-wiki.fandom.com/wiki/Category:Resource_Icons",
+    "gamename": "Raft",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Raft.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-school.png",
+    "gamename": "Riddle School",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20School.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-school2.png",
+    "gamename": "Riddle School 2",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20School%202.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-school3.png",
+    "gamename": "Riddle School 3",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20School%203.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-school4.png",
+    "gamename": "Riddle School 4",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20School%204.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-school5.png",
+    "gamename": "Riddle School 5",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20School%205.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-transfer.png",
+    "gamename": "Riddle Transfer",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20Transfer.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/riddle-transfer2.png",
+    "gamename": "Riddle Transfer 2",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Riddle%20Transfer%202.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://example.com/icons/station-141.png",
+    "gamename": "Station 141",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Station%20141.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://icons8.com/icons/set/ultrakill",
+    "gamename": "ULTRAKILL",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/ULTRAKILL.html",
+    "gameclass": ["action"]
+  },
+  {
+    "gameicon": "https://seeklogo.com/free-vector-logos/undertale-yellow",
+    "gamename": "Undertale Yellow",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/Undertale%20Yellow.html",
+    "gameclass": ["puzzle"]
+  },
+  {
+    "gameicon": "https://the-official-worldbox-wiki.fandom.com/wiki/Category:Resource_Icons",
+    "gamename": "World Box",
+    "gameurl": "https://github.com/schoolboysdev/school-boys/raw/refs/heads/main/World%20Box.html",
+    "gameclass": ["puzzle"]
   }
 ]
