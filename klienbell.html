@@ -1,1298 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Klein Bell</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --system-blue: #007AFF;
-    --system-gray1: #8E8E93;
-    --system-gray2: #AEAEB2;
-    --system-gray3: #C7C7CC;
-    --system-gray4: #D1D1D6;
-    --system-gray5: #E5E5EA;
-    --system-gray6: #F2F2F7;
-    --system-background: #FFFFFF;
-    --system-background-elevated: #FFFFFF;
-    --system-label: #000000;
-    --system-red: #FF3B30;
-    --system-green: #34C759;
-    --system-orange: #FF9500;
-    --system-purple: #AF52DE;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(180deg, #0f1c30 0%, #1e3a5f 100%);
-    color: white;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.snowflakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.snowflake {
-    position: absolute;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(100vh);
-    }
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.header {
-    text-align: center;
-    padding: 30px 0;
-}
-
-.title {
-    font-size: 42px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.subtitle {
-    font-size: 18px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.tab-bar {
-    display: flex;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-}
-
-.tab {
-    flex: 1;
-    padding: 18px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border-bottom: 3px solid transparent;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.tab.active {
-    color: white;
-    border-bottom-color: var(--system-blue);
-    background-color: rgba(0, 122, 255, 0.1);
-}
-
-.tab i {
-    margin-right: 8px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.card-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.card-title i {
-    margin-right: 12px;
-    color: var(--system-blue);
-}
-
-.clock-container {
-    text-align: center;
-    padding: 40px 0;
-}
-
-.live-clock {
-    font-size: 80px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -2px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.date-display {
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 40px;
-}
-
-.action-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-top: 30px;
-}
-
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 24px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    color: white;
-}
-
-.btn:hover {
-    background-color: rgba(0, 122, 255, 0.2);
-    border-color: var(--system-blue);
-    transform: translateY(-2px);
-}
-
-.btn i {
-    margin-right: 10px;
-    color: var(--system-blue);
-}
-
-.countdown-info {
-    font-size: 20px;
-    margin: 16px 0;
-    display: flex;
-    align-items: center;
-}
-
-.countdown-info.highlight {
-    font-weight: 600;
-    color: var(--system-blue);
-}
-
-.countdown-info i {
-    margin-right: 12px;
-    width: 24px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.progress-container {
-    height: 6px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-    margin: 30px 0;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: var(--system-blue);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.5s ease;
-}
-
-.notes-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 24px;
-}
-
-.notes-sidebar {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.notes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.notes-list {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.note-item {
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.note-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.note-item.active {
-    background-color: rgba(0, 122, 255, 0.15);
-    border-color: var(--system-blue);
-}
-
-.note-title {
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.note-preview {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.note-date {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 8px;
-}
-
-.notes-editor {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.note-editor-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.note-editor-title {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: 500;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
-}
-
-.note-editor-content {
-    flex: 1;
-    padding: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    resize: none;
-    margin-bottom: 20px;
-    min-height: 300px;
-    font-family: 'Inter', sans-serif;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
-}
-
-.note-editor-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.note-editor-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.note-save {
-    background-color: var(--system-blue);
-    color: white;
-}
-
-.note-cancel {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.note-new {
-    width: 100%;
-    padding: 12px;
-    margin-top: 16px;
-    background-color: var(--system-blue);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.note-new:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
-.notes-empty {
-    text-align: center;
-    padding: 40px 20px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.notes-empty i {
-    font-size: 48px;
-    margin-bottom: 16px;
-    color: rgba(255, 255, 255, 0.3);
-}
-
-.games-container {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-.games-icon {
-    font-size: 64px;
-    margin-bottom: 24px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.games-text {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-.games-subtext {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* Footer */
-.footer {
-    margin-top: 60px;
-    padding: 30px 0;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.7);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer a {
-    color: var(--system-blue);
-    text-decoration: none;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    backdrop-filter: blur(5px);
-}
-
-.modal.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.modal-content {
-    background-color: rgba(30, 30, 32, 0.95);
-    border-radius: 16px;
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.modal.active .modal-content {
-    transform: translateY(0);
-}
-
-.modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.modal-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: white;
-}
-
-.toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(30, 30, 32, 0.9);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 10px;
-    z-index: 1001;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-}
-
-.toast.show {
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .title {
-        font-size: 32px;
-    }
-    
-    .live-clock {
-        font-size: 60px;
-    }
-    
-    .tab-bar {
-        flex-direction: column;
-    }
-    
-    .notes-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .action-buttons {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Boys Launcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #4a6bff, #38b6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
+        }
+        
+        .spinner-container {
+            position: relative;
+            margin: 2rem auto;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .spinner {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(74, 107, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: #4a6bff;
+            animation: spin 1.2s ease-in-out infinite;
+            position: absolute;
+        }
+        
+        .spinner-inner {
+            width: 70%;
+            height: 70%;
+            border: 3px solid rgba(56, 182, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: #38b6ff;
+            animation: spinReverse 1.5s ease-in-out infinite;
+            position: absolute;
+            top: 15%;
+            left: 15%;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+        }
+        
+        .status-title {
+            font-size: 1.8rem;
+            margin: 1.5rem 0;
+            color: #e0e0e0;
+            font-weight: 300;
+        }
+        
+        .status-container {
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.2rem 0;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        
+        .status-item.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .status-text {
+            flex: 1;
+            color: #ddd;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        .status-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-left: 1rem;
+        }
+        
+        .check {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+        
+        .cross {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        .progress-container {
+            height: 8px;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            margin: 2.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4a6bff, #38b6ff);
+            border-radius: 4px;
+            transition: width 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: 0 0 20px rgba(56, 182, 255, 0.5);
+        }
+        
+        .signature {
+            margin-top: 2.5rem;
+            color: #777;
+            font-size: 1rem;
+            font-style: italic;
+        }
+        
+        .dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .completed-text {
+            color: #4caf50;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+        
+        .completed-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .status-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="snowflakes" aria-hidden="true"></div>
+    <div class="container">
+        <div class="logo">
+            <h1>LAUNCHER</h1>
+        </div>
+        
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="spinner-inner"></div>
+        </div>
+        
+        <h2 class="status-title">Checking for updates<span class="dots"></span></h2>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+        
+        <div class="status-container">
+            <div class="status-item" id="version-check-item">
+                <span class="status-text">Checking current version</span>
+                <div class="status-icon" id="version-check">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </div>
+            
+            <div class="status-item" id="download-item">
+                <span class="status-text">Updating from file</span>
+                <div class="status-icon" id="download-check">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+            
+            <div class="status-item" id="webview-item">
+                <span class="status-text">Preparing WebView</span>
+                <div class="status-icon" id="webview-check">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="completed-text" id="completed-text">
+            Launching application...
+        </div>
+        
+        <div class="signature">
+            made by archero <3
+        </div>
+    </div>
 
-<div class="container">
-    <div class="header">
-        <h1 class="title">Klein Bell</h1>
-        <p class="subtitle">made by archero <3</p>
-    </div>
-    
-    <div class="tab-bar">
-        <div class="tab active" data-tab="home"><i class="fas fa-home"></i> Home</div>
-        <div class="tab" data-tab="schedule"><i class="fas fa-clock"></i> Countdown</div>
-        <div class="tab" data-tab="notes"><i class="fas fa-sticky-note"></i> Notes</div>
-        <div class="tab" data-tab="games"><i class="fas fa-gamepad"></i> Games</div>
-    </div>
-    
-    <div class="tab-content active" id="home-tab">
-        <div class="card">
-            <div class="clock-container">
-                <div class="live-clock" id="clock">12:00:00 PM</div>
-                <div class="date-display" id="date">Monday, January 1, 2023</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const versionCheck = document.getElementById('version-check');
+            const downloadCheck = document.getElementById('download-check');
+            const webviewCheck = document.getElementById('webview-check');
+            const progressBar = document.getElementById('progress');
+            const versionItem = document.getElementById('version-check-item');
+            const downloadItem = document.getElementById('download-item');
+            const webviewItem = document.getElementById('webview-item');
+            const completedText = document.getElementById('completed-text');
+            
+            const updateJsonUrl = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/update.json';
+            const contentUrl = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/klienbell.html';
+            
+            setTimeout(() => versionItem.classList.add('visible'), 300);
+            setTimeout(() => downloadItem.classList.add('visible'), 600);
+            setTimeout(() => webviewItem.classList.add('visible'), 900);
+            
+            simulateProgress(15);
+            
+            try {
+                await delay(1200);
+                const localVersion = localStorage.getItem('version');
                 
-                <div class="action-buttons">
-                    <button class="btn" id="schedule-btn"><i class="fas fa-table"></i> View Schedule</button>
-                    <button class="btn" id="settings-btn"><i class="fas fa-cog"></i> Settings</button>
-                    <button class="btn" id="info-btn"><i class="fab fa-discord"></i> Discord</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="tab-content" id="schedule-tab">
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-clock"></i> Schedule Countdown</h2>
-            
-            <div class="countdown-info highlight" id="current-period">
-                <i class="fas fa-calendar-alt"></i> Loading...
-            </div>
-            <div class="countdown-info" id="next-period">
-                <i class="fas fa-arrow-right"></i> Loading...
-            </div>
-            <div class="countdown-info" id="lunch-countdown">
-                <i class="fas fa-utensils"></i> Loading...
-            </div>
-            <div class="countdown-info" id="end-of-school">
-                <i class="fas fa-school"></i> Loading...
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="period-progress"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="tab-content" id="notes-tab">
-        <div class="card">
-            <div class="notes-container">
-                <div class="notes-sidebar">
-                    <div class="notes-header">
-                        <h3>Your Notes</h3>
-                    </div>
-                    
-                    <div class="notes-list" id="notes-list">
-                        <div class="notes-empty">
-                            <i class="fas fa-sticky-note"></i>
-                            <p>No notes yet</p>
-                        </div>
-                    </div>
-                    
-                    <button class="note-new" id="create-note-btn">
-                        <i class="fas fa-plus"></i> New Note
-                    </button>
-                </div>
+                const response = await fetch(updateJsonUrl);
+                const updateInfo = await response.json();
                 
-                <div class="notes-editor">
-                    <div class="note-editor-header">
-                        <input type="text" class="note-editor-title" id="note-title" placeholder="Note Title">
-                    </div>
-                    
-                    <textarea class="note-editor-content" id="note-content" placeholder="Write your note here..."></textarea>
-                    
-                    <div class="note-editor-actions">
-                        <button class="note-editor-btn note-cancel" id="cancel-note-btn">Cancel</button>
-                        <button class="note-editor-btn note-save" id="save-note-btn">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="tab-content" id="games-tab">
-        <div class="card">
-            <div class="games-container">
-                <div class="games-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <div class="games-text">Games Coming Soon</div>
-                <div class="games-subtext">
-                    We're working on some fun games to help pass the time between classes. Check back later!
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>Brought to you by <a href="#">School Boys</a> • <a href="#" id="discord-link">Join our Discord</a></p>
-    </div>
-</div>
-
-<div class="modal" id="lunch-modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <h2 class="modal-title">Select Your Lunch Period</h2>
-        <p>Choose your lunch period to personalize your schedule:</p>
-        
-        <div style="display: flex; flex-direction: column; gap: 12px; margin: 24px 0;">
-            <button class="btn" onclick="selectLunch('A')" style="justify-content: center;">A Lunch</button>
-            <button class="btn" onclick="selectLunch('B')" style="justify-content: center;">B Lunch</button>
-            <button class="btn" onclick="selectLunch('C')" style="justify-content: center;">C Lunch</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="schedule-modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <h2 class="modal-title">Full Bell Schedule</h2>
-        
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr>
-                    <th style="text-align: left; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">Period</th>
-                    <th style="text-align: left; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">Start Time</th>
-                    <th style="text-align: left; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">End Time</th>
-                </tr>
-            </thead>
-            <tbody id="modal-schedule-table-body">
-                <!-- Schedule will be populated here -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="modal" id="settings-modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <h2 class="modal-title">Settings</h2>
-        
-        <div style="margin: 24px 0;">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Lunch Period</label>
-                <select id="lunch-setting" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: rgba(255,255,255,0.1); color: white;">
-                    <option value="A">A Lunch</option>
-                    <option value="B">B Lunch</option>
-                    <option value="C">C Lunch</option>
-                </select>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: 500;">School Start Time</label>
-                <input type="time" id="start-time-setting" value="07:10" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: rgba(255,255,255,0.1); color: white;">
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: 500;">School End Time</label>
-                <input type="time" id="end-time-setting" value="14:35" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: rgba(255,255,255,0.1); color: white;">
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <button class="btn" id="export-data-btn" style="justify-content: center;">Export Data</button>
-                <button class="btn" id="import-data-btn" style="justify-content: center;">Import Data</button>
-                <input type="file" id="import-file" style="display: none;">
-            </div>
-        </div>
-        
-        <button class="note-new" id="save-settings-btn" style="width: 100%; margin-top: 20px;">Save Settings</button>
-    </div>
-</div>
-
-<div class="modal" id="discord-modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <h2 class="modal-title">School Boys Discord</h2>
-        
-        <p style="margin: 16px 0;">Join our community for updates and to meet more friends!</p>
-        
-        <p style="background-color: rgba(255,255,255,0.1); padding: 16px; border-radius: 10px; margin: 20px 0;">
-            <strong>Created by:</strong> Archero (dev/owner)<br>
-            <strong>Discord:</strong> <a href="https://discord.gg/Tpz6Rg3q8M" style="color: var(--system-blue);">https://discord.gg/Tpz6Rg3q8M</a>
-        </p>
-        
-        <button class="note-new" id="join-discord-btn" style="width: 100%;">Join Discord Server</button>
-    </div>
-</div>
-
-<div class="modal" id="warning-modal">
-    <div class="modal-content">
-        <h2 class="modal-title">Important Notice</h2>
-        
-        <p style="margin: 16px 0;">Warning! DO NOT clear your browser history without backing up first.</p>
-        
-        <div style="background-color: rgba(255,255,255,0.1); padding: 16px; border-radius: 10px; margin: 20px 0;">
-            <p style="margin-bottom: 12px;"><strong>To backup your data:</strong></p>
-            <ol style="padding-left: 20px;">
-                <li>Go to Settings and click "Export Data" to create a backup file</li>
-                <li>After clearing history, go back to Settings and upload the backup file</li>
-                <li>Your information will be restored</li>
-            </ol>
-        </div>
-        
-        <div style="display: flex; align-items: center; margin: 20px 0;">
-            <input type="checkbox" id="remind-later" style="margin-right: 12px;">
-            <label for="remind-later">Remind me again in 3 days</label>
-        </div>
-        
-        <button class="note-new" id="understand-btn" style="width: 100%;">I Understand</button>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-let lunchType = null;
-let schoolStartTime = "07:10";
-let schoolEndTime = "14:35";
-let currentNoteId = null;
-let notes = [];
-
-const scheduleBase = [
-    {name:"1st Period", start:"07:10", end:"08:00"},
-    {name:"Passing Period", start:"08:00", end:"08:06", isPassing: true},
-    {name:"2nd Period", start:"08:06", end:"08:56"},
-    {name:"Passing Period", start:"08:56", end:"09:02", isPassing: true},
-    {name:"3rd Period", start:"09:02", end:"09:52"},
-    {name:"Passing Period", start:"09:52", end:"09:58", isPassing: true},
-    {name:"4th Period", start:"09:58", end:"10:48"},
-    {name:"Passing Period", start:"10:48", end:"10:54", isPassing: true},
-    {name:"InKlein", start:"10:54", end:"11:24"},
-];
-
-const lunchSchedules = {
-    A: [
-        {name:"A Lunch", start:"11:24", end:"11:54"},
-        {name:"Passing Period", start:"11:54", end:"12:00", isPassing: true},
-        {name:"5th Period", start:"12:00", end:"12:50"},
-    ],
-    B: [
-        {name:"5th Period", start:"11:24", end:"11:48"},
-        {name:"B Lunch", start:"11:48", end:"12:18"},
-        {name:"5th Period", start:"12:18", end:"12:24", isPassing: true},
-        {name:"5th Period", start:"12:24", end:"12:50"},
-    ],
-    C: [
-        {name:"5th Period", start:"11:24", end:"12:18"},
-        {name:"C Lunch", start:"12:18", end:"12:48"},
-        {name:"Passing Period", start:"12:48", end:"12:54", isPassing: true},
-    ]
-};
-
-const afterLunch = [
-    {name:"6th Period", start:"12:54", end:"13:44"},
-    {name:"Passing Period", start:"13:44", end:"13:50", isPassing: true},
-    {name:"7th Period", start:"13:50", end:"14:40"},
-];
-
-function createSnowflakes() {
-    const snowflakes = document.querySelector('.snowflakes');
-    const snowflakeCount = 100;
-    
-    for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        
-        const size = Math.random() * 4 + 2;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.top = `${Math.random() * -100}px`;
-        
-        snowflake.style.opacity = Math.random() * 0.6 + 0.4;
-        
-        const duration = Math.random() * 10 + 5;
-        snowflake.style.animationDuration = `${duration}s`;
-        
-        snowflake.style.animationDelay = `${Math.random() * 5}s`;
-        
-        snowflakes.appendChild(snowflake);
-    }
-}
-
-function init() {
-    createSnowflakes();
-    
-    loadSettings();
-    loadNotes();
-    
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabName = tab.getAttribute('data-tab');
-            switchTab(tabName);
-        });
-    });
-    
-    document.getElementById('schedule-btn').addEventListener('click', () => openModal('schedule-modal'));
-    document.getElementById('settings-btn').addEventListener('click', () => openModal('settings-modal'));
-    document.getElementById('info-btn').addEventListener('click', () => openModal('discord-modal'));
-    document.getElementById('discord-link').addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('discord-modal');
-    });
-    
-    document.getElementById('create-note-btn').addEventListener('click', createNewNote);
-    document.getElementById('save-note-btn').addEventListener('click', saveCurrentNote);
-    document.getElementById('cancel-note-btn').addEventListener('click', cancelNoteEdit);
-    
-    document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
-    document.getElementById('export-data-btn').addEventListener('click', exportData);
-    document.getElementById('import-data-btn').addEventListener('click', () => document.getElementById('import-file').click());
-    document.getElementById('import-file').addEventListener('change', importData);
-    
-    document.getElementById('join-discord-btn').addEventListener('click', () => {
-        window.open('https://discord.gg/Tpz6Rg3q8M', '_blank');
-    });
-    
-    document.getElementById('understand-btn').addEventListener('click', closeWarningModal);
-    
-    document.querySelectorAll('.modal-close').forEach(button => {
-        button.addEventListener('click', () => {
-            button.closest('.modal').classList.remove('active');
-        });
-    });
-    
-    updateClock();
-    updateCountdown();
-    setInterval(updateClock, 1000);
-    setInterval(updateCountdown, 1000);
-    
-    if (!lunchType) {
-        setTimeout(() => {
-            openModal('lunch-modal');
-        }, 1000);
-    }
-    
-    checkWarningModal();
-}
-
-function switchTab(tabName) {
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-    
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    document.getElementById(`${tabName}-tab`).classList.add('active');
-}
-
-function openModal(id) {
-    document.getElementById(id).classList.add('active');
-    
-    if (id === 'schedule-modal') {
-        updateModalScheduleTable();
-    }
-}
-
-function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-}
-
-function selectLunch(type) {
-    lunchType = type;
-    localStorage.setItem('lunchType', type);
-    closeModal('lunch-modal');
-    showToast('Lunch period set to ' + type);
-    updateScheduleTable();
-}
-
-// ===== SETTINGS FUNCTIONS =====
-function saveSettings() {
-    lunchType = document.getElementById('lunch-setting').value;
-    schoolStartTime = document.getElementById('start-time-setting').value;
-    schoolEndTime = document.getElementById('end-time-setting').value;
-    
-    localStorage.setItem('lunchType', lunchType);
-    localStorage.setItem('schoolStartTime', schoolStartTime);
-    localStorage.setItem('schoolEndTime', schoolEndTime);
-    
-    closeModal('settings-modal');
-    showToast('Settings saved successfully!');
-    updateScheduleTable();
-}
-
-function loadSettings() {
-    const savedLunch = localStorage.getItem('lunchType');
-    const savedStart = localStorage.getItem('schoolStartTime');
-    const savedEnd = localStorage.getItem('schoolEndTime');
-    
-    if (savedLunch) {
-        lunchType = savedLunch;
-        document.getElementById('lunch-setting').value = savedLunch;
-    }
-    
-    if (savedStart) schoolStartTime = savedStart;
-    if (savedEnd) schoolEndTime = savedEnd;
-    
-    document.getElementById('start-time-setting').value = schoolStartTime;
-    document.getElementById('end-time-setting').value = schoolEndTime;
-}
-
-// ===== NOTES FUNCTIONS =====
-function loadNotes() {
-    const savedNotes = localStorage.getItem('notes');
-    if (savedNotes) {
-        notes = JSON.parse(savedNotes);
-    }
-    renderNotesList();
-}
-
-function saveNotes() {
-    localStorage.setItem('notes', JSON.stringify(notes));
-}
-
-function renderNotesList() {
-    const notesList = document.getElementById('notes-list');
-    
-    if (notes.length === 0) {
-        notesList.innerHTML = '<div class="notes-empty"><i class="fas fa-sticky-note"></i><p>No notes yet</p></div>';
-        return;
-    }
-    
-    notesList.innerHTML = '';
-    notes.forEach((note, index) => {
-        const noteElement = document.createElement('div');
-        noteElement.className = 'note-item';
-        noteElement.innerHTML = `
-            <div class="note-title">${note.title}</div>
-            <div class="note-preview">${note.content.substring(0, 50)}${note.content.length > 50 ? '...' : ''}</div>
-            <div class="note-date">${new Date(note.date).toLocaleDateString()}</div>
-        `;
-        
-        noteElement.addEventListener('click', () => {
-            document.querySelectorAll('.note-item').forEach(item => item.classList.remove('active'));
-            noteElement.classList.add('active');
-            
-            currentNoteId = index;
-            document.getElementById('note-title').value = note.title;
-            document.getElementById('note-content').value = note.content;
-        });
-        
-        notesList.appendChild(noteElement);
-    });
-}
-
-function createNewNote() {
-    currentNoteId = null;
-    document.getElementById('note-title').value = '';
-    document.getElementById('note-content').value = '';
-}
-
-function saveCurrentNote() {
-    const title = document.getElementById('note-title').value || 'Untitled Note';
-    const content = document.getElementById('note-content').value;
-    
-    // Check size limit (10KB)
-    if (new Blob([content]).size > 10240) {
-        showToast('Note is too large! Maximum size is 10KB.');
-        return;
-    }
-    
-    if (currentNoteId !== null) {
-        // Update existing note
-        notes[currentNoteId] = { title, content, date: new Date() };
-    } else {
-        // Create new note
-        notes.push({ title, content, date: new Date() });
-        currentNoteId = notes.length - 1;
-    }
-    
-    saveNotes();
-    renderNotesList();
-    showToast('Note saved successfully!');
-}
-
-function cancelNoteEdit() {
-    createNewNote();
-}
-
-function exportData() {
-    const data = {
-        lunchType: localStorage.getItem('lunchType'),
-        schoolStartTime: localStorage.getItem('schoolStartTime'),
-        schoolEndTime: localStorage.getItem('schoolEndTime'),
-        notes: localStorage.getItem('notes')
-    };
-    
-    const dataStr = JSON.stringify(data);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-    
-    const exportFileDefaultName = 'klein-bell-schedule-data.json';
-    
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
-    
-    showToast('Data exported successfully!');
-}
-
-function importData(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const data = JSON.parse(e.target.result);
-            
-            if (data.lunchType) localStorage.setItem('lunchType', data.lunchType);
-            if (data.schoolStartTime) localStorage.setItem('schoolStartTime', data.schoolStartTime);
-            if (data.schoolEndTime) localStorage.setItem('schoolEndTime', data.schoolEndTime);
-            if (data.notes) localStorage.setItem('notes', data.notes);
-            
-            // Reload all data
-            loadSettings();
-            loadNotes();
-            
-            showToast('Data imported successfully!');
-        } catch (error) {
-            showToast('Error importing data: Invalid file format');
-        }
-    };
-    reader.readAsText(file);
-    
-    event.target.value = '';
-}
-
-function checkWarningModal() {
-    const lastWarning = localStorage.getItem('lastWarning');
-    const remindLater = localStorage.getItem('remindLater');
-    
-    if (!lastWarning || (remindLater && Date.now() - parseInt(lastWarning) > 3 * 24 * 60 * 60 * 1000)) {
-        setTimeout(() => {
-            openModal('warning-modal');
-        }, 1000);
-    }
-}
-
-function closeWarningModal() {
-    const remindLater = document.getElementById('remind-later').checked;
-    
-    localStorage.setItem('lastWarning', Date.now().toString());
-    localStorage.setItem('remindLater', remindLater.toString());
-    
-    closeModal('warning-modal');
-}
-
-function buildSchedule() {
-    if (!lunchType) return [];
-    return [...scheduleBase, ...lunchSchedules[lunchType], ...afterLunch];
-}
-
-function parseTime(str) {
-    let [h, m] = str.split(":").map(Number);
-    let d = new Date();
-    d.setHours(h, m, 0, 0);
-    return d;
-}
-
-function formatDiff(sec) {
-    let h = Math.floor(sec / 3600);
-    let m = Math.floor((sec % 3600) / 60);
-    let s = Math.floor(sec % 60);
-    return (h > 0 ? h + "h " : "") + (m > 0 ? m + "m " : "") + s + "s";
-}
-
-function updateClock() {
-    const now = new Date();
-    document.getElementById("clock").textContent = now.toLocaleTimeString();
-    document.getElementById("date").textContent = now.toLocaleDateString('en-US', { 
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-    });
-}
-
-function updateCountdown() {
-    const now = new Date();
-    const todaySchedule = buildSchedule();
-    
-    if (todaySchedule.length === 0) {
-        document.getElementById("current-period").textContent = "Please select your lunch period";
-        return;
-    }
-    
-    const startDay = parseTime(schoolStartTime);
-    const endDay = parseTime(schoolEndTime);
-
-    if (now < startDay) {
-        let diff = (startDay - now) / 1000;
-        document.getElementById("current-period").textContent = "School hasn't started yet";
-        document.getElementById("next-period").textContent = "1st Period starts in: " + formatDiff(diff);
-        document.getElementById("lunch-countdown").textContent = "";
-        document.getElementById("end-of-school").textContent = "School ends in: " + formatDiff((endDay - now) / 1000);
-        document.getElementById("period-progress").style.width = "0%";
-        return;
-    }
-    
-    if (now > endDay) {
-        let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(parseInt(schoolStartTime.split(":")[0]), parseInt(schoolStartTime.split(":")[1]), 0, 0);
-        let diff = (tomorrow - now) / 1000;
-        document.getElementById("current-period").textContent = "School has ended";
-        document.getElementById("next-period").textContent = "School starts again in: " + formatDiff(diff);
-        document.getElementById("lunch-countdown").textContent = "";
-        document.getElementById("end-of-school").textContent = "";
-        document.getElementById("period-progress").style.width = "100%";
-        return;
-    }
-    
-    for (let i = 0; i < todaySchedule.length; i++) {
-        let p = todaySchedule[i];
-        let start = parseTime(p.start);
-        let end = parseTime(p.end);
-        
-        if (now >= start && now <= end) {
-            let totalDuration = (end - start) / 1000;
-            let elapsed = (now - start) / 1000;
-            let remaining = (end - now) / 1000;
-            let progress = (elapsed / totalDuration) * 100;
-            
-            document.getElementById("current-period").textContent = "Currently: " + p.name;
-            document.getElementById("period-progress").style.width = progress + "%";
-            
-            if (p.name === "7th Period") {
-                document.getElementById("next-period").textContent = "Ends in: " + formatDiff(remaining);
-                document.getElementById("end-of-school").textContent = "";
-            } else {
-                document.getElementById("next-period").textContent = "Ends in: " + formatDiff(remaining);
+                versionCheck.innerHTML = '<i class="fas fa-check"></i>';
+                versionCheck.className = 'status-icon check';
+                simulateProgress(40);
                 
-                if (i < todaySchedule.length - 1) {
-                    let nextPeriod = todaySchedule[i + 1];
-                    let nextStart = parseTime(nextPeriod.start);
-                    let untilNext = (nextStart - now) / 1000;
-                    document.getElementById("next-period").textContent += " | Next: " + nextPeriod.name + " in: " + formatDiff(untilNext);
+                if (localVersion === updateInfo.version) {
+                    downloadItem.style.display = 'none';
+                    simulateProgress(70);
+                    
+                    await delay(800);
+                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
+                    webviewCheck.className = 'status-icon check';
+                    simulateProgress(100);
+                    
+                    completeLaunchSequence();
+                } else {
+                    await delay(800);
+                    downloadCheck.innerHTML = '<i class="fas fa-sync fa-spin"></i>';
+                    simulateProgress(60);
+                    
+                    await delay(1500);
+                    const contentResponse = await fetch(contentUrl);
+                    const htmlContent = await contentResponse.text();
+                    
+                    localStorage.setItem('htmlContent', htmlContent);
+                    localStorage.setItem('version', updateInfo.version);
+                    
+                    downloadCheck.innerHTML = '<i class="fas fa-check"></i>';
+                    downloadCheck.className = 'status-icon check';
+                    simulateProgress(80);
+                    
+                    await delay(800);
+                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
+                    webviewCheck.className = 'status-icon check';
+                    simulateProgress(100);
+                    
+                    completeLaunchSequence();
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                versionCheck.innerHTML = '<i class="fas fa-times"></i>';
+                versionCheck.className = 'status-icon cross';
+                downloadCheck.innerHTML = '<i class="fas fa-times"></i>';
+                downloadCheck.className = 'status-icon cross';
                 
-                document.getElementById("end-of-school").textContent = "School ends in: " + formatDiff((endDay - now) / 1000);
+                if (localStorage.getItem('htmlContent')) {
+                    await delay(1500);
+                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
+                    webviewCheck.className = 'status-icon check';
+                    simulateProgress(100);
+                    completeLaunchSequence();
+                }
             }
             
-            if (!p.name.includes("Lunch")) {
-                updateLunchCountdown(now);
-            } else {
-                document.getElementById("lunch-countdown").textContent = "Lunch ends in: " + formatDiff(remaining);
+            function completeLaunchSequence() {
+                completedText.classList.add('visible');
+                
+                setTimeout(() => {
+                    const htmlContent = localStorage.getItem('htmlContent');
+                    if (htmlContent) {
+                        const newTab = window.open('about:blank', '_blank');
+                        newTab.document.write(htmlContent);
+                        newTab.document.close();
+                        
+                        setTimeout(() => {
+                            window.close();
+                        }, 500);
+                    }
+                }, 1500);
             }
             
-            return;
-        }
-        
-        if (now < start) {
-            let diff = (start - now) / 1000;
-            document.getElementById("current-period").textContent = "Currently: Between Periods";
-            document.getElementById("next-period").textContent = "Next: " + p.name + " in: " + formatDiff(diff);
-            document.getElementById("period-progress").style.width = "0%";
+            function simulateProgress(targetWidth) {
+                progressBar.style.width = targetWidth + '%';
+            }
             
-            updateLunchCountdown(now);
-            
-            document.getElementById("end-of-school").textContent = "School ends in: " + formatDiff((endDay - now) / 1000);
-            return;
-        }
-    }
-}
-
-function updateLunchCountdown(now) {
-    if (!lunchType) return;
-    
-    let lunchPeriod = null;
-    
-    for (let period of lunchSchedules[lunchType]) {
-        if (period.name.includes("Lunch")) {
-            lunchPeriod = period;
-            break;
-        }
-    }
-    
-    if (lunchPeriod) {
-        let lunchStart = parseTime(lunchPeriod.start);
-        let lunchEnd = parseTime(lunchPeriod.end);
-        
-        if (now < lunchStart) {
-            let diff = (lunchStart - now) / 1000;
-            document.getElementById("lunch-countdown").textContent = "Lunch starts in: " + formatDiff(diff);
-        } else if (now >= lunchStart && now <= lunchEnd) {
-            let diff = (lunchEnd - now) / 1000;
-            document.getElementById("lunch-countdown").textContent = "Lunch ends in: " + formatDiff(diff);
-        } else {
-            document.getElementById("lunch-countdown").textContent = "Lunch is over";
-        }
-    }
-}
-
-function updateScheduleTable() {
-    const tableBody = document.getElementById('modal-schedule-table-body');
-    tableBody.innerHTML = '';
-    
-    const schedule = buildSchedule();
-    
-    schedule.forEach(period => {
-        const row = document.createElement('tr');
-        
-        const nameCell = document.createElement('td');
-        nameCell.textContent = period.name;
-        if (period.isPassing) {
-            nameCell.innerHTML = period.name + ' <span style="color: rgba(255,255,255,0.6); font-style: italic;">(Passing)</span>';
-        }
-        
-        const startCell = document.createElement('td');
-        startCell.textContent = period.start;
-        
-        const endCell = document.createElement('td');
-        endCell.textContent = period.end;
-        
-        row.appendChild(nameCell);
-        row.appendChild(startCell);
-        row.appendChild(endCell);
-        
-        tableBody.appendChild(row);
-    });
-}
-
-function updateModalScheduleTable() {
-    updateScheduleTable();
-}
-
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
-
-window.addEventListener('DOMContentLoaded', init);
-</script>
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        });
+    </script>
 </body>
 </html>
