@@ -1,366 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Boys Launcher</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        
-        .container {
-            text-align: center;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-        
-        .logo {
-            margin-bottom: 2rem;
-        }
-        
-        .logo h1 {
-            font-size: 3.5rem;
-            background: linear-gradient(90deg, #4a6bff, #38b6ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-            text-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
-        }
-        
-        .spinner-container {
-            position: relative;
-            margin: 2rem auto;
-            width: 80px;
-            height: 80px;
-        }
-        
-        .spinner {
-            width: 100%;
-            height: 100%;
-            border: 3px solid rgba(74, 107, 255, 0.2);
-            border-radius: 50%;
-            border-top-color: #4a6bff;
-            animation: spin 1.2s ease-in-out infinite;
-            position: absolute;
-        }
-        
-        .spinner-inner {
-            width: 70%;
-            height: 70%;
-            border: 3px solid rgba(56, 182, 255, 0.2);
-            border-radius: 50%;
-            border-top-color: #38b6ff;
-            animation: spinReverse 1.5s ease-in-out infinite;
-            position: absolute;
-            top: 15%;
-            left: 15%;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes spinReverse {
-            to { transform: rotate(-360deg); }
-        }
-        
-        .status-title {
-            font-size: 1.8rem;
-            margin: 1.5rem 0;
-            color: #e0e0e0;
-            font-weight: 300;
-        }
-        
-        .status-container {
-            margin: 2rem 0;
-            width: 100%;
-            max-width: 500px;
-        }
-        
-        .status-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 1.2rem 0;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            transform: translateX(-20px);
-            opacity: 0;
-        }
-        
-        .status-item.visible {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        
-        .status-text {
-            flex: 1;
-            color: #ddd;
-            text-align: left;
-            font-size: 1.1rem;
-        }
-        
-        .status-icon {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-left: 1rem;
-        }
-        
-        .check {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-        }
-        
-        .cross {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-        }
-        
-        .progress-container {
-            height: 8px;
-            width: 100%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            margin: 2.5rem 0;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #4a6bff, #38b6ff);
-            border-radius: 4px;
-            transition: width 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: 0 0 20px rgba(56, 182, 255, 0.5);
-        }
-        
-        .signature {
-            margin-top: 2.5rem;
-            color: #777;
-            font-size: 1rem;
-            font-style: italic;
-        }
-        
-        .dots::after {
-            content: '';
-            animation: dots 1.5s infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-        
-        .completed-text {
-            color: #4caf50;
-            font-weight: 500;
-            margin-top: 1.5rem;
-            font-size: 1.3rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease;
-        }
-        
-        .completed-text.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        @media (max-width: 768px) {
-            .logo h1 {
-                font-size: 2.5rem;
-            }
-            
-            .status-text {
-                font-size: 1rem;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Klein Bell</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --system-blue:#007AFF;
+  --glass:rgba(255,255,255,0.06);
+  --glass-2:rgba(255,255,255,0.04);
+  --bg1:#06131f;
+  --bg2:#0f2b4a;
+  --accent:#2db8ff;
+  --danger:#ff1f2d;
+}
+html,body{height:100%}
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  color:#fff;
+  background:
+    radial-gradient(900px 420px at 8% 12%, rgba(30,120,220,0.09), transparent),
+    linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  padding-bottom:100px;
+}
+.bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(14px);opacity:0.6;animation:drift linear infinite}
+@keyframes drift{from{transform:translate3d(-8vw,-12vh,0)}to{transform:translate3d(18vw,120vh,0)}}
+.fog-layer{position:fixed;inset:auto 0 0 0;height:45vh;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008));filter:blur(36px);opacity:0.22}
+.fog-layer.fg{height:60vh;opacity:0.12;filter:blur(46px);mix-blend-mode:screen}
+.container{max-width:1240px;margin:0 auto;padding:32px;position:relative;z-index:1}
+.header{text-align:center;padding:24px 0}
+.title{font-size:52px;font-weight:800;margin-bottom:6px;letter-spacing:-0.6px;text-shadow:0 16px 56px rgba(0,0,0,0.6)}
+.subtitle{font-size:15px;color:rgba(255,255,255,0.86)}
+.tab-bar{display:flex;background-color:var(--glass);border-radius:16px;margin-bottom:26px;box-shadow:0 16px 64px rgba(0,0,0,0.36);overflow:hidden;backdrop-filter:blur(8px)}
+.tab{flex:1;padding:14px;text-align:center;cursor:pointer;font-weight:800;transition:all .18s;color:rgba(255,255,255,0.82);font-size:15px}
+.tab.active{color:white;background:linear-gradient(180deg,rgba(0,122,255,0.12),rgba(0,122,255,0.06));box-shadow:inset 0 -3px 0 rgba(0,122,255,0.08)}
+.tab i{margin-right:8px;color:var(--system-blue)}
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn .28s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 18px 68px rgba(0,0,0,0.36);border:1px solid var(--glass-2);backdrop-filter:blur(6px)}
+.card-title{font-size:22px;font-weight:800;margin-bottom:14px;display:flex;align-items:center}
+.card-title i{margin-right:10px;color:var(--system-blue)}
+.clock-container{text-align:center;padding:28px 0}
+.live-clock{font-size:84px;font-weight:900;margin-bottom:8px;letter-spacing:-1px;font-variant-numeric:tabular-nums;text-shadow:0 18px 60px rgba(0,0,0,0.6)}
+.date-display{font-size:16px;color:rgba(255,255,255,0.88);margin-bottom:20px}
+.action-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.btn{display:flex;align-items:center;justify-content:center;padding:14px 20px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:14px;font-weight:800;cursor:pointer;transition:all .16s;font-size:15px}
+.btn:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,0,0,0.34)}
+.btn i{margin-right:10px;color:var(--system-blue)}
+.progress-container{height:12px;background-color:rgba(255,255,255,0.04);border-radius:999px;margin:20px 0;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),#006ee6);border-radius:999px;width:0%;transition:width .6s}
+.notes-container{display:grid;grid-template-columns:1fr 2fr;gap:22px}
+.notes-sidebar{background:rgba(255,255,255,0.03);border-radius:14px;padding:16px;border:1px solid var(--glass-2)}
+.notes-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.notes-list{max-height:520px;overflow-y:auto;padding-right:6px}
+.note-item{padding:14px;border-radius:12px;margin-bottom:12px;cursor:pointer;transition:all .12s;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;border:1px solid transparent}
+.note-item:hover{transform:translateY(-3px);background:rgba(255,255,255,0.03)}
+.note-item.active{background:linear-gradient(180deg,rgba(0,122,255,0.12),rgba(0,122,255,0.06));border-color:rgba(0,122,255,0.18)}
+.note-meta{flex:1;margin-right:12px}
+.note-title{font-weight:800;margin-bottom:6px;font-size:15px}
+.note-preview{font-size:13px;color:rgba(255,255,255,0.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.notes-editor{background:rgba(255,255,255,0.03);border-radius:14px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--glass-2)}
+.note-editor-title{flex:0;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);font-weight:800;color:white;font-size:16px}
+.note-editor-content{flex:1;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);margin:14px 0;min-height:320px;resize:none;background:rgba(255,255,255,0.02);font-size:15px}
+.note-editor-actions{display:flex;gap:12px;justify-content:flex-end}
+.note-editor-btn{padding:12px 20px;border-radius:12px;border:none;font-weight:900;cursor:pointer;font-size:15px}
+.note-save{background:linear-gradient(90deg,var(--accent),#006ee6);color:#fff}
+.note-cancel{background:rgba(255,255,255,0.06);color:#fff}
+.note-new{width:100%;padding:14px;margin-top:12px;background:linear-gradient(90deg,var(--accent),#006ee6);color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:15px}
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:16px}
+.game-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;transition:transform .26s,box-shadow .26s;border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(4px)}
+.game-card:hover{transform:translateY(-6px);box-shadow:0 28px 90px rgba(0,0,0,0.45)}
+.game-image{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;color:rgba(255,255,255,0.28);background:linear-gradient(135deg,rgba(0,0,0,0.12),rgba(255,255,255,0.02))}
+.game-content{padding:14px}
+.game-title{font-size:17px;font-weight:900;margin-bottom:8px}
+.game-tag{padding:8px 12px;border-radius:999px;font-size:13px;font-weight:900;background:rgba(0,122,255,0.12);color:var(--system-blue);margin-right:6px}
+.launch-btn{width:100%;padding:12px;background:linear-gradient(90deg,var(--accent),#006ee6);color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:15px}
+.footer{margin-top:60px;padding:20px 0;text-align:center;color:rgba(255,255,255,0.72);border-top:1px solid rgba(255,255,255,0.04)}
+.modal{position:fixed;inset:0;background-color:rgba(4,10,18,0.6);display:flex;justify-content:center;align-items:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(6px)}
+.modal.active{opacity:1;pointer-events:all}
+.modal-content{background:linear-gradient(180deg, rgba(12,14,18,0.98), rgba(18,20,24,0.99));border-radius:16px;padding:18px;width:94%;max-width:1080px;max-height:88vh;overflow:auto;box-shadow:0 28px 88px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;font-size:22px;cursor:pointer;color:rgba(255,255,255,0.7);padding:6px;border-radius:8px;transition:all .12s}
+.game-modal .modal-close{background:var(--danger);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;box-shadow:0 8px 28px rgba(255,31,45,0.14)}
+.game-modal .modal-close:hover{transform:translateY(-2px);box-shadow:0 16px 52px rgba(255,31,45,0.18)}
+.modal-title{font-size:20px;font-weight:900;margin-bottom:12px;color:#fff}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(10,12,14,0.94);color:#fff;padding:12px 20px;border-radius:12px;z-index:1001;opacity:0;transition:opacity .26s;border:1px solid rgba(255,255,255,0.04)}
+.toast.show{opacity:1}
+.game-modal{max-width:1180px;width:96%;height:84vh;padding:0;display:flex;flex-direction:column}
+.game-modal-header{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center}
+.game-controls{display:flex;gap:10px;align-items:center}
+.fullscreen-btn{padding:10px 14px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);cursor:pointer;font-weight:900;color:#fff}
+.game-modal-body{flex:1;padding:18px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:12px;min-height:380px;position:relative}
+.game-stage{position:relative;flex:1;border-radius:12px;overflow:hidden;background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));display:flex;align-items:center;justify-content:center;min-height:380px}
+.game-loading-step{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:92%;max-width:920px;text-align:center;opacity:0;transform-origin:center;transition:all .28s;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:12px}
+.game-loading-step.active{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.game-loading-icon{font-size:48px;margin-bottom:12px;color:var(--system-blue)}
+.game-loading-text{font-size:17px;font-weight:900;margin-bottom:12px}
+.server-lines{max-height:220px;overflow-y:auto;background:rgba(0,0,0,0.55);padding:12px;margin-top:8px;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,"Roboto Mono",monospace;font-size:13px;text-align:left;border:1px solid rgba(255,255,255,0.03);color:rgba(255,255,255,0.95)}
+.server-lines pre{margin:0;white-space:pre-wrap;word-break:break-word}
+.progress-bar-loading{width:100%;height:12px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:8px}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#006ee6);width:0%;transition:width .32s}
+.game-sandbox{position:absolute;inset:0;border:none;border-radius:0;background:white;display:none;z-index:3;width:100%;height:100%}
+.game-stage.loaded .game-loading-step{opacity:0;pointer-events:none;visibility:hidden}
+.game-stage.loaded .game-sandbox{display:block}
+.game-error{text-align:center;color:#FF4D4F;display:none;z-index:4}
+@media(max-width:900px){
+  .live-clock{font-size:64px}
+  .title{font-size:40px}
+  .note-editor-content{min-height:260px}
+  .game-modal{height:78vh}
+  .game-modal-body{min-height:260px}
+  .game-stage{min-height:260px}
+}
+@media(max-width:520px){
+  .tab-bar{flex-direction:column}
+  .action-buttons{grid-template-columns:1fr}
+  .notes-container{grid-template-columns:1fr}
+  .games-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <h1>LAUNCHER</h1>
+<div class="bg-orbs" aria-hidden="true"></div>
+<div class="fog-layer"></div>
+<div class="fog-layer fg"></div>
+<div class="container">
+  <div class="header">
+    <h1 class="title">Klein Bell</h1>
+    <p class="subtitle">made by archero <3</p>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" data-tab="home"><i class="fas fa-home"></i> Home</div>
+    <div class="tab" data-tab="schedule"><i class="fas fa-clock"></i> Countdown</div>
+    <div class="tab" data-tab="notes"><i class="fas fa-sticky-note"></i> Notes</div>
+    <div class="tab" data-tab="games"><i class="fas fa-gamepad"></i> Games</div>
+  </div>
+  <div class="tab-content active" id="home-tab">
+    <div class="card">
+      <div class="clock-container">
+        <div class="live-clock" id="clock">12:00:00 PM</div>
+        <div class="date-display" id="date">Monday, January 1, 2023</div>
+        <div class="action-buttons">
+          <button class="btn" id="schedule-btn"><i class="fas fa-table"></i> View Schedule</button>
+          <button class="btn" id="settings-btn"><i class="fas fa-cog"></i> Settings</button>
+          <button class="btn" id="info-btn"><i class="fab fa-discord"></i> Discord</button>
         </div>
-        
-        <div class="spinner-container">
-            <div class="spinner"></div>
-            <div class="spinner-inner"></div>
-        </div>
-        
-        <h2 class="status-title">Checking for updates<span class="dots"></span></h2>
-        
-        <div class="progress-container">
-            <div class="progress-bar" id="progress"></div>
-        </div>
-        
-        <div class="status-container">
-            <div class="status-item" id="version-check-item">
-                <span class="status-text">Checking current version</span>
-                <div class="status-icon" id="version-check">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
-            </div>
-            
-            <div class="status-item" id="download-item">
-                <span class="status-text">Updating from file</span>
-                <div class="status-icon" id="download-check">
-                    <i class="fas fa-clock"></i>
-                </div>
-            </div>
-            
-            <div class="status-item" id="webview-item">
-                <span class="status-text">Preparing WebView</span>
-                <div class="status-icon" id="webview-check">
-                    <i class="fas fa-clock"></i>
-                </div>
-            </div>
-        </div>
-        
-        <div class="completed-text" id="completed-text">
-            Launching application...
-        </div>
-        
-        <div class="signature">
-            made by archero <3
-        </div>
+      </div>
     </div>
+  </div>
+  <div class="tab-content" id="schedule-tab">
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-clock"></i> Schedule Countdown</h2>
+      <div class="countdown-info highlight" id="current-period"><i class="fas fa-calendar-alt"></i> Loading...</div>
+      <div class="countdown-info" id="next-period"><i class="fas fa-arrow-right"></i> Loading...</div>
+      <div class="countdown-info" id="lunch-countdown"><i class="fas fa-utensils"></i> Loading...</div>
+      <div class="countdown-info" id="end-of-school"><i class="fas fa-school"></i> Loading...</div>
+      <div class="progress-container"><div class="progress-bar" id="period-progress"></div></div>
+    </div>
+  </div>
+  <div class="tab-content" id="notes-tab">
+    <div class="card">
+      <div class="notes-container">
+        <div class="notes-sidebar">
+          <div class="notes-header"><h3>Your Notes</h3></div>
+          <div class="notes-list" id="notes-list"><div class="notes-empty"><i class="fas fa-sticky-note"></i><p>No notes yet</p></div></div>
+          <button class="note-new" id="create-note-btn"><i class="fas fa-plus"></i> New Note</button>
+        </div>
+        <div class="notes-editor">
+          <div class="note-editor-header">
+            <input type="text" class="note-editor-title" id="note-title" placeholder="Note Title">
+          </div>
+          <textarea class="note-editor-content" id="note-content" placeholder="Write your note here..."></textarea>
+          <div class="note-editor-actions">
+            <button class="note-editor-btn note-cancel" id="cancel-note-btn">Cancel</button>
+            <button class="note-editor-btn note-save note-save" id="save-note-btn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="games-tab">
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-gamepad"></i> Games</h2>
+      <p>Select a game to play during your free time!</p>
+      <div class="games-grid" id="games-container"><div class="games-empty"><i class="fas fa-gamepad"></i><p>Loading games...</p></div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Brought to you by <a href="#">School Boys</a> • <a href="#" id="discord-link">Join our Discord</a></p>
+  </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const versionCheck = document.getElementById('version-check');
-            const downloadCheck = document.getElementById('download-check');
-            const webviewCheck = document.getElementById('webview-check');
-            const progressBar = document.getElementById('progress');
-            const versionItem = document.getElementById('version-check-item');
-            const downloadItem = document.getElementById('download-item');
-            const webviewItem = document.getElementById('webview-item');
-            const completedText = document.getElementById('completed-text');
-            
-            const updateJsonUrl = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/update.json';
-            const contentUrl = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/klienbell.html';
-            
-            setTimeout(() => versionItem.classList.add('visible'), 300);
-            setTimeout(() => downloadItem.classList.add('visible'), 600);
-            setTimeout(() => webviewItem.classList.add('visible'), 900);
-            
-            simulateProgress(15);
-            
-            try {
-                await delay(1200);
-                const localVersion = localStorage.getItem('version');
-                
-                const response = await fetch(updateJsonUrl);
-                const updateInfo = await response.json();
-                
-                versionCheck.innerHTML = '<i class="fas fa-check"></i>';
-                versionCheck.className = 'status-icon check';
-                simulateProgress(40);
-                
-                if (localVersion === updateInfo.version) {
-                    downloadItem.style.display = 'none';
-                    simulateProgress(70);
-                    
-                    await delay(800);
-                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
-                    webviewCheck.className = 'status-icon check';
-                    simulateProgress(100);
-                    
-                    completeLaunchSequence();
-                } else {
-                    await delay(800);
-                    downloadCheck.innerHTML = '<i class="fas fa-sync fa-spin"></i>';
-                    simulateProgress(60);
-                    
-                    await delay(1500);
-                    const contentResponse = await fetch(contentUrl);
-                    const htmlContent = await contentResponse.text();
-                    
-                    localStorage.setItem('htmlContent', htmlContent);
-                    localStorage.setItem('version', updateInfo.version);
-                    
-                    downloadCheck.innerHTML = '<i class="fas fa-check"></i>';
-                    downloadCheck.className = 'status-icon check';
-                    simulateProgress(80);
-                    
-                    await delay(800);
-                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
-                    webviewCheck.className = 'status-icon check';
-                    simulateProgress(100);
-                    
-                    completeLaunchSequence();
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                versionCheck.innerHTML = '<i class="fas fa-times"></i>';
-                versionCheck.className = 'status-icon cross';
-                downloadCheck.innerHTML = '<i class="fas fa-times"></i>';
-                downloadCheck.className = 'status-icon cross';
-                
-                if (localStorage.getItem('htmlContent')) {
-                    await delay(1500);
-                    webviewCheck.innerHTML = '<i class="fas fa-check"></i>';
-                    webviewCheck.className = 'status-icon check';
-                    simulateProgress(100);
-                    completeLaunchSequence();
-                }
-            }
-            
-            function completeLaunchSequence() {
-                completedText.classList.add('visible');
-                
-                setTimeout(() => {
-                    const htmlContent = localStorage.getItem('htmlContent');
-                    if (htmlContent) {
-                        const newTab = window.open('about:blank', '_blank');
-                        newTab.document.write(htmlContent);
-                        newTab.document.close();
-                        
-                        setTimeout(() => {
-                            window.close();
-                        }, 500);
-                    }
-                }, 1500);
-            }
-            
-            function simulateProgress(targetWidth) {
-                progressBar.style.width = targetWidth + '%';
-            }
-            
-            function delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-        });
-    </script>
+<div class="modal" id="lunch-modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">Select Your Lunch Period</h2>
+    <p>Choose your lunch period to personalize your schedule:</p>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:18px 0">
+      <button class="btn" onclick="selectLunch('A')" style="justify-content:center">A Lunch</button>
+      <button class="btn" onclick="selectLunch('B')" style="justify-content:center">B Lunch</button>
+      <button class="btn" onclick="selectLunch('C')" style="justify-content:center">C Lunch</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="schedule-modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">Full Bell Schedule</h2>
+    <table style="width:100%;border-collapse:collapse;margin:14px 0">
+      <thead>
+        <tr><th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,0.04)">Period</th><th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,0.04)">Start Time</th><th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,0.04)">End Time</th></tr>
+      </thead>
+      <tbody id="modal-schedule-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="settings-modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">Settings</h2>
+    <div style="margin:18px 0">
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:800">Lunch Period</label>
+        <select id="lunch-setting" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:white">
+          <option value="A">A Lunch</option><option value="B">B Lunch</option><option value="C">C Lunch</option>
+        </select>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:800">School Start Time</label>
+        <input type="time" id="start-time-setting" value="07:10" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:white">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;margin-bottom:8px;font-weight:800">School End Time</label>
+        <input type="time" id="end-time-setting" value="14:35" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:white">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <button class="btn" id="export-data-btn" style="justify-content:center">Export Data</button>
+        <button class="btn" id="import-data-btn" style="justify-content:center">Import Data</button>
+        <input type="file" id="import-file" style="display:none">
+      </div>
+    </div>
+    <button class="note-new" id="save-settings-btn" style="width:100%;margin-top:12px">Save Settings</button>
+  </div>
+</div>
+
+<div class="modal" id="discord-modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <h2 class="modal-title">School Boys Discord</h2>
+    <p style="margin:12px 0">Join our community for updates and to meet more friends!</p>
+    <p style="background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;margin:12px 0">
+      <strong>Created by:</strong> Archero (dev/owner)<br><strong>Discord:</strong> <a href="https://discord.gg/Tpz6Rg3q8M" style="color:var(--system-blue)">https://discord.gg/Tpz6Rg3q8M</a>
+    </p>
+    <button class="note-new" id="join-discord-btn" style="width:100%">Join Discord Server</button>
+  </div>
+</div>
+
+<div class="modal" id="warning-modal">
+  <div class="modal-content">
+    <h2 class="modal-title">Important Notice</h2>
+    <p style="margin:12px 0">Warning! DO NOT clear your browser history without backing up first.</p>
+    <div style="background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;margin:12px 0">
+      <p style="margin-bottom:10px"><strong>To backup your data:</strong></p>
+      <ol style="padding-left:18px"><li>Go to Settings and click "Export Data" to create a backup file</li><li>After clearing history, go back to Settings and upload the backup file</li><li>Your information will be restored</li></ol>
+    </div>
+    <div style="display:flex;align-items:center;margin:12px 0">
+      <input type="checkbox" id="remind-later" style="margin-right:12px">
+      <label for="remind-later">Remind me again in 3 days</label>
+    </div>
+    <button class="note-new" id="understand-btn" style="width:100%">I Understand</button>
+  </div>
+</div>
+
+<div class="modal" id="game-modal">
+  <div class="modal-content game-modal" role="dialog" aria-modal="true">
+    <button class="modal-close">&times;</button>
+    <div class="game-modal-header">
+      <h2 class="modal-title" id="game-modal-title">Loading Game</h2>
+      <div class="game-controls">
+        <button class="fullscreen-btn" id="fullscreen-btn"><i class="fas fa-expand"></i> Full Screen</button>
+      </div>
+    </div>
+    <div class="game-modal-body">
+      <div class="game-stage" id="game-stage">
+        <div class="game-loading-step" id="step-retrieving">
+          <div class="game-loading-icon"><i class="fas fa-cloud-download-alt"></i></div>
+          <div class="game-loading-text">Retrieving game files...</div>
+          <div class="progress-bar-loading"><div class="progress-bar-fill" id="progress-retrieving"></div></div>
+        </div>
+        <div class="game-loading-step" id="step-reading">
+          <div class="game-loading-icon"><i class="fas fa-server"></i></div>
+          <div class="game-loading-text" id="server-text">Server responded with 0 lines</div>
+          <div class="server-lines" id="server-lines"><pre id="server-lines-pre"></pre></div>
+          <div class="progress-bar-loading"><div class="progress-bar-fill" id="progress-reading"></div></div>
+        </div>
+        <div class="game-loading-step" id="step-cooking">
+          <div class="game-loading-icon"><i class="fas fa-utensils"></i></div>
+          <div class="game-loading-text">Cooking up the sandbox...</div>
+          <div class="progress-bar-loading"><div class="progress-bar-fill" id="progress-cooking"></div></div>
+        </div>
+        <div class="game-loading-step" id="step-deploying">
+          <div class="game-loading-icon"><i class="fas fa-rocket"></i></div>
+          <div class="game-loading-text">Deploying services...</div>
+          <div class="progress-bar-loading"><div class="progress-bar-fill" id="progress-deploying"></div></div>
+        </div>
+        <iframe class="game-sandbox" id="game-sandbox" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="game-error" id="game-error">
+          <div class="game-loading-icon"><i class="fas fa-exclamation-circle"></i></div>
+          <div class="game-loading-text">Failed to load game. Please try again later.</div>
+          <button class="note-new" id="retry-game-btn" style="margin-top:12px">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let lunchType = null
+let schoolStartTime = "07:10"
+let schoolEndTime = "14:35"
+let currentNoteId = null
+let notes = []
+let games = []
+const scheduleBase = [{name:"1st Period",start:"07:10",end:"08:00"},{name:"Passing Period",start:"08:00",end:"08:06",isPassing:true},{name:"2nd Period",start:"08:06",end:"08:56"},{name:"Passing Period",start:"08:56",end:"09:02",isPassing:true},{name:"3rd Period",start:"09:02",end:"09:52"},{name:"Passing Period",start:"09:52",end:"09:58",isPassing:true},{name:"4th Period",start:"09:58",end:"10:48"},{name:"InKlein",start:"10:48",end:"11:18"},{name:"Passing Period",start:"11:18",end:"11:24",isPassing:true}]
+const lunchSchedules = {A:[{name:"A Lunch",start:"11:24",end:"11:48"},{name:"5th Period",start:"11:48",end:"12:43"}],B:[{name:"5th Period",start:"11:24",end:"11:48"},{name:"B Lunch",start:"11:48",end:"12:18"},{name:"5th Period",start:"12:18",end:"12:43"}],C:[{name:"5th Period",start:"11:24",end:"12:18"},{name:"C Lunch",start:"12:18",end:"12:48"}]}
+const afterLunch = [{name:"Passing Period",start:"12:48",end:"12:49",isPassing:true},{name:"6th Period",start:"12:49",end:"13:39"},{name:"Passing Period",start:"13:39",end:"13:45",isPassing:true},{name:"7th Period",start:"13:45",end:"14:35"}]
+let currentLoadController = null
+let lastLaunchedGameUrl = null
+let currentBlobUrl = null
+
+function createOrbs(){
+  const container = document.querySelector('.bg-orbs')
+  const colors = ['rgba(45,184,255,0.18)','rgba(0,122,255,0.14)','rgba(0,200,150,0.12)','rgba(255,120,110,0.08)','rgba(140,80,255,0.06)']
+  for(let i=0;i<80;i++){
+    const o = document.createElement('div'); o.className='orb'
+    const size = Math.floor(Math.random()*260)+50
+    o.style.width = size+'px'; o.style.height = size+'px'
+    o.style.left = (Math.random()*120-10)+'%' ; o.style.top = (Math.random()*-60)+'%'
+    o.style.background = colors[i%colors.length]
+    o.style.boxShadow = '0 40px '+(size/6)+'px rgba(0,0,0,0.25)'
+    const dur = Math.random()*22+12
+    o.style.animationDuration = dur+'s'
+    o.style.opacity = 0.52 + Math.random()*0.25
+    o.style.filter = 'blur('+ (Math.random()*18+6) +'px)'
+    container.appendChild(o)
+  }
+}
+
+function init(){
+  createOrbs()
+  loadSettings()
+  loadNotes()
+  loadGames()
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.getAttribute('data-tab'))))
+  document.getElementById('schedule-btn').addEventListener('click',()=>openModal('schedule-modal'))
+  document.getElementById('settings-btn').addEventListener('click',()=>openModal('settings-modal'))
+  document.getElementById('info-btn').addEventListener('click',()=>openModal('discord-modal'))
+  document.getElementById('discord-link').addEventListener('click',(e)=>{e.preventDefault();openModal('discord-modal')})
+  document.getElementById('create-note-btn').addEventListener('click',createNewNote)
+  document.getElementById('save-note-btn').addEventListener('click',saveCurrentNote)
+  document.getElementById('cancel-note-btn').addEventListener('click',cancelNoteEdit)
+  document.getElementById('save-settings-btn').addEventListener('click',saveSettings)
+  document.getElementById('export-data-btn').addEventListener('click',exportData)
+  document.getElementById('import-data-btn').addEventListener('click',()=>document.getElementById('import-file').click())
+  document.getElementById('import-file').addEventListener('change',importData)
+  document.getElementById('join-discord-btn').addEventListener('click',()=>window.open('https://discord.gg/Tpz6Rg3q8M','_blank'))
+  document.getElementById('understand-btn').addEventListener('click',closeWarningModal)
+  document.getElementById('retry-game-btn').addEventListener('click',retryGameLoad)
+  document.querySelectorAll('.modal-close').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const m = btn.closest('.modal')
+      if(m && m.id === 'game-modal'){ closeGameModal() } else if(m){ m.classList.remove('active') }
+    })
+  })
+  document.getElementById('fullscreen-btn').addEventListener('click',toggleFullScreen)
+  updateClock()
+  updateCountdown()
+  setInterval(updateClock,1000)
+  setInterval(updateCountdown,1000)
+  if(!lunchType) setTimeout(()=>openModal('lunch-modal'),800)
+  checkWarningModal()
+}
+
+function switchTab(tabName){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+  const sel=document.querySelector(`.tab[data-tab="${tabName}"]`)
+  if(sel) sel.classList.add('active')
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'))
+  const content=document.getElementById(`${tabName}-tab`)
+  if(content) content.classList.add('active')
+}
+
+function openModal(id){
+  const m=document.getElementById(id); if(m) m.classList.add('active'); if(id==='schedule-modal') updateModalScheduleTable()
+}
+
+function selectLunch(type){
+  lunchType = type; localStorage.setItem('lunchType', type); closeModal('lunch-modal'); showToast('Lunch period set to '+type); updateScheduleTable()
+}
+
+function saveSettings(){
+  lunchType = document.getElementById('lunch-setting').value
+  schoolStartTime = document.getElementById('start-time-setting').value
+  schoolEndTime = document.getElementById('end-time-setting').value
+  localStorage.setItem('lunchType', lunchType)
+  localStorage.setItem('schoolStartTime', schoolStartTime)
+  localStorage.setItem('schoolEndTime', schoolEndTime)
+  closeModal('settings-modal')
+  showToast('Settings saved successfully!')
+  updateScheduleTable()
+}
+
+function closeModal(id){ const m=document.getElementById(id); if(m) m.classList.remove('active') }
+
+function loadSettings(){
+  const sL = localStorage.getItem('lunchType'), sS = localStorage.getItem('schoolStartTime'), sE = localStorage.getItem('schoolEndTime')
+  if(sL){ lunchType = sL; document.getElementById('lunch-setting').value = sL }
+  if(sS) schoolStartTime = sS
+  if(sE) schoolEndTime = sE
+  document.getElementById('start-time-setting').value = schoolStartTime
+  document.getElementById('end-time-setting').value = schoolEndTime
+}
+
+function loadNotes(){
+  const saved = localStorage.getItem('notes')
+  if(saved){ try{ notes = JSON.parse(saved) } catch(e){ notes = [] } }
+  renderNotesList()
+}
+
+function saveNotes(){ localStorage.setItem('notes', JSON.stringify(notes)) }
+
+function renderNotesList(){
+  const list = document.getElementById('notes-list'); if(!list) return
+  if(notes.length === 0){ list.innerHTML = '<div class="notes-empty"><i class="fas fa-sticky-note"></i><p>No notes yet</p></div>'; return }
+  list.innerHTML = ''
+  notes.forEach((note,i)=>{
+    const el = document.createElement('div'); el.className = 'note-item'; if(i === currentNoteId) el.classList.add('active')
+    const meta = document.createElement('div'); meta.className = 'note-meta'
+    meta.innerHTML = '<div class="note-title">'+escapeHtml(note.title)+'</div><div class="note-preview">'+escapeHtml((note.content||'').substring(0,60))+(note.content&&note.content.length>60?'...':'')+'</div><div class="note-date">'+new Date(note.date).toLocaleDateString()+'</div>'
+    const actions = document.createElement('div'); actions.className = 'note-actions'
+    const openBtn = document.createElement('button'); openBtn.innerHTML = '<i class="fas fa-eye"></i>'; openBtn.title = 'Open note'
+    openBtn.addEventListener('click', e=>{ e.stopPropagation(); currentNoteId = i; document.querySelectorAll('.note-item').forEach(n=>n.classList.remove('active')); el.classList.add('active'); document.getElementById('note-title').value = note.title; document.getElementById('note-content').value = note.content })
+    const delBtn = document.createElement('button'); delBtn.innerHTML = '<i class="fas fa-trash-alt"></i>'; delBtn.title = 'Delete note'
+    delBtn.addEventListener('click', e=>{ e.stopPropagation(); if(!confirm('Delete this note?')) return; notes.splice(i,1); if(currentNoteId===i){ currentNoteId=null; document.getElementById('note-title').value=''; document.getElementById('note-content').value=''} else if(currentNoteId>i) currentNoteId--; saveNotes(); renderNotesList(); showToast('Note deleted') })
+    actions.appendChild(openBtn); actions.appendChild(delBtn)
+    el.appendChild(meta); el.appendChild(actions)
+    el.addEventListener('click', ()=>{ currentNoteId = i; document.querySelectorAll('.note-item').forEach(n=>n.classList.remove('active')); el.classList.add('active'); document.getElementById('note-title').value = note.title; document.getElementById('note-content').value = note.content })
+    list.appendChild(el)
+  })
+}
+
+function createNewNote(){ currentNoteId = null; document.getElementById('note-title').value=''; document.getElementById('note-content').value=''; document.querySelectorAll('.note-item').forEach(n=>n.classList.remove('active')) }
+
+function saveCurrentNote(){
+  const title = document.getElementById('note-title').value || 'Untitled Note'
+  const content = document.getElementById('note-content').value || ''
+  if(new Blob([content]).size > 10240){ showToast('Note is too large! Maximum size is 10KB.'); return }
+  if(currentNoteId !== null){ notes[currentNoteId] = { title, content, date: new Date() } } else { notes.push({ title, content, date: new Date() }); currentNoteId = notes.length - 1 }
+  saveNotes(); renderNotesList(); showToast('Note saved successfully!')
+}
+
+function cancelNoteEdit(){ createNewNote() }
+
+function exportData(){
+  const data = { lunchType: localStorage.getItem('lunchType'), schoolStartTime: localStorage.getItem('schoolStartTime'), schoolEndTime: localStorage.getItem('schoolEndTime'), notes: localStorage.getItem('notes') }
+  const dataStr = JSON.stringify(data)
+  const dataUri = 'data:application/json;charset=utf-8,'+encodeURIComponent(dataStr)
+  const link = document.createElement('a'); link.setAttribute('href', dataUri); link.setAttribute('download', 'klein-bell-schedule-data.json'); link.click(); showToast('Data exported successfully!')
+}
+
+function importData(e){
+  const file = e.target.files[0]; if(!file) return
+  const reader = new FileReader()
+  reader.onload = function(evt){ try { const data = JSON.parse(evt.target.result); if(data.lunchType) localStorage.setItem('lunchType', data.lunchType); if(data.schoolStartTime) localStorage.setItem('schoolStartTime', data.schoolStartTime); if(data.schoolEndTime) localStorage.setItem('schoolEndTime', data.schoolEndTime); if(data.notes) localStorage.setItem('notes', data.notes); loadSettings(); loadNotes(); showToast('Data imported successfully!') } catch(err) { showToast('Error importing data: Invalid file format') } }
+  reader.readAsText(file); e.target.value = ''
+}
+
+function checkWarningModal(){
+  const lastWarning = localStorage.getItem('lastWarning'), remindLater = localStorage.getItem('remindLater')
+  if(!lastWarning || (remindLater && Date.now() - parseInt(lastWarning) > 3*24*60*60*1000)) setTimeout(()=>openModal('warning-modal'),1000)
+}
+
+function closeWarningModal(){ const remindLater = document.getElementById('remind-later').checked; localStorage.setItem('lastWarning', Date.now().toString()); localStorage.setItem('remindLater', remindLater.toString()); closeModal('warning-modal') }
+
+async function loadGames(){
+  try{
+    const res = await fetch('https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/Jewish.json')
+    games = await res.json()
+    renderGames()
+  }catch(e){
+    document.getElementById('games-container').innerHTML = '<div class="games-empty"><i class="fas fa-exclamation-circle"></i><p>Failed to load games. Please try again later.</p></div>'
+  }
+}
+
+function renderGames(){
+  const container = document.getElementById('games-container'); if(!container) return
+  if(!Array.isArray(games) || games.length === 0){ container.innerHTML = '<div class="games-empty"><i class="fas fa-gamepad"></i><p>No games available at the moment.</p></div>'; return }
+  container.innerHTML = ''
+  games.forEach((game)=>{
+    const card = document.createElement('div'); card.className = 'game-card'
+    const imgHtml = game.gameicon ? '<img src="'+escapeHtml(game.gameicon)+'" alt="'+escapeHtml(game.gamename)+'" style="width:100%;height:100%;object-fit:cover">' : '<i class="fas fa-gamepad"></i>'
+    card.innerHTML = '<div class="game-image">'+imgHtml+'</div><div class="game-content"><div class="game-title">'+escapeHtml(game.gamename)+'</div><div class="game-tags">'+(Array.isArray(game.gameclass)?game.gameclass.map(c=>'<span class="game-tag">'+escapeHtml(c)+'</span>').join(''):'')+'</div><div class="game-action"><button class="launch-btn" data-url="'+escapeHtml(game.gameurl||'')+'"><i class="fas fa-play"></i> Launch Game</button></div></div>'
+    card.querySelector('.launch-btn').addEventListener('click', ()=>launchGame({ gamename: game.gamename, gameurl: game.gameurl }))
+    container.appendChild(card)
+  })
+}
+
+function launchGame(game){
+  lastLaunchedGameUrl = game.gameurl || null
+  document.getElementById('game-modal-title').textContent = game.gamename || 'Game'
+  const stage = document.getElementById('game-stage')
+  stage.classList.remove('loaded')
+  document.getElementById('game-sandbox').style.display = 'none'
+  document.getElementById('game-sandbox').src = 'about:blank'
+  document.getElementById('game-error').style.display = 'none'
+  document.querySelectorAll('.game-loading-step').forEach(s=>s.classList.remove('active'))
+  document.getElementById('server-lines-pre').textContent = ''
+  openModal('game-modal')
+  startGameLoadSequence(game.gameurl)
+}
+
+async function startGameLoadSequence(url){
+  cleanupGameLoad()
+  const abortCtrl = new AbortController()
+  currentLoadController = { aborted:false, intervals:[], timeouts:[], blobUrl:null, gameUrl:url, abortController: abortCtrl }
+  try{
+    await runProgress('retrieving',800,12,currentLoadController)
+    const response = await fetch(url, { cache:'no-store', signal: abortCtrl.signal })
+    const text = await response.text()
+    if(currentLoadController.aborted) throw new Error('aborted')
+    const lines = text.split(/\r\n|\n/)
+    document.getElementById('server-text').textContent = 'Server responded with '+lines.length+' lines'
+    document.getElementById('server-lines-pre').textContent = lines.map((l,idx)=>(''+(idx+1)).padStart(3,' ')+'  '+l).join('\n')
+    await runProgress('reading',900,10,currentLoadController)
+    await runProgress('cooking',700,8,currentLoadController)
+    if(currentLoadController.aborted) throw new Error('aborted')
+    let assembled = ''
+    let parsedJson = null
+    try{ parsedJson = JSON.parse(text) } catch(e){ parsedJson = null }
+    if(parsedJson && (parsedJson.html || parsedJson.css || parsedJson.js)){
+      const h = parsedJson.html || ''
+      const c = parsedJson.css || ''
+      const j = parsedJson.js || ''
+      assembled = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+c+'</style></head><body>'+h+'<script>'+j+'<\/script></body></html>'
+    } else {
+      assembled = text
+    }
+    const blob = new Blob([assembled], { type: 'text/html' })
+    const blobUrl = URL.createObjectURL(blob)
+    currentBlobUrl = blobUrl
+    currentLoadController.blobUrl = blobUrl
+    await runProgress('deploying',600,12,currentLoadController)
+    if(currentLoadController.aborted) throw new Error('aborted')
+    const sandbox = document.getElementById('game-sandbox')
+    sandbox.style.display = 'block'
+    sandbox.src = blobUrl
+    const stage = document.getElementById('game-stage')
+    stage.classList.add('loaded')
+    document.getElementById('server-lines-pre').textContent = ''
+    document.getElementById('server-text').textContent = 'Server responded with 0 lines'
+    document.querySelectorAll('.game-loading-step').forEach(step=>step.classList.remove('active'))
+    sandbox.onload = ()=>{ showToast('Game loaded successfully!') }
+    sandbox.onerror = ()=>{
+      sandbox.style.display = 'none'
+      document.getElementById('game-error').style.display = 'block'
+    }
+  }catch(err){
+    if(err && err.name === 'AbortError') return
+    if(err && err.message === 'aborted') return
+    document.getElementById('server-text').textContent = 'Server responded with 0 lines'
+    document.getElementById('server-lines-pre').textContent = ''
+    document.getElementById('game-error').style.display = 'block'
+  }finally{
+    if(currentLoadController) currentLoadController.intervals = []
+  }
+}
+
+function runProgress(step,totalMs,stepsCount,controller){
+  return new Promise(resolve=>{
+    const stepEl = document.getElementById('step-'+step)
+    const prog = document.getElementById('progress-'+step)
+    if(!stepEl || !prog){ resolve(); return }
+    stepEl.classList.add('active')
+    prog.style.width = '0%'
+    let progress = 0
+    const inc = 100 / stepsCount
+    const intervalMs = Math.max(30, Math.floor(totalMs / stepsCount))
+    const iv = setInterval(()=>{
+      if(controller && controller.aborted){ clearInterval(iv); stepEl.classList.remove('active'); prog.style.width='0%'; resolve(); return }
+      progress += inc
+      if(progress > 100) progress = 100
+      prog.style.width = progress + '%'
+      if(progress >= 100){ clearInterval(iv); const to = setTimeout(()=>{ stepEl.classList.remove('active'); resolve() }, 220); if(controller) controller.timeouts.push(to) }
+    }, intervalMs)
+    if(controller) controller.intervals.push(iv)
+  })
+}
+
+function retryGameLoad(){
+  document.getElementById('game-error').style.display = 'none'
+  document.getElementById('game-sandbox').style.display = 'none'
+  if(lastLaunchedGameUrl){ startGameLoadSequence(lastLaunchedGameUrl) } else { showToast('Retry failed: original URL not found') }
+}
+
+function findGameUrlByBlobOrSrc(src){
+  for(const g of games){ if(g.gameurl && src && src.includes(g.gameurl)) return g.gameurl }
+  return null
+}
+
+function cleanupGameLoad(){
+  if(currentLoadController){
+    currentLoadController.aborted = true
+    try{ if(currentLoadController.abortController) currentLoadController.abortController.abort() }catch(e){}
+    if(Array.isArray(currentLoadController.intervals)){
+      currentLoadController.intervals.forEach(id=>{ try{ clearInterval(id) } catch(e){} })
+    }
+    if(Array.isArray(currentLoadController.timeouts)){
+      currentLoadController.timeouts.forEach(id=>{ try{ clearTimeout(id) } catch(e){} })
+    }
+    currentLoadController.intervals = []
+    currentLoadController.timeouts = []
+    currentLoadController = null
+  }
+  if(currentBlobUrl){
+    try{ URL.revokeObjectURL(currentBlobUrl) }catch(e){}
+    currentBlobUrl = null
+  }
+  const sandbox = document.getElementById('game-sandbox')
+  if(sandbox){
+    sandbox.src = 'about:blank'
+    sandbox.style.display = 'none'
+  }
+  document.getElementById('server-lines-pre').textContent = ''
+  document.getElementById('server-text').textContent = 'Server responded with 0 lines'
+  document.getElementById('game-error').style.display = 'none'
+  document.querySelectorAll('.progress-bar-fill').forEach(p=>p.style.width='0%')
+  document.querySelectorAll('.game-loading-step').forEach(s=>s.classList.remove('active'))
+  const stage = document.getElementById('game-stage')
+  stage.classList.remove('loaded')
+}
+
+function closeGameModal(){
+  cleanupGameLoad()
+  const m = document.getElementById('game-modal')
+  if(m) m.classList.remove('active')
+}
+
+function toggleFullScreen(){
+  const fmBtn = document.getElementById('fullscreen-btn')
+  const sandbox = document.getElementById('game-sandbox')
+  const modalContent = document.querySelector('#game-modal .modal-content')
+  if(!document.fullscreenElement){
+    const target = sandbox.style.display !== 'none' ? sandbox : modalContent
+    if(target.requestFullscreen) target.requestFullscreen()
+    fmBtn.innerHTML = '<i class="fas fa-compress"></i> Exit Full Screen'
+  } else {
+    if(document.exitFullscreen) document.exitFullscreen()
+    fmBtn.innerHTML = '<i class="fas fa-expand"></i> Full Screen'
+  }
+}
+
+function buildSchedule(){
+  if(!lunchType) return []
+  return scheduleBase.concat(lunchSchedules[lunchType]||[]).concat(afterLunch)
+}
+
+function parseTime(str){
+  const parts = str.split(':').map(Number)
+  const d = new Date(); d.setHours(parts[0], parts[1]||0, 0, 0); return d
+}
+
+function formatDiff(sec){
+  sec = Math.max(0, Math.floor(sec))
+  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = Math.floor(sec%60)
+  return (h>0? h+'h ':'') + (m>0? m+'m ':'') + s+'s'
+}
+
+function updateClock(){
+  const now = new Date()
+  document.getElementById('clock').textContent = now.toLocaleTimeString()
+  document.getElementById('date').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})
+}
+
+function updateCountdown(){
+  const now = new Date()
+  const todaySchedule = buildSchedule()
+  if(todaySchedule.length === 0){ document.getElementById('current-period').textContent = 'Please select your lunch period'; return }
+  const startDay = parseTime(schoolStartTime)
+  const endDay = parseTime(schoolEndTime)
+  if(now < startDay){
+    let diff = (startDay - now) / 1000
+    document.getElementById('current-period').textContent = "School hasn't started yet"
+    document.getElementById('next-period').textContent = "1st Period starts in: " + formatDiff(diff)
+    document.getElementById('lunch-countdown').textContent = ""
+    document.getElementById('end-of-school').textContent = "School ends in: " + formatDiff((endDay - now) / 1000)
+    document.getElementById('period-progress').style.width = '0%'
+    return
+  }
+  if(now > endDay){
+    let tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(parseInt(schoolStartTime.split(':')[0]),parseInt(schoolStartTime.split(':')[1]),0,0)
+    let diff = (tomorrow - now)/1000
+    document.getElementById('current-period').textContent = 'School has ended'
+    document.getElementById('next-period').textContent = 'School starts again in: ' + formatDiff(diff)
+    document.getElementById('lunch-countdown').textContent = ''
+    document.getElementById('end-of-school').textContent = ''
+    document.getElementById('period-progress').style.width='100%'
+    return
+  }
+  for(let i=0;i<todaySchedule.length;i++){
+    const p = todaySchedule[i]
+    const start = parseTime(p.start)
+    const end = parseTime(p.end)
+    if(now >= start && now <= end){
+      const totalDuration = (end - start)/1000; const elapsed = (now - start)/1000; const remaining = (end - now)/1000
+      const progress = (elapsed/totalDuration)*100
+      document.getElementById('current-period').textContent = 'Currently: '+p.name
+      document.getElementById('period-progress').style.width = progress+'%'
+      if(p.name === '7th Period'){ document.getElementById('next-period').textContent = 'Ends in: '+formatDiff(remaining); document.getElementById('end-of-school').textContent = '' } else {
+        document.getElementById('next-period').textContent = 'Ends in: '+formatDiff(remaining)
+        if(i < todaySchedule.length - 1){ const nextPeriod = todaySchedule[i+1]; const nextStart = parseTime(nextPeriod.start); const untilNext = (nextStart - now)/1000; document.getElementById('next-period').textContent += ' | Next: '+nextPeriod.name+' in: '+formatDiff(untilNext) }
+        document.getElementById('end-of-school').textContent = 'School ends in: '+formatDiff((endDay - now)/1000)
+      }
+      if(!p.name.includes('Lunch')) updateLunchCountdown(now); else document.getElementById('lunch-countdown').textContent = 'Lunch ends in: '+formatDiff(remaining)
+      return
+    }
+    if(now < start){
+      let diff = (start - now)/1000
+      document.getElementById('current-period').textContent = 'Currently: Between Periods'
+      document.getElementById('next-period').textContent = 'Next: '+p.name+' in: '+formatDiff(diff)
+      document.getElementById('period-progress').style.width = '0%'
+      updateLunchCountdown(now)
+      document.getElementById('end-of-school').textContent = 'School ends in: '+formatDiff((endDay - now)/1000)
+      return
+    }
+  }
+}
+
+function updateLunchCountdown(now){
+  if(!lunchType) return
+  let lunchPeriod = null
+  for(const period of lunchSchedules[lunchType]) if(period.name.includes('Lunch')) { lunchPeriod = period; break }
+  if(lunchPeriod){
+    const lunchStart = parseTime(lunchPeriod.start); const lunchEnd = parseTime(lunchPeriod.end)
+    if(now < lunchStart) document.getElementById('lunch-countdown').textContent = 'Lunch starts in: ' + formatDiff((lunchStart - now)/1000)
+    else if(now >= lunchStart && now <= lunchEnd) document.getElementById('lunch-countdown').textContent = 'Lunch ends in: ' + formatDiff((lunchEnd - now)/1000)
+    else document.getElementById('lunch-countdown').textContent = 'Lunch is over'
+  }
+}
+
+function updateScheduleTable(){
+  const body = document.getElementById('modal-schedule-table-body'); body.innerHTML = ''
+  const schedule = buildSchedule()
+  schedule.forEach(period=>{
+    const tr = document.createElement('tr')
+    const n = document.createElement('td'); n.textContent = period.name; if(period.isPassing) n.innerHTML = period.name + ' <span style="color:rgba(255,255,255,0.6);font-style:italic">(Passing)</span>'
+    const s = document.createElement('td'); s.textContent = period.start
+    const e = document.createElement('td'); e.textContent = period.end
+    tr.appendChild(n); tr.appendChild(s); tr.appendChild(e); body.appendChild(tr)
+  })
+}
+
+function updateModalScheduleTable(){ updateScheduleTable() }
+
+function showToast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000) }
+
+function escapeHtml(u){ return String(u).replace(/[&<>"'`=\/]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[s])) }
+
+window.addEventListener('DOMContentLoaded', init)
+</script>
 </body>
 </html>
