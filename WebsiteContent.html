@@ -102,8 +102,8 @@ label{font-weight:800;display:block;margin-bottom:6px;color:rgba(255,255,255,0.9
 <div class="fog-layer"></div>
 <div class="container">
   <div class="header">
-    <div class="title">Klein Bell</div>
-    <div class="subtitle">made by archero &lt;3</div>
+    <div class="title">Klein Tool</div>
+    <div class="subtitle">Goinked by Neuro &lt;3</div>
   </div>
 
   <div class="tab-bar">
@@ -122,7 +122,6 @@ label{font-weight:800;display:block;margin-bottom:6px;color:rgba(255,255,255,0.9
         <div class="action-buttons">
           <button class="btn secondary" id="schedule-btn"><i class="fas fa-table"></i> View Schedule</button>
           <button class="btn secondary" id="settings-btn"><i class="fas fa-cog"></i> Settings</button>
-          <button class="btn secondary" id="open-discord"><i class="fab fa-discord"></i> Join Discord</button>
         </div>
       </div>
     </div>
@@ -213,8 +212,6 @@ label{font-weight:800;display:block;margin-bottom:6px;color:rgba(255,255,255,0.9
       </div>
     </div>
   </div>
-
-  <div style="text-align:center;margin-top:18px;color:rgba(255,255,255,0.7)">Brought to you by The Hallway • <a href="#" id="discord-link" style="color:inherit;text-decoration:underline">Join Discord</a></div>
 </div>
 
 <div class="modal" id="lunch-modal">
@@ -308,23 +305,6 @@ label{font-weight:800;display:block;margin-bottom:6px;color:rgba(255,255,255,0.9
       <button class="btn secondary" id="ev-cancel">Cancel</button>
       <button class="btn" id="ev-save">Save</button>
     </div>
-  </div>
-</div>
-
-<div class="modal" id="discord-modal">
-  <div class="modal-content">
-    <button class="modal-close" type="button">&times;</button>
-    <h3 style="margin-bottom:8px">The Hallway — Discord</h3>
-    <div class="discord-invite">
-      <div style="font-weight:800;margin-bottom:6px">The Hallway Discord</div>
-      <div style="color:var(--muted);font-size:14px;margin-bottom:8px">The Hallway is a Discord group where you can meet new friends, talk about the school and hear about clubs.</div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <input id="discord-invite-input" value="https://discord.gg/Tpz6Rg3q8M" readonly style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--input-bg);color:#fff">
-        <button class="btn secondary" id="copy-invite">Copy</button>
-        <button class="btn" id="open-invite">Open</button>
-      </div>
-    </div>
-    <button class="btn" id="join-discord-btn" style="width:100%">Join Discord Server</button>
   </div>
 </div>
 
@@ -432,11 +412,6 @@ function saveSettings(){
 /* Settings & other controls */
 $('#settings-btn').addEventListener('click', ()=> openModal('settings-modal'))
 $('#schedule-btn').addEventListener('click', ()=> openModal('schedule-modal'))
-$('#open-discord').addEventListener('click', ()=> openModal('discord-modal'))
-$('#discord-link').addEventListener('click', e => { e.preventDefault(); openModal('discord-modal') })
-$('#join-discord-btn').addEventListener('click', ()=> window.open($('#discord-invite-input').value, '_blank'))
-$('#open-invite').addEventListener('click', ()=> window.open($('#discord-invite-input').value, '_blank'))
-$('#copy-invite').addEventListener('click', ()=> { navigator.clipboard.writeText($('#discord-invite-input').value).then(()=> showToast('Copied invite')) })
 
 $('#set-lunch-a').addEventListener('click', ()=> { lunchType='A'; localStorage.setItem('lunchType','A'); closeModal('lunch-modal'); showToast('A Lunch'); updateScheduleTable() })
 $('#set-lunch-b').addEventListener('click', ()=> { lunchType='B'; localStorage.setItem('lunchType','B'); closeModal('lunch-modal'); showToast('B Lunch'); updateScheduleTable() })
