@@ -1,912 +1,2198 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Klein Bell</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg1:#06131f; --bg2:#0f2b4a; --accent:#2db8ff; --glass:rgba(255,255,255,0.06); --glass-2:rgba(255,255,255,0.04); --muted:rgba(255,255,255,0.78);
-  --modal-bg: linear-gradient(180deg, rgba(18,25,38,0.98), rgba(14,20,30,0.99));
-  --input-bg: rgba(255,255,255,0.05);
-}
-html,body{height:100%}
-body{
-  min-height:100vh;
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  color:#fff;
-  background:
-    radial-gradient(900px 420px at 8% 12%, rgba(30,120,220,0.09), transparent),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-  background-attachment:fixed;
-  -webkit-font-smoothing:antialiased;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-}
-.bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.fog-layer{position:fixed;left:0;right:0;bottom:0;height:60vh;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);filter:blur(28px);opacity:0.10}
-.container{max-width:1200px;margin:24px auto;padding:28px;position:relative;z-index:2}
-.header{text-align:center;margin-bottom:18px}
-.title{font-size:44px;font-weight:800}
-.subtitle{color:var(--muted);margin-top:6px}
-.tab-bar{display:flex;background:var(--glass);border-radius:12px;padding:6px;gap:6px;backdrop-filter:blur(6px);margin-bottom:20px;position:relative;z-index:3}
-.tab{flex:1;padding:12px 14px;text-align:center;border-radius:8px;cursor:pointer;font-weight:800;color:rgba(255,255,255,0.86);user-select:none}
-.tab.active{background:linear-gradient(180deg,rgba(45,184,255,0.10),rgba(45,184,255,0.04));box-shadow:inset 0 -3px 0 rgba(45,184,255,0.06)}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;margin-bottom:18px;border:1px solid var(--glass-2);box-shadow:0 18px 48px rgba(0,0,0,0.45)}
-.live-clock{font-size:64px;font-weight:900;text-align:center}
-.date-display{text-align:center;color:var(--muted);margin-top:6px}
-.action-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
-.btn{padding:12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;background:linear-gradient(90deg,var(--accent),#006ee6);color:#fff}
-.btn.secondary{background:rgba(255,255,255,0.03);border:1px solid var(--glass-2);color:#fff}
-.progress{height:12px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:12px}
-.progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#006ee6);transition:width .36s}
-.notes-container{display:grid;grid-template-columns:1fr 2fr;gap:18px}
-.notes-sidebar{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px;border:1px solid var(--glass-2)}
-.note-item{padding:12px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-.note-item.active{background:linear-gradient(180deg, rgba(45,184,255,0.08), rgba(45,184,255,0.03));border:1px solid rgba(45,184,255,0.08)}
-.note-editor{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px;border:1px solid var(--glass-2)}
-.icon-btn{background:transparent;border:none;color:#fff;cursor:pointer;font-size:14px;margin-left:6px}
-.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.game-card{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.007));display:flex;flex-direction:column}
-.game-image{height:140px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3)}
-.game-title{font-weight:900}
-.launch-btn{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),#006ee6);color:#fff;cursor:pointer;font-weight:900;margin-top:10px}
-.modal{position:fixed;inset:0;background:rgba(2,6,10,0.6);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .18s}
-.modal.active{opacity:1;pointer-events:all}
-.modal-content{background:var(--modal-bg);border-radius:12px;padding:20px;width:96%;max-width:980px;border:1px solid rgba(255,255,255,0.03);position:relative;box-shadow:0 24px 48px rgba(0,0,0,0.4);max-height:90vh;overflow-y:auto}
-.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px;border-radius:4px;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
-.modal-close:hover{background:rgba(255,255,255,0.05);color:#fff}
-.game-stage{position:relative;min-height:420px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg, rgba(4,6,8,0.6), rgba(0,0,0,0.35));display:flex;align-items:center;justify-content:center}
-.game-sandbox-object{position:absolute;inset:0;border:none;width:100%;height:100%;display:none}
-.game-stage.loaded .game-sandbox-object{display:block}
-.game-loading-step{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;display:none}
-.game-loading-step.active{display:block}
-.server-lines{max-height:220px;overflow:auto;background:rgba(0,0,0,0.55);padding:12px;border-radius:8px;font-family:ui-monospace,monospace;font-size:13px}
-.calendar-month{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px;border:1px solid var(--glass-2);width:720px;max-width:100%}
-.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:12px;grid-auto-rows:110px}
-.weekday{font-weight:800;text-align:center;color:rgba(255,255,255,0.78);padding:6px}
-.day-cell{border-radius:10px;padding:8px;background:rgba(255,255,255,0.02);position:relative;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;overflow:hidden;transition:all 0.2s ease}
-.day-cell:hover{background:rgba(255,255,255,0.05);transform:translateY(-2px)}
-.day-cell.inactive{opacity:0.28}
-.day-number{font-weight:800}
-.event-pill{background:rgba(255,255,255,0.03);padding:6px;border-radius:999px;font-size:12px;margin-top:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:rgba(10,12,14,0.95);padding:10px 14px;border-radius:10px;color:#fff;border:1px solid rgba(255,255,255,0.04);z-index:1100;opacity:0;transition:opacity .18s}
-.toast.show{opacity:1}
-.select-wrapper{position:relative;display:block;margin-bottom:12px}
-.select-wrapper .select-caret{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:rgba(255,255,255,0.68);font-size:14px}
-select{appearance:none;-webkit-appearance:none;background:var(--input-bg);color:#fff;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);width:100%;font-size:14px;cursor:pointer;transition:all 0.2s ease}
-select:hover, select:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(45,184,255,0.2)}
-option{background:#141a25;color:#fff;padding:8px}
-.fullscreen-btn{padding:8px 10px;border-radius:8px;border:none;background:rgba(255,255,255,0.03);color:#fff;cursor:pointer;font-weight:800}
-input[type="text"], input[type="date"], input[type="time"], textarea {
-  width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:var(--input-bg);color:#fff;font-size:14px;margin-bottom:10px;
-  transition:all 0.2s ease
-}
-input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, textarea:focus {
-  border-color:var(--accent);box-shadow:0 0 0 2px rgba(45,184,255,0.2);outline:none
-}
-label{font-weight:800;display:block;margin-bottom:6px;color:rgba(255,255,255,0.9)}
-.modal h3{font-weight:900;margin-bottom:16px;font-size:20px;color:#fff}
-.tab-content{display:none}
-.tab-content.active{display:block}
-@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(40vw,140vh,0)}}
-@media(max-width:900px){ .notes-container{grid-template-columns:1fr}.live-clock{font-size:48px}.container{padding:18px}.month-grid{grid-auto-rows:88px} }
-</style>
-</head>
-<body>
-<div class="bg-orbs" aria-hidden="true"></div>
-<div class="fog-layer"></div>
-<div class="container">
-  <div class="header">
-    <div class="title">Klein Tool</div>
-    <div class="subtitle">Goinked by Neuro &lt;3</div>
-  </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Klein Bell</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-  <div class="tab-bar">
-    <div class="tab active" data-tab="home"><i class="fas fa-home"></i> Home</div>
-    <div class="tab" data-tab="schedule"><i class="fas fa-clock"></i> Countdown</div>
-    <div class="tab" data-tab="notes"><i class="fas fa-sticky-note"></i> Notes</div>
-    <div class="tab" data-tab="games"><i class="fas fa-gamepad"></i> Games</div>
-    <div class="tab" data-tab="calendar"><i class="fas fa-calendar-alt"></i> Calendar</div>
-  </div>
+      :root {
+        --bg1: #06131f;
+        --bg2: #0f2b4a;
+        --accent: #2db8ff;
+        --glass: rgba(255, 255, 255, 0.06);
+        --glass-2: rgba(255, 255, 255, 0.04);
+        --muted: rgba(255, 255, 255, 0.78);
+        --modal-bg: linear-gradient(180deg, rgba(18, 25, 38, 0.98), rgba(14, 20, 30, 0.99));
+        --input-bg: rgba(255, 255, 255, 0.05);
+      }
 
-  <div id="home-tab" class="tab-content active">
-    <div class="card">
-      <div style="text-align:center">
-        <div class="live-clock" id="clock">12:00:00 PM</div>
-        <div class="date-display" id="date">Monday, January 1, 2023</div>
-        <div class="action-buttons">
-          <button class="btn secondary" id="schedule-btn"><i class="fas fa-table"></i> View Schedule</button>
-          <button class="btn secondary" id="settings-btn"><i class="fas fa-cog"></i> Settings</button>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        color: #fff;
+        background: radial-gradient(
+            900px 420px at 8% 12%,
+            rgba(30, 120, 220, 0.09),
+            transparent
+          ),
+          linear-gradient(180deg, var(--bg1), var(--bg2));
+        background-attachment: fixed;
+        -webkit-font-smoothing: antialiased;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .bg-orbs {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .fog-layer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 60vh;
+        z-index: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+        filter: blur(28px);
+        opacity: 0.1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 24px auto;
+        padding: 28px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      .title {
+        font-size: 44px;
+        font-weight: 800;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      .tab-bar {
+        display: flex;
+        background: var(--glass);
+        border-radius: 12px;
+        padding: 6px;
+        gap: 6px;
+        backdrop-filter: blur(6px);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 3;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 12px 14px;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.86);
+        user-select: none;
+      }
+
+      .tab.active {
+        background: linear-gradient(
+          180deg,
+          rgba(45, 184, 255, 0.1),
+          rgba(45, 184, 255, 0.04)
+        );
+        box-shadow: inset 0 -3px 0 rgba(45, 184, 255, 0.06);
+      }
+
+      .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 18px;
+        border: 1px solid var(--glass-2);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+      }
+
+      .live-clock {
+        font-size: 64px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .date-display {
+        text-align: center;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .btn {
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 800;
+        background: linear-gradient(90deg, var(--accent), #006ee6);
+        color: #fff;
+      }
+
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-2);
+        color: #fff;
+      }
+
+      .progress {
+        height: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 12px;
+      }
+
+      .progress .bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), #006ee6);
+        transition: width 0.36s;
+      }
+
+      .notes-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 18px;
+      }
+
+      .notes-sidebar {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-2);
+      }
+
+      .note-item {
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .note-item.active {
+        background: linear-gradient(
+          180deg,
+          rgba(45, 184, 255, 0.08),
+          rgba(45, 184, 255, 0.03)
+        );
+        border: 1px solid rgba(45, 184, 255, 0.08);
+      }
+
+      .note-editor {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-2);
+      }
+
+      .icon-btn {
+        background: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 6px;
+      }
+
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 14px;
+      }
+
+      .game-card {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          rgba(255, 255, 255, 0.007)
+        );
+        display: flex;
+        flex-direction: column;
+      }
+
+      .game-image {
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      .game-title {
+        font-weight: 900;
+      }
+
+      .launch-btn {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(90deg, var(--accent), #006ee6);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 900;
+        margin-top: 10px;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 10, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s;
+      }
+
+      .modal.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .modal-content {
+        background: var(--modal-bg);
+        border-radius: 12px;
+        padding: 20px;
+        width: 96%;
+        max-width: 980px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        position: relative;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 20px;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-close:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+      }
+
+      .game-stage {
+        position: relative;
+        min-height: 420px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(4, 6, 8, 0.6),
+          rgba(0, 0, 0, 0.35)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .game-sandbox-object {
+        position: absolute;
+        inset: 0;
+        border: none;
+        width: 100%;
+        height: 100%;
+        display: none;
+      }
+
+      .game-stage.loaded .game-sandbox-object {
+        display: block;
+      }
+
+      .game-loading-step {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: none;
+      }
+
+      .game-loading-step.active {
+        display: block;
+      }
+
+      .server-lines {
+        max-height: 220px;
+        overflow: auto;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 12px;
+        border-radius: 8px;
+        font-family: ui-monospace, monospace;
+        font-size: 13px;
+      }
+
+      .calendar-month {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-2);
+        width: 720px;
+        max-width: 100%;
+      }
+
+      .month-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-top: 12px;
+        grid-auto-rows: 110px;
+      }
+
+      .weekday {
+        font-weight: 800;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.78);
+        padding: 6px;
+      }
+
+      .day-cell {
+        border-radius: 10px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.02);
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+
+      .day-cell:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .day-cell.inactive {
+        opacity: 0.28;
+      }
+
+      .day-number {
+        font-weight: 800;
+      }
+
+      .event-pill {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 6px;
+        border-radius: 999px;
+        font-size: 12px;
+        margin-top: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 24px;
+        background: rgba(10, 12, 14, 0.95);
+        padding: 10px 14px;
+        border-radius: 10px;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        z-index: 1100;
+        opacity: 0;
+        transition: opacity 0.18s;
+      }
+
+      .toast.show {
+        opacity: 1;
+      }
+
+      .select-wrapper {
+        position: relative;
+        display: block;
+        margin-bottom: 12px;
+      }
+
+      .select-wrapper .select-caret {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 14px;
+      }
+
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        background: var(--input-bg);
+        color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        width: 100%;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      select:hover,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(45, 184, 255, 0.2);
+      }
+
+      option {
+        background: #141a25;
+        color: #fff;
+        padding: 8px;
+      }
+
+      .fullscreen-btn {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(255, 255, 255, 0.03);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="time"],
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--input-bg);
+        color: #fff;
+        font-size: 14px;
+        margin-bottom: 10px;
+        transition: all 0.2s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="date"]:focus,
+      input[type="time"]:focus,
+      textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(45, 184, 255, 0.2);
+        outline: none;
+      }
+
+      label {
+        font-weight: 800;
+        display: block;
+        margin-bottom: 6px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .modal h3 {
+        font-weight: 900;
+        margin-bottom: 16px;
+        font-size: 20px;
+        color: #fff;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate3d(0, 0, 0);
+        }
+
+        to {
+          transform: translate3d(40vw, 140vh, 0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .notes-container {
+          grid-template-columns: 1fr;
+        }
+
+        .live-clock {
+          font-size: 48px;
+        }
+
+        .container {
+          padding: 18px;
+        }
+
+        .month-grid {
+          grid-auto-rows: 88px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg-orbs" aria-hidden="true"></div>
+    <div class="fog-layer"></div>
+    <div class="container">
+      <div class="header">
+        <div class="title">Klein Tool</div>
+        <div class="subtitle">Goinked by Neuro &lt;3</div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab active" data-tab="home">
+          <i class="fas fa-home"></i> Home
+        </div>
+        <div class="tab" data-tab="schedule">
+          <i class="fas fa-clock"></i> Countdown
+        </div>
+        <div class="tab" data-tab="notes">
+          <i class="fas fa-sticky-note"></i> Notes
+        </div>
+        <div class="tab" data-tab="games">
+          <i class="fas fa-gamepad"></i> Games
+        </div>
+        <div class="tab" data-tab="calendar">
+          <i class="fas fa-calendar-alt"></i> Calendar
         </div>
       </div>
-    </div>
-  </div>
 
-  <div id="schedule-tab" class="tab-content">
-    <div class="card">
-      <h3 style="font-weight:900;margin-bottom:12px">Schedule Countdown</h3>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <div style="flex:1;min-width:300px">
-          <div style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.02)">
-            <div style="font-weight:900;font-size:20px" id="current-period">Loading...</div>
-            <div style="color:var(--muted);margin-top:6px" id="next-period">—</div>
-            <div style="color:var(--muted);margin-top:6px" id="lunch-countdown">—</div>
-          </div>
-        </div>
-        <div style="width:260px;min-width:260px">
-          <div style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);text-align:center">
-            <div style="font-size:12px;color:var(--muted)">School day</div>
-            <div style="font-weight:900;font-size:26px;margin-top:8px" id="time-until-end">—</div>
-            <div style="color:var(--muted);margin-top:6px" id="end-of-school">—</div>
+      <div id="home-tab" class="tab-content active">
+        <div class="card">
+          <div style="text-align: center">
+            <div class="live-clock" id="clock">12:00:00 PM</div>
+            <div class="date-display" id="date">Monday, January 1, 2023</div>
+            <div class="action-buttons">
+              <button class="btn secondary" id="schedule-btn">
+                <i class="fas fa-table"></i> View Schedule
+              </button>
+              <button class="btn secondary" id="settings-btn">
+                <i class="fas fa-cog"></i> Settings
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="progress" style="margin-top:14px"><div class="bar" id="period-progress"></div></div>
-      <div style="margin-top:12px"><button class="btn" id="open-full-schedule"><i class="fas fa-list"></i> View Full Schedule</button></div>
-    </div>
-  </div>
 
-  <div id="notes-tab" class="tab-content">
-    <div class="card">
-      <div class="notes-container">
-        <div class="notes-sidebar">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div style="font-weight:900">Your Notes</div>
-            <button class="btn" id="new-note-btn"><i class="fas fa-plus"></i> New</button>
+      <div id="schedule-tab" class="tab-content">
+        <div class="card">
+          <h3 style="font-weight: 900; margin-bottom: 12px">Schedule Countdown</h3>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap">
+            <div style="flex: 1; min-width: 300px">
+              <div style="padding: 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.02)">
+                <div style="font-weight: 900; font-size: 20px" id="current-period">
+                  Loading...
+                </div>
+                <div style="color: var(--muted); margin-top: 6px" id="next-period">
+                  —
+                </div>
+                <div style="color: var(--muted); margin-top: 6px" id="lunch-countdown">
+                  —
+                </div>
+              </div>
+            </div>
+            <div style="width: 260px; min-width: 260px">
+              <div
+                style="
+                  padding: 12px;
+                  border-radius: 10px;
+                  background: rgba(255, 255, 255, 0.02);
+                  text-align: center;
+                "
+              >
+                <div style="font-size: 12px; color: var(--muted)">School day</div>
+                <div style="font-weight: 900; font-size: 26px; margin-top: 8px" id="time-until-end">
+                  —
+                </div>
+                <div style="color: var(--muted); margin-top: 6px" id="end-of-school">
+                  —
+                </div>
+              </div>
+            </div>
           </div>
-          <div id="notes-list" style="max-height:520px;overflow:auto"></div>
-        </div>
-        <div class="note-editor">
-          <input id="note-title" placeholder="Note title" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#fff;font-weight:700;margin-bottom:8px">
-          <textarea id="note-content" placeholder="Write something..." style="width:100%;min-height:320px;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#fff"></textarea>
-          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">
-            <button class="btn secondary" id="cancel-note">Cancel</button>
-            <button class="btn" id="save-note">Save</button>
+          <div class="progress" style="margin-top: 14px">
+            <div class="bar" id="period-progress"></div>
+          </div>
+          <div style="margin-top: 12px">
+            <button class="btn" id="open-full-schedule">
+              <i class="fas fa-list"></i> View Full Schedule
+            </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div id="games-tab" class="tab-content">
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3 style="font-weight:900;margin-bottom:8px">Games</h3>
-        <div>
-          <button class="fullscreen-btn" id="sandbox-fullscreen-toggle" style="display:none"><i class="fas fa-expand"></i> Fullscreen</button>
+      <div id="notes-tab" class="tab-content">
+        <div class="card">
+          <div class="notes-container">
+            <div class="notes-sidebar">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 8px;
+                "
+              >
+                <div style="font-weight: 900">Your Notes</div>
+                <button class="btn" id="new-note-btn">
+                  <i class="fas fa-plus"></i> New
+                </button>
+              </div>
+              <div id="notes-list" style="max-height: 520px; overflow: auto"></div>
+            </div>
+            <div class="note-editor">
+              <input
+                id="note-title"
+                placeholder="Note title"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 8px;
+                  border: 1px solid rgba(255, 255, 255, 0.04);
+                  background: rgba(255, 255, 255, 0.02);
+                  color: #fff;
+                  font-weight: 700;
+                  margin-bottom: 8px;
+                "
+              />
+              <textarea
+                id="note-content"
+                placeholder="Write something..."
+                style="
+                  width: 100%;
+                  min-height: 320px;
+                  padding: 12px;
+                  border-radius: 8px;
+                  border: 1px solid rgba(255, 255, 255, 0.04);
+                  background: rgba(255, 255, 255, 0.02);
+                  color: #fff;
+                "
+              ></textarea>
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px">
+                <button class="btn secondary" id="cancel-note">Cancel</button>
+                <button class="btn" id="save-note">Save</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="games-container" class="games-grid"></div>
-    </div>
-  </div>
 
-  <div id="calendar-tab" class="tab-content">
-    <div class="card">
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <div class="calendar-month">
-          <div style="display:flex;justify-content:space-between;align-items:center">
+      <div id="games-tab" class="tab-content">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <h3 style="font-weight: 900; margin-bottom: 8px">Games</h3>
             <div>
-              <div id="month-title" style="font-weight:900"></div>
-              <div style="color:var(--muted);font-size:13px">Click a day to add/edit events</div>
-            </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn secondary" id="prev-month"><i class="fas fa-chevron-left"></i></button>
-              <button class="btn secondary" id="next-month"><i class="fas fa-chevron-right"></i></button>
-              <button class="btn" id="today-month">Today</button>
+              <button
+                class="fullscreen-btn"
+                id="sandbox-fullscreen-toggle"
+                style="display: none"
+              >
+                <i class="fas fa-expand"></i> Fullscreen
+              </button>
             </div>
           </div>
-          <div class="month-grid">
-            <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+          <div id="games-container" class="games-grid"></div>
+        </div>
+      </div>
+
+      <div id="calendar-tab" class="tab-content">
+        <div class="card">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap">
+            <div class="calendar-month">
+              <div style="display: flex; justify-content: space-between; align-items: center">
+                <div>
+                  <div id="month-title" style="font-weight: 900"></div>
+                  <div style="color: var(--muted); font-size: 13px">
+                    Click a day to add/edit events
+                  </div>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <button class="btn secondary" id="prev-month">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button class="btn secondary" id="next-month">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                  <button class="btn" id="today-month">Today</button>
+                </div>
+              </div>
+              <div class="month-grid">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+              </div>
+              <div class="month-grid" id="days-grid" style="margin-top: 8px"></div>
+            </div>
+            <div style="flex: 1; min-width: 260px">
+              <div style="font-weight: 900; margin-bottom: 8px">Upcoming</div>
+              <div id="calendar-upcoming" style="display: flex; flex-direction: column; gap: 8px"></div>
+            </div>
           </div>
-          <div class="month-grid" id="days-grid" style="margin-top:8px"></div>
-        </div>
-        <div style="flex:1;min-width:260px">
-          <div style="font-weight:900;margin-bottom:8px">Upcoming</div>
-          <div id="calendar-upcoming" style="display:flex;flex-direction:column;gap:8px"></div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="modal" id="lunch-modal">
-  <div class="modal-content">
-    <button class="modal-close" type="button">&times;</button>
-    <h3 style="margin-bottom:12px">Select Lunch</h3>
-    <div style="display:flex;gap:8px">
-      <button class="btn" id="set-lunch-a">A Lunch</button>
-      <button class="btn" id="set-lunch-b">B Lunch</button>
-      <button class="btn" id="set-lunch-c">C Lunch</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="settings-modal">
-  <div class="modal-content">
-    <button class="modal-close" type="button">&times;</button>
-    <h3 style="margin-bottom:12px">Settings</h3>
-    <div style="display:grid;gap:10px">
-      <div class="select-wrapper">
-        <label style="font-weight:800;display:block;margin-bottom:6px">Lunch</label>
-        <select id="lunch-select">
-          <option value="">Not set</option><option value="A">A</option><option value="B">B</option><option value="C">C</option>
-        </select>
-        <div class="select-caret">▾</div>
-      </div>
-      <div style="display:flex;gap:8px">
-        <div style="flex:1">
-          <label style="font-weight:800">Start</label>
-          <input type="time" id="start-time" value="07:10" style="width:100%;padding:10px;border-radius:8px;background:var(--input-bg);color:#fff;border:1px solid rgba(255,255,255,0.08)">
-        </div>
-        <div style="flex:1">
-          <label style="font-weight:800">End</label>
-          <input type="time" id="end-time" value="14:35" style="width:100%;padding:10px;border-radius:8px;background:var(--input-bg);color:#fff;border:1px solid rgba(255,255,255,0.08)">
+    <div class="modal" id="lunch-modal">
+      <div class="modal-content">
+        <button class="modal-close" type="button">&times;</button>
+        <h3 style="margin-bottom: 12px">Select Lunch</h3>
+        <div style="display: flex; gap: 8px">
+          <button class="btn" id="set-lunch-a">A Lunch</button>
+          <button class="btn" id="set-lunch-b">B Lunch</button>
+          <button class="btn" id="set-lunch-c">C Lunch</button>
         </div>
       </div>
-      <div style="display:flex;gap:8px">
-        <button class="btn" id="save-settings">Save</button>
-        <button class="btn secondary" id="export-btn">Export</button>
-        <button class="btn secondary" id="import-btn">Import</button>
-        <input id="import-file" type="file" accept=".json,.ics" style="display:none">
+    </div>
+
+    <div class="modal" id="settings-modal">
+      <div class="modal-content">
+        <button class="modal-close" type="button">&times;</button>
+        <h3 style="margin-bottom: 12px">Settings</h3>
+        <div style="display: grid; gap: 10px">
+          <div class="select-wrapper">
+            <label style="font-weight: 800; display: block; margin-bottom: 6px">Lunch</label>
+            <select id="lunch-select">
+              <option value="">Not set</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+            <div class="select-caret">▾</div>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <div style="flex: 1">
+              <label style="font-weight: 800">Start</label>
+              <input
+                type="time"
+                id="start-time"
+                value="07:10"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 8px;
+                  background: var(--input-bg);
+                  color: #fff;
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                "
+              />
+            </div>
+            <div style="flex: 1">
+              <label style="font-weight: 800">End</label>
+              <input
+                type="time"
+                id="end-time"
+                value="14:35"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 8px;
+                  background: var(--input-bg);
+                  color: #fff;
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                "
+              />
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button class="btn" id="save-settings">Save</button>
+            <button class="btn secondary" id="export-btn">Export</button>
+            <button class="btn secondary" id="import-btn">Import</button>
+            <input id="import-file" type="file" accept=".json,.ics" style="display: none" />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="modal" id="schedule-modal">
-  <div class="modal-content">
-    <button class="modal-close" type="button">&times;</button>
-    <h3 style="margin-bottom:12px">Full Schedule</h3>
-    <div id="modal-schedule-body"></div>
-  </div>
-</div>
-
-<div class="modal" id="game-modal">
-  <div class="modal-content" style="position:relative;height:86vh;max-width:1200px">
-    <button class="modal-close" type="button">&times;</button>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div style="font-weight:900">Game Sandbox</div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="fullscreen-btn" id="enter-fullscreen" style="display:none"><i class="fas fa-expand"></i> Fullscreen</button>
-        <button class="fullscreen-btn" id="exit-fullscreen" style="display:none"><i class="fas fa-compress"></i> Exit</button>
+    <div class="modal" id="schedule-modal">
+      <div class="modal-content">
+        <button class="modal-close" type="button">&times;</button>
+        <h3 style="margin-bottom: 12px">Full Schedule</h3>
+        <div id="modal-schedule-body"></div>
       </div>
     </div>
-    <div class="game-stage" id="game-stage" style="height:calc(100% - 48px)">
-      <div id="step-retrieving" class="game-loading-step"><div style="font-size:28px;color:var(--accent)"><i class="fas fa-cloud-download-alt"></i></div><div style="font-weight:900;margin-top:8px">Retrieving...</div><div style="height:8px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px"><div id="progress-retrieving" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent),#006ee6);transition:width .25s"></div></div></div>
-      <div id="step-reading" class="game-loading-step"><div style="font-size:28px;color:var(--accent)"><i class="fas fa-server"></i></div><div id="server-text" style="font-weight:900;margin-top:8px">Reading...</div><div class="server-lines" id="server-lines" style="max-height:160px;overflow:auto"><pre id="server-lines-pre" style="margin:0"></pre></div><div style="height:8px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px"><div id="progress-reading" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent),#006ee6);transition:width .25s"></div></div></div>
-      <div id="step-cooking" class="game-loading-step"><div style="font-size:28px;color:var(--accent)"><i class="fas fa-utensils"></i></div><div style="font-weight:900;margin-top:8px">Assembling sandbox...</div><div style="height:8px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px"><div id="progress-cooking" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent),#006ee6);transition:width .25s"></div></div></div>
-      <div id="step-deploying" class="game-loading-step"><div style="font-size:28px;color:var(--accent)"><i class="fas fa-rocket"></i></div><div style="font-weight:900;margin-top:8px">Deploying...</div><div style="height:8px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px"><div id="progress-deploying" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent),#006ee6);transition:width .25s"></div></div></div>
 
-      <!-- This object will be created/managed by JS to ensure clean unloads -->
-      <object id="game-object" class="game-sandbox-object" type="text/html"></object>
+    <div class="modal" id="game-modal">
+      <div class="modal-content" style="position: relative; height: 86vh; max-width: 1200px">
+        <button class="modal-close" type="button">&times;</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
+          <div style="font-weight: 900">Game Sandbox</div>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <button class="fullscreen-btn" id="enter-fullscreen" style="display: none">
+              <i class="fas fa-expand"></i> Fullscreen
+            </button>
+            <button class="fullscreen-btn" id="exit-fullscreen" style="display: none">
+              <i class="fas fa-compress"></i> Exit
+            </button>
+          </div>
+        </div>
+        <div class="game-stage" id="game-stage" style="height: calc(100% - 48px)">
+          <div id="step-retrieving" class="game-loading-step">
+            <div style="font-size: 28px; color: var(--accent)">
+              <i class="fas fa-cloud-download-alt"></i>
+            </div>
+            <div style="font-weight: 900; margin-top: 8px">Retrieving...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+              <div
+                id="progress-retrieving"
+                style="
+                  height: 100%;
+                  width: 0;
+                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  transition: width 0.25s;
+                "
+              ></div>
+            </div>
+          </div>
+          <div id="step-reading" class="game-loading-step">
+            <div style="font-size: 28px; color: var(--accent)">
+              <i class="fas fa-server"></i>
+            </div>
+            <div id="server-text" style="font-weight: 900; margin-top: 8px">
+              Reading...
+            </div>
+            <div class="server-lines" id="server-lines" style="max-height: 160px; overflow: auto">
+              <pre id="server-lines-pre" style="margin: 0"></pre>
+            </div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+              <div
+                id="progress-reading"
+                style="
+                  height: 100%;
+                  width: 0;
+                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  transition: width 0.25s;
+                "
+              ></div>
+            </div>
+          </div>
+          <div id="step-cooking" class="game-loading-step">
+            <div style="font-size: 28px; color: var(--accent)">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <div style="font-weight: 900; margin-top: 8px">Assembling sandbox...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+              <div
+                id="progress-cooking"
+                style="
+                  height: 100%;
+                  width: 0;
+                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  transition: width 0.25s;
+                "
+              ></div>
+            </div>
+          </div>
+          <div id="step-deploying" class="game-loading-step">
+            <div style="font-size: 28px; color: var(--accent)">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div style="font-weight: 900; margin-top: 8px">Deploying...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+              <div
+                id="progress-deploying"
+                style="
+                  height: 100%;
+                  width: 0;
+                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  transition: width 0.25s;
+                "
+              ></div>
+            </div>
+          </div>
 
-      <div id="game-error" style="display:none;text-align:center;color:#ff6b6b"><div style="font-size:28px;margin-bottom:8px"><i class="fas fa-exclamation-circle"></i></div><div style="font-weight:900">Game failed to load</div><div style="margin-top:12px"><button class="btn" id="retry-launch">Retry</button></div></div>
+          <object id="game-object" class="game-sandbox-object" type="text/html"></object>
+
+          <div
+            id="game-error"
+            style="display: none; text-align: center; color: #ff6b6b"
+          >
+            <div style="font-size: 28px; margin-bottom: 8px">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div style="font-weight: 900">Game failed to load</div>
+            <div style="margin-top: 12px">
+              <button class="btn" id="retry-launch">Retry</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="modal" id="day-modal">
-  <div class="modal-content">
-    <button class="modal-close" type="button">&times;</button>
-    <h3 id="day-modal-title">Day</h3>
-    <div id="day-events-list" style="margin-bottom:10px"></div>
-    <input id="ev-title" placeholder="Title" style="width:100%;padding:10px;margin-bottom:6px">
-    <input id="ev-date" type="date" style="width:100%;padding:10px;margin-bottom:6px">
-    <input id="ev-start" type="time" style="width:100%;padding:10px;margin-bottom:6px">
-    <input id="ev-end" type="time" style="width:100%;padding:10px;margin-bottom:6px">
-    <input id="ev-location" placeholder="Location" style="width:100%;padding:10px;margin-bottom:6px">
-    <textarea id="ev-desc" rows="4" placeholder="Description" style="width:100%;padding:10px;margin-bottom:8px"></textarea>
-    <div style="display:flex;justify-content:flex-end;gap:8px">
-      <button class="btn secondary" id="ev-cancel">Cancel</button>
-      <button class="btn" id="ev-save">Save</button>
+    <div class="modal" id="day-modal">
+      <div class="modal-content">
+        <button class="modal-close" type="button">&times;</button>
+        <h3 id="day-modal-title">Day</h3>
+        <div id="day-events-list" style="margin-bottom: 10px"></div>
+        <input
+          id="ev-title"
+          placeholder="Title"
+          style="width: 100%; padding: 10px; margin-bottom: 6px"
+        />
+        <input
+          id="ev-date"
+          type="date"
+          style="width: 100%; padding: 10px; margin-bottom: 6px"
+        />
+        <input
+          id="ev-start"
+          type="time"
+          style="width: 100%; padding: 10px; margin-bottom: 6px"
+        />
+        <input
+          id="ev-end"
+          type="time"
+          style="width: 100%; padding: 10px; margin-bottom: 6px"
+        />
+        <input
+          id="ev-location"
+          placeholder="Location"
+          style="width: 100%; padding: 10px; margin-bottom: 6px"
+        />
+        <textarea
+          id="ev-desc"
+          rows="4"
+          placeholder="Description"
+          style="width: 100%; padding: 10px; margin-bottom: 8px"
+        ></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 8px">
+          <button class="btn secondary" id="ev-cancel">Cancel</button>
+          <button class="btn" id="ev-save">Save</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div id="toast" class="toast"></div>
+    <div id="toast" class="toast"></div>
 
-<script>
-const ICS_URL = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/klein_high_school_events.ics'
-let lunchType = localStorage.getItem('lunchType') || ''
-let schoolStart = localStorage.getItem('schoolStart') || '07:10'
-let schoolEnd = localStorage.getItem('schoolEnd') || '14:35'
-let notes = JSON.parse(localStorage.getItem('notes') || '[]')
-let customEvents = JSON.parse(localStorage.getItem('klein_custom_events') || '[]')
-let calendarEvents = []
-let games = []
-let viewYear = new Date().getFullYear()
-let viewMonth = new Date().getMonth()
-let currentLoad = null
-let currentBlobUrl = null
-let lastGameUrl = null
+    <script>
+      const ICS_URL = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/klein_high_school_events.ics';
+      let lunchType = localStorage.getItem('lunchType') || '';
+      let schoolStart = localStorage.getItem('schoolStart') || '07:10';
+      let schoolEnd = localStorage.getItem('schoolEnd') || '14:35';
+      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      let customEvents = JSON.parse(localStorage.getItem('klein_custom_events') || '[]');
+      let calendarEvents = [];
+      let games = [];
+      let viewYear = new Date().getFullYear();
+      let viewMonth = new Date().getMonth();
+      let currentLoad = null;
+      let currentBlobUrl = null;
+      let lastGameUrl = null;
 
-function $(s){return document.querySelector(s)}
-function $all(s){return Array.from(document.querySelectorAll(s))}
-function showToast(t){const el = $('#toast'); el.textContent = t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2800)}
-function escapeHtml(s){ return String(s||'').replace(/[&<>"'`=\/]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#60;','=':'&#3D'}[c]))}
-function formatClock(d){ return d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',second:'2-digit'})}
-function formatShortTime(hm){ if(!hm) return ''; const [h,m]=hm.split(':').map(Number); const d=new Date(); d.setHours(h,m,0,0); return d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
-
-/* Background orbs: animate and recycle */
-function createOrb(i){
-  const o = document.createElement('div')
-  o.style.position = 'absolute'
-  o.style.borderRadius = '50%'
-  const s = 40 + Math.floor(Math.random()*220)
-  o.style.width = s + 'px'
-  o.style.height = s + 'px'
-  o.style.left = (Math.random()*120-10) + '%'
-  o.style.top = (Math.random()*-60) + '%'
-  const colors = ['rgba(45,184,255,0.18)','rgba(0,122,255,0.14)','rgba(0,200,150,0.12)','rgba(255,120,110,0.08)','rgba(140,80,255,0.06)']
-  o.style.background = colors[i % colors.length]
-  o.style.opacity = (0.2 + Math.random()*0.5).toString()
-  const dur = (12 + Math.random()*28).toFixed(2) + 's'
-  o.style.animation = 'drift ' + dur + ' linear infinite'
-  o.style.animationDelay = (Math.random()*-6).toFixed(2) + 's'
-  o.style.filter = 'blur(' + (4 + Math.random()*18) + 'px)'
-  o.style.zIndex = 0
-  return o
-}
-function spawnOrbs(){
-  const container = document.querySelector('.bg-orbs')
-  container.innerHTML = ''
-  for(let i=0;i<28;i++){ container.appendChild(createOrb(i)) }
-  setInterval(()=>{ for(let r=0;r<3;r++){ if(container.firstChild) container.removeChild(container.firstChild) } for(let i=0;i<3;i++){ container.appendChild(createOrb(Math.floor(Math.random()*5))) } },4200)
-}
-
-/* Tabs and modals */
-function attachTabs(){
-  $all('.tab').forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      const name = tab.getAttribute('data-tab')
-      if(!lunchType && name !== 'home' && name !== 'calendar'){ openModal('lunch-modal'); return }
-      switchTab(name)
-    })
-  })
-}
-function switchTab(name){
-  $all('.tab').forEach(t => t.classList.toggle('active', t.getAttribute('data-tab') === name))
-  $all('.tab-content').forEach(c => c.classList.remove('active'))
-  const el = $('#'+name+'-tab')
-  if(el) el.classList.add('active')
-  if(name === 'calendar') renderMonth(viewYear, viewMonth)
-}
-function openModal(id){ const m = $('#'+id); if(!m) return; m.classList.add('active') }
-function closeModal(id){ const m = $('#'+id); if(!m) return; m.classList.remove('active') }
-function attachModalClosers(){
-  $all('.modal-close').forEach(b => b.addEventListener('click', ()=>{
-    const root = b.closest('.modal')
-    if(!root) return
-    if(root.id === 'game-modal') closeGameModal()
-    else root.classList.remove('active')
-  }))
-}
-
-/* Clock */
-function loadClock(){ const now = new Date(); $('#clock').textContent = formatClock(now); $('#date').textContent = now.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}) }
-setInterval(loadClock,1000)
-
-/* Settings UI */
-function loadSettingsToUI(){
-  if(localStorage.getItem('lunchType')){ lunchType = localStorage.getItem('lunchType'); $('#lunch-select').value = lunchType }
-  if(localStorage.getItem('schoolStart')){ schoolStart = localStorage.getItem('schoolStart'); $('#start-time').value = schoolStart }
-  if(localStorage.getItem('schoolEnd')){ schoolEnd = localStorage.getItem('schoolEnd'); $('#end-time').value = schoolEnd }
-}
-function saveSettings(){
-  const sel = $('#lunch-select').value
-  if(sel){ lunchType = sel; localStorage.setItem('lunchType', sel) }
-  schoolStart = $('#start-time').value
-  schoolEnd = $('#end-time').value
-  localStorage.setItem('schoolStart', schoolStart)
-  localStorage.setItem('schoolEnd', schoolEnd)
-  closeModal('settings-modal')
-  showToast('Settings saved')
-  updateScheduleTable()
-}
-
-/* Settings & other controls */
-$('#settings-btn').addEventListener('click', ()=> openModal('settings-modal'))
-$('#schedule-btn').addEventListener('click', ()=> openModal('schedule-modal'))
-
-$('#set-lunch-a').addEventListener('click', ()=> { lunchType='A'; localStorage.setItem('lunchType','A'); closeModal('lunch-modal'); showToast('A Lunch'); updateScheduleTable() })
-$('#set-lunch-b').addEventListener('click', ()=> { lunchType='B'; localStorage.setItem('lunchType','B'); closeModal('lunch-modal'); showToast('B Lunch'); updateScheduleTable() })
-$('#set-lunch-c').addEventListener('click', ()=> { lunchType='C'; localStorage.setItem('lunchType','C'); closeModal('lunch-modal'); showToast('C Lunch'); updateScheduleTable() })
-
-$('#save-settings').addEventListener('click', saveSettings)
-$('#open-full-schedule').addEventListener('click', ()=> openModal('schedule-modal'))
-
-/* Notes */
-$('#new-note-btn').addEventListener('click', ()=> { $('#note-title').value=''; $('#note-content').value=''; $all('.note-item').forEach(x => x.classList.remove('active')) })
-$('#save-note').addEventListener('click', ()=> { const t = $('#note-title').value.trim() || 'Untitled'; const c = $('#note-content').value || ''; notes.push({ title: t, content: c, date: new Date().toISOString() }); localStorage.setItem('notes', JSON.stringify(notes)); renderNotes(); showToast('Saved') })
-$('#cancel-note').addEventListener('click', ()=> { $('#note-title').value=''; $('#note-content').value=''; $all('.note-item').forEach(x => x.classList.remove('active')) })
-
-function renderNotes(){
-  const list = $('#notes-list')
-  list.innerHTML = ''
-  if(!notes.length){ list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.7);padding:12px">No notes yet</div>'; return }
-  notes.forEach((n,i)=>{
-    const el = document.createElement('div'); el.className = 'note-item'
-    const meta = document.createElement('div'); meta.style.flex = '1'
-    meta.innerHTML = '<div style="font-weight:800">'+escapeHtml(n.title)+'</div><div style="font-size:13px;color:rgba(255,255,255,0.78)">'+escapeHtml((n.content||'').slice(0,80))+'</div>'
-    const actions = document.createElement('div'); actions.style.display='flex'; actions.style.gap='8px'
-    const openBtn = document.createElement('button'); openBtn.className='icon-btn'; openBtn.innerHTML = '<i class="fas fa-eye"></i>'
-    openBtn.addEventListener('click', function(e){ e.stopPropagation(); $all('.note-item').forEach(x=>x.classList.remove('active')); el.classList.add('active'); $('#note-title').value = n.title; $('#note-content').value = n.content })
-    const delBtn = document.createElement('button'); delBtn.className='icon-btn'; delBtn.innerHTML = '<i class="fas fa-trash-alt"></i>'
-    delBtn.addEventListener('click', function(e){ e.stopPropagation(); if(confirm('Delete this note?')){ notes.splice(i,1); localStorage.setItem('notes', JSON.stringify(notes)); renderNotes(); showToast('Deleted') } })
-    actions.appendChild(openBtn); actions.appendChild(delBtn)
-    el.appendChild(meta); el.appendChild(actions)
-    el.addEventListener('click', function(){ $all('.note-item').forEach(x=>x.classList.remove('active')); el.classList.add('active'); $('#note-title').value=n.title; $('#note-content').value=n.content })
-    list.appendChild(el)
-  })
-}
-
-/* Import/export/ICS */
-$('#export-btn').addEventListener('click', ()=> {
-  const payload = { notes, customEvents, lunchType, schoolStart, schoolEnd }
-  const b = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
-  const u = URL.createObjectURL(b)
-  const a = document.createElement('a'); a.href = u; a.download = 'klein-export.json'; a.click(); URL.revokeObjectURL(u)
-  showToast('Exported')
-})
-$('#import-btn').addEventListener('click', ()=> $('#import-file').click())
-$('#import-file').addEventListener('change', function(e){
-  const f = e.target.files[0]; if(!f) return
-  const r = new FileReader()
-  r.onload = function(){
-    try {
-      if(f.name.toLowerCase().endsWith('.ics')) {
-        const parsed = parseICS(r.result)
-        calendarEvents = parsed.concat(customEvents.map(c=>({ id:c.id, title:c.title, date:c.date ? new Date(c.date).toISOString() : null, dateKey:c.date, startTime:c.startTime||'', endTime:c.endTime||'', description:c.description||'', location:c.location||'', source:'custom' })))
-        renderMonth(viewYear, viewMonth)
-        showToast('ICS imported')
-      } else {
-        const j = JSON.parse(r.result)
-        if(j.notes){ notes = j.notes; localStorage.setItem('notes', JSON.stringify(notes)); renderNotes() }
-        if(j.customEvents){ customEvents = j.customEvents; localStorage.setItem('klein_custom_events', JSON.stringify(customEvents)); mergeCalendarFromCustom(); renderMonth(viewYear, viewMonth) }
-        showToast('Imported')
+      function $(s) {
+        return document.querySelector(s);
       }
-    } catch (err) { showToast('Import failed') }
-  }
-  r.readAsText(f)
-  e.target.value = ''
-})
-
-/* Helper: create a fresh <object> placeholder and return it.
-   We remove any prior element to force unload of previous content. */
-function createGameObject(){
-  const stage = $('#game-stage')
-  if(!stage) return null
-  const existing = document.getElementById('game-object')
-  if(existing){
-    try{ existing.onload = null; existing.onerror = null; existing.data = 'about:blank' }catch(e){}
-    existing.remove()
-  }
-  const obj = document.createElement('object')
-  obj.id = 'game-object'
-  obj.className = 'game-sandbox-object'
-  obj.type = 'text/html'
-  obj.style.display = 'none'
-  stage.appendChild(obj)
-  return obj
-}
-
-/* Games list + sandbox (object) */
-async function loadGames(){
-  try {
-    const r = await fetch('https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/GameList.json', { cache: 'no-cache' })
-    games = await r.json()
-    renderGames()
-  } catch (err) {
-    $('#games-container').innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.7)"><i class="fas fa-exclamation-circle"></i><div>Games failed to load</div></div>'
-  }
-}
-function renderGames(){
-  const c = $('#games-container'); c.innerHTML = ''
-  if(!Array.isArray(games) || !games.length){ c.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.7)"><i class="fas fa-gamepad"></i><div>No games</div></div>'; return }
-  games.forEach(g=>{
-    const card = document.createElement('div'); card.className='game-card'
-    const icon = g.gameicon ? '<img src="'+escapeHtml(g.gameicon)+'" style="width:100%;height:100%;object-fit:cover">' : '<i class="fas fa-gamepad" style="font-size:36px"></i>'
-    card.innerHTML = '<div class="game-image">'+icon+'</div><div class="game-content"><div class="game-title">'+escapeHtml(g.gamename)+'</div><div style="margin-top:10px"><button class="launch-btn" data-url="'+escapeHtml(g.gameurl||'')+'"><i class="fas fa-play"></i> Launch</button></div></div>'
-    const btn = card.querySelector('.launch-btn')
-    btn.addEventListener('click', ()=> launchGame(g))
-    c.appendChild(card)
-  })
-}
-
-async function launchGame(g){
-  if(!g || !g.gameurl){ showToast('No game URL'); return }
-  lastGameUrl = g.gameurl
-  openModal('game-modal')
-
-  // first: tear down any existing load / running game immediately
-  cleanupLoad()
-
-  // create fresh placeholder object so we have a reliable element to attach to later
-  createGameObject()
-  $('#game-object').style.display = 'none'
-  $('#game-error').style.display = 'none'
-  $all('.game-loading-step').forEach(s => s.classList.remove('active'))
-  $('#server-lines-pre').textContent = ''
-
-  currentLoad = { aborted:false, intervals:[], timeouts:[], abortController:null, blobUrl:null }
-  await runStep('retrieving', 600, 10)
-  try {
-    const controller = new AbortController(); currentLoad.abortController = controller
-    const to = setTimeout(()=>controller.abort(), 14000)
-    const res = await fetch(g.gameurl, { signal: controller.signal, cache: 'no-cache' })
-    clearTimeout(to)
-    if(!res.ok) throw new Error('HTTP '+res.status)
-    const text = await res.text()
-    const lines = text.split(/\r\n|\n/)
-    $('#server-text').textContent = 'Server responded with ' + lines.length + ' lines'
-    $('#server-lines-pre').textContent = lines.map((l,i) => (String(i+1).padStart(3,' ')) + '  ' + l ).join('\n')
-    await runStep('reading', 700, 10)
-    await runStep('cooking', 500, 8)
-    let assembled = text
-    try {
-      const j = JSON.parse(text)
-      if(j && (j.html || j.css || j.js)) {
-        assembled = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + (j.css||'') + '</style></head><body>' + (j.html||'') + '<script>' + (j.js||'') + ('</scr' + 'ipt>') + '</body></html>'
+      function $all(s) {
+        return Array.from(document.querySelectorAll(s));
       }
-    } catch(e) { /* not JSON, fine */ }
-    // create a blob for the sandbox content
-    const blob = new Blob([assembled], { type: 'text/html' })
-    const blobUrl = URL.createObjectURL(blob)
+      function showToast(t) {
+        const el = $('#toast');
+        el.textContent = t;
+        el.classList.add('show');
+        setTimeout(() => el.classList.remove('show'), 2800);
+      }
+      function escapeHtml(s) {
+        return String(s || '').replace(
+          /[&<>"'`=\/]/g,
+          (c) =>
+            ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;',
+              '/': '&#x2F;',
+              '`': '&#60;',
+              '=': '&#3D',
+            }[c])
+        );
+      }
+      function formatClock(d) {
+        return d.toLocaleTimeString(undefined, {
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+      }
+      function formatShortTime(hm) {
+        if (!hm) return '';
+        const [h, m] = hm.split(':').map(Number);
+        const d = new Date();
+        d.setHours(h, m, 0, 0);
+        return d.toLocaleTimeString(undefined, {
+          hour: 'numeric',
+          minute: '2-digit',
+        });
+      }
 
-    // revoke previous blob if still present (should have been revoked in cleanup but just in case)
-    if(currentBlobUrl && currentBlobUrl !== blobUrl){
-      try{ URL.revokeObjectURL(currentBlobUrl) }catch(e){}
-    }
-    currentBlobUrl = blobUrl
-    currentLoad.blobUrl = blobUrl
+      /* Background orbs: animate and recycle */
+      function createOrb(i) {
+        const o = document.createElement('div');
+        o.style.position = 'absolute';
+        o.style.borderRadius = '50%';
+        const s = 40 + Math.floor(Math.random() * 220);
+        o.style.width = s + 'px';
+        o.style.height = s + 'px';
+        o.style.left = Math.random() * 120 - 10 + '%';
+        o.style.top = Math.random() * -60 + '%';
+        const colors = [
+          'rgba(45,184,255,0.18)',
+          'rgba(0,122,255,0.14)',
+          'rgba(0,200,150,0.12)',
+          'rgba(255,120,110,0.08)',
+          'rgba(140,80,255,0.06)',
+        ];
+        o.style.background = colors[i % colors.length];
+        o.style.opacity = (0.2 + Math.random() * 0.5).toString();
+        const dur = (12 + Math.random() * 28).toFixed(2) + 's';
+        o.style.animation = 'drift ' + dur + ' linear infinite';
+        o.style.animationDelay = (Math.random() * -6).toFixed(2) + 's';
+        o.style.filter = 'blur(' + (4 + Math.random() * 18) + 'px)';
+        o.style.zIndex = 0;
+        return o;
+      }
+      function spawnOrbs() {
+        const container = document.querySelector('.bg-orbs');
+        container.innerHTML = '';
+        for (let i = 0; i < 28; i++) {
+          container.appendChild(createOrb(i));
+        }
+        setInterval(() => {
+          for (let r = 0; r < 3; r++) {
+            if (container.firstChild) container.removeChild(container.firstChild);
+          }
+          for (let i = 0; i < 3; i++) {
+            container.appendChild(createOrb(Math.floor(Math.random() * 5)));
+          }
+        }, 4200);
+      }
 
-    await runStep('deploying', 500, 6)
+      /* Tabs and modals */
+      function attachTabs() {
+        $all('.tab').forEach((tab) => {
+          tab.addEventListener('click', () => {
+            const name = tab.getAttribute('data-tab');
+            if (!lunchType && name !== 'home' && name !== 'calendar') {
+              openModal('lunch-modal');
+              return;
+            }
+            switchTab(name);
+          });
+        });
+      }
+      function switchTab(name) {
+        $all('.tab').forEach((t) => t.classList.toggle('active', t.getAttribute('data-tab') === name));
+        $all('.tab-content').forEach((c) => c.classList.remove('active'));
+        const el = $('#' + name + '-tab');
+        if (el) el.classList.add('active');
+        if (name === 'calendar') renderMonth(viewYear, viewMonth);
+      }
+      function openModal(id) {
+        const m = $('#' + id);
+        if (!m) return;
+        m.classList.add('active');
+      }
+      function closeModal(id) {
+        const m = $('#' + id);
+        if (!m) return;
+        m.classList.remove('active');
+      }
+      function attachModalClosers() {
+        $all('.modal-close').forEach((b) =>
+          b.addEventListener('click', () => {
+            const root = b.closest('.modal');
+            if (!root) return;
+            if (root.id === 'game-modal') closeGameModal();
+            else root.classList.remove('active');
+          })
+        );
+      }
 
-    // ensure the object exists and attach
-    const obj = document.getElementById('game-object') || createGameObject()
-    if(!obj){
-      $('#game-error').style.display = 'block'
-      return
-    }
+      /* Clock */
+      function loadClock() {
+        const now = new Date();
+        $('#clock').textContent = formatClock(now);
+        $('#date').textContent = now.toLocaleDateString(undefined, {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+      setInterval(loadClock, 1000);
 
-    // attach and show
-    obj.data = blobUrl
-    obj.style.display = 'block'
-    $('#game-stage').classList.add('loaded')
+      /* Settings UI */
+      function loadSettingsToUI() {
+        if (localStorage.getItem('lunchType')) {
+          lunchType = localStorage.getItem('lunchType');
+          $('#lunch-select').value = lunchType;
+        }
+        if (localStorage.getItem('schoolStart')) {
+          schoolStart = localStorage.getItem('schoolStart');
+          $('#start-time').value = schoolStart;
+        }
+        if (localStorage.getItem('schoolEnd')) {
+          schoolEnd = localStorage.getItem('schoolEnd');
+          $('#end-time').value = schoolEnd;
+        }
+      }
+      function saveSettings() {
+        const sel = $('#lunch-select').value;
+        if (sel) {
+          lunchType = sel;
+          localStorage.setItem('lunchType', sel);
+        }
+        schoolStart = $('#start-time').value;
+        schoolEnd = $('#end-time').value;
+        localStorage.setItem('schoolStart', schoolStart);
+        localStorage.setItem('schoolEnd', schoolEnd);
+        closeModal('settings-modal');
+        showToast('Settings saved');
+        updateScheduleTable();
+      }
 
-    // set handlers
-    obj.onload = function(){ showToast('Game loaded') }
-    obj.onerror = function(){ $('#game-error').style.display = 'block' }
+      /* Settings & other controls */
+      $('#settings-btn').addEventListener('click', () => openModal('settings-modal'));
+      $('#schedule-btn').addEventListener('click', () => openModal('schedule-modal'));
 
-    // show fullscreen control
-    updateFullscreenButtons()
-    $('#enter-fullscreen').style.display = 'inline-block'
-  } catch (err) {
-    if(err && err.name === 'AbortError'){ showToast('Load aborted'); return }
-    $('#game-error').style.display = 'block'
-    console.error('launchGame error', err)
-  }
-}
+      $('#set-lunch-a').addEventListener('click', () => {
+        lunchType = 'A';
+        localStorage.setItem('lunchType', 'A');
+        closeModal('lunch-modal');
+        showToast('A Lunch');
+        updateScheduleTable();
+      });
+      $('#set-lunch-b').addEventListener('click', () => {
+        lunchType = 'B';
+        localStorage.setItem('lunchType', 'B');
+        closeModal('lunch-modal');
+        showToast('B Lunch');
+        updateScheduleTable();
+      });
+      $('#set-lunch-c').addEventListener('click', () => {
+        lunchType = 'C';
+        localStorage.setItem('lunchType', 'C');
+        closeModal('lunch-modal');
+        showToast('C Lunch');
+        updateScheduleTable();
+      });
 
-/* Cleanup: abort network, clear intervals/timeouts, revoke blob url, remove <object> entirely and recreate placeholder */
-function cleanupLoad(){
-  if(currentLoad){
-    currentLoad.aborted = true
-    try{ if(currentLoad.abortController) currentLoad.abortController.abort() }catch(e){}
-    if(Array.isArray(currentLoad.intervals)) currentLoad.intervals.forEach(i => clearInterval(i))
-    if(Array.isArray(currentLoad.timeouts)) currentLoad.timeouts.forEach(t => clearTimeout(t))
-    currentLoad = null
-  }
+      $('#save-settings').addEventListener('click', saveSettings);
+      $('#open-full-schedule').addEventListener('click', () => openModal('schedule-modal'));
 
-  // Revoke any blob we created
-  if(currentBlobUrl){
-    try{ URL.revokeObjectURL(currentBlobUrl) }catch(e){}
-    currentBlobUrl = null
-  }
+      /* Notes */
+      $('#new-note-btn').addEventListener('click', () => {
+        $('#note-title').value = '';
+        $('#note-content').value = '';
+        $all('.note-item').forEach((x) => x.classList.remove('active'));
+      });
+      $('#save-note').addEventListener('click', () => {
+        const t = $('#note-title').value.trim() || 'Untitled';
+        const c = $('#note-content').value || '';
+        notes.push({ title: t, content: c, date: new Date().toISOString() });
+        localStorage.setItem('notes', JSON.stringify(notes));
+        renderNotes();
+        showToast('Saved');
+      });
+      $('#cancel-note').addEventListener('click', () => {
+        $('#note-title').value = '';
+        $('#note-content').value = '';
+        $all('.note-item').forEach((x) => x.classList.remove('active'));
+      });
 
-  // Remove existing object to force unload of embedded content
-  const obj = document.getElementById('game-object')
-  if(obj){
-    try{
-      obj.onload = null
-      obj.onerror = null
-      obj.data = 'about:blank'
-    }catch(e){}
-    obj.remove()
-  }
+      function renderNotes() {
+        const list = $('#notes-list');
+        list.innerHTML = '';
+        if (!notes.length) {
+          list.innerHTML =
+            '<div style="text-align:center;color:rgba(255,255,255,0.7);padding:12px">No notes yet</div>';
+          return;
+        }
+        notes.forEach((n, i) => {
+          const el = document.createElement('div');
+          el.className = 'note-item';
+          const meta = document.createElement('div');
+          meta.style.flex = '1';
+          meta.innerHTML =
+            '<div style="font-weight:800">' +
+            escapeHtml(n.title) +
+            '</div><div style="font-size:13px;color:rgba(255,255,255,0.78)">' +
+            escapeHtml((n.content || '').slice(0, 80)) +
+            '</div>';
+          const actions = document.createElement('div');
+          actions.style.display = 'flex';
+          actions.style.gap = '8px';
+          const openBtn = document.createElement('button');
+          openBtn.className = 'icon-btn';
+          openBtn.innerHTML = '<i class="fas fa-eye"></i>';
+          openBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            $all('.note-item').forEach((x) => x.classList.remove('active'));
+            el.classList.add('active');
+            $('#note-title').value = n.title;
+            $('#note-content').value = n.content;
+          });
+          const delBtn = document.createElement('button');
+          delBtn.className = 'icon-btn';
+          delBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+          delBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (confirm('Delete this note?')) {
+              notes.splice(i, 1);
+              localStorage.setItem('notes', JSON.stringify(notes));
+              renderNotes();
+              showToast('Deleted');
+            }
+          });
+          actions.appendChild(openBtn);
+          actions.appendChild(delBtn);
+          el.appendChild(meta);
+          el.appendChild(actions);
+          el.addEventListener('click', function () {
+            $all('.note-item').forEach((x) => x.classList.remove('active'));
+            el.classList.add('active');
+            $('#note-title').value = n.title;
+            $('#note-content').value = n.content;
+          });
+          list.appendChild(el);
+        });
+      }
 
-  // replace with clean placeholder
-  createGameObject()
+      /* Import/export/ICS */
+      $('#export-btn').addEventListener('click', () => {
+        const payload = { notes, customEvents, lunchType, schoolStart, schoolEnd };
+        const b = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const u = URL.createObjectURL(b);
+        const a = document.createElement('a');
+        a.href = u;
+        a.download = 'klein-export.json';
+        a.click();
+        URL.revokeObjectURL(u);
+        showToast('Exported');
+      });
+      $('#import-btn').addEventListener('click', () => $('#import-file').click());
+      $('#import-file').addEventListener('change', function (e) {
+        const f = e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = function () {
+          try {
+            if (f.name.toLowerCase().endsWith('.ics')) {
+              const parsed = parseICS(r.result);
+              calendarEvents = parsed.concat(
+                customEvents.map((c) => ({
+                  id: c.id,
+                  title: c.title,
+                  date: c.date ? new Date(c.date).toISOString() : null,
+                  dateKey: c.date,
+                  startTime: c.startTime || '',
+                  endTime: c.endTime || '',
+                  description: c.description || '',
+                  location: c.location || '',
+                  source: 'custom',
+                }))
+              );
+              renderMonth(viewYear, viewMonth);
+              showToast('ICS imported');
+            } else {
+              const j = JSON.parse(r.result);
+              if (j.notes) {
+                notes = j.notes;
+                localStorage.setItem('notes', JSON.stringify(notes));
+                renderNotes();
+              }
+              if (j.customEvents) {
+                customEvents = j.customEvents;
+                localStorage.setItem('klein_custom_events', JSON.stringify(customEvents));
+                mergeCalendarFromCustom();
+                renderMonth(viewYear, viewMonth);
+              }
+              showToast('Imported');
+            }
+          } catch (err) {
+            showToast('Import failed');
+          }
+        };
+        r.readAsText(f);
+        e.target.value = '';
+      });
 
-  // reset UI steps / progress
-  $all('.game-loading-step').forEach(s => s.classList.remove('active'))
-  $all('#progress-retrieving,#progress-reading,#progress-cooking,#progress-deploying').forEach(p => { if(p) p.style.width = '0%' })
-  $('#server-lines-pre').textContent = ''; $('#server-text').textContent = ''; $('#game-error').style.display = 'none'
-  $('#enter-fullscreen').style.display = 'none'; $('#exit-fullscreen').style.display = 'none'
-  $('#game-stage').classList.remove('loaded')
-}
+      /* Helper: create a fresh <object> placeholder and return it.
+         We remove any prior element to force unload of previous content. */
+      function createGameObject() {
+        const stage = $('#game-stage');
+        if (!stage) return null;
+        const existing = document.getElementById('game-object');
+        if (existing) {
+          try {
+            existing.onload = null;
+            existing.onerror = null;
+            existing.data = 'about:blank';
+          } catch (e) {}
+          existing.remove();
+        }
+        const obj = document.createElement('object');
+        obj.id = 'game-object';
+        obj.className = 'game-sandbox-object';
+        obj.type = 'text/html';
+        obj.style.display = 'none';
+        stage.appendChild(obj);
+        return obj;
+      }
 
-/* Retry */
-$('#retry-launch').addEventListener('click', ()=> { cleanupLoad(); if(lastGameUrl) launchGame({ gameurl:lastGameUrl, gamename:'Game' }) })
+      /* Games list + sandbox (object) */
+      async function loadGames() {
+        try {
+          const r = await fetch(
+            'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/GameList.json',
+            { cache: 'no-cache' }
+          );
+          games = await r.json();
+          renderGames();
+        } catch (err) {
+          $('#games-container').innerHTML =
+            '<div style="text-align:center;color:rgba(255,255,255,0.7)"><i class="fas fa-exclamation-circle"></i><div>Games failed to load</div></div>';
+        }
+      }
+      function renderGames() {
+        const c = $('#games-container');
+        c.innerHTML = '';
+        if (!Array.isArray(games) || !games.length) {
+          c.innerHTML =
+            '<div style="text-align:center;color:rgba(255,255,255,0.7)"><i class="fas fa-gamepad"></i><div>No games</div></div>';
+          return;
+        }
+        games.forEach((g) => {
+          const card = document.createElement('div');
+          card.className = 'game-card';
+          const icon = g.gameicon
+            ? '<img src="' +
+              escapeHtml(g.gameicon) +
+              '" style="width:100%;height:100%;object-fit:cover">'
+            : '<i class="fas fa-gamepad" style="font-size:36px"></i>';
+          card.innerHTML =
+            '<div class="game-image">' +
+            icon +
+            '</div><div class="game-content"><div class="game-title">' +
+            escapeHtml(g.gamename) +
+            '</div><div style="margin-top:10px"><button class="launch-btn" data-url="' +
+            escapeHtml(g.gameurl || '') +
+            '"><i class="fas fa-play"></i> Launch</button></div></div>';
+          const btn = card.querySelector('.launch-btn');
+          btn.addEventListener('click', () => launchGame(g));
+          c.appendChild(card);
+        });
+      }
 
-async function runStep(id, totalMs, steps){
-  const stepEl = $('#step-' + id)
-  const prog = $('#progress-' + id)
-  if(!stepEl || !prog) return
-  stepEl.classList.add('active')
-  prog.style.width = '0%'
-  let progress = 0
-  const inc = 100 / steps
-  const ivMs = Math.max(25, Math.floor(totalMs / steps))
-  return new Promise(resolve => {
-    const iv = setInterval(()=>{
-      if(currentLoad && currentLoad.aborted){ clearInterval(iv); stepEl.classList.remove('active'); prog.style.width = '0%'; resolve(); return }
-      progress += inc
-      if(progress > 100) progress = 100
-      prog.style.width = progress + '%'
-      if(progress >= 100){ clearInterval(iv); const to = setTimeout(()=>{ stepEl.classList.remove('active'); resolve() }, 220); if(currentLoad) currentLoad.timeouts.push(to) }
-    }, ivMs)
-    if(currentLoad) currentLoad.intervals.push(iv)
-    else {
-      // if currentLoad vanished while starting, clear interval
-      setTimeout(()=> clearInterval(iv), totalMs + 1000)
-    }
-  })
-}
+      async function launchGame(g) {
+        if (!g || !g.gameurl) {
+          showToast('No game URL');
+          return;
+        }
+        lastGameUrl = g.gameurl;
+        openModal('game-modal');
 
-/* Fullscreen controls for <object> */
-$('#enter-fullscreen').addEventListener('click', async ()=> {
-  const obj = document.getElementById('game-object')
-  if(obj && obj.requestFullscreen){ try { await obj.requestFullscreen(); } catch(e){} }
-  updateFullscreenButtons()
-})
-$('#exit-fullscreen').addEventListener('click', async ()=> {
-  if(document.fullscreenElement){ try{ await document.exitFullscreen(); } catch(e){} }
-  updateFullscreenButtons()
-})
+        // first: tear down any existing load / running game immediately
+        cleanupLoad();
 
-function updateFullscreenButtons(){
-  const isFS = !!document.fullscreenElement
-  if($('#enter-fullscreen')) $('#enter-fullscreen').style.display = isFS ? 'none' : 'inline-block'
-  if($('#exit-fullscreen')) $('#exit-fullscreen').style.display = isFS ? 'inline-block' : 'none'
-}
+        // create fresh placeholder object so we have a reliable element to attach to later
+        createGameObject();
+        $('#game-object').style.display = 'none';
+        $('#game-error').style.display = 'none';
+        $all('.game-loading-step').forEach((s) => s.classList.remove('active'));
+        $('#server-lines-pre').textContent = '';
 
-/* If modal is closed while fullscreen, exit fullscreen first and then cleanup */
-async function closeGameModal(){
-  try { if(document.fullscreenElement) await document.exitFullscreen() } catch(e){}
-  cleanupLoad()
-  closeModal('game-modal')
-}
+        currentLoad = {
+          aborted: false,
+          intervals: [],
+          timeouts: [],
+          abortController: null,
+          blobUrl: null,
+        };
+        await runStep('retrieving', 600, 10);
+        try {
+          const controller = new AbortController();
+          currentLoad.abortController = controller;
+          const to = setTimeout(() => controller.abort(), 14000);
+          const res = await fetch(g.gameurl, { signal: controller.signal, cache: 'no-cache' });
+          clearTimeout(to);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const text = await res.text();
+          const lines = text.split(/\r\n|\n/);
+          $('#server-text').textContent = 'Server responded with ' + lines.length + ' lines';
+          $('#server-lines-pre').textContent = lines
+            .map((l, i) => String(i + 1).padStart(3, ' ') + '  ' + l)
+            .join('\n');
+          await runStep('reading', 700, 10);
+          await runStep('cooking', 500, 8);
+          let assembled = text;
+          try {
+            const j = JSON.parse(text);
+            if (j && (j.html || j.css || j.js)) {
+              assembled =
+                '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' +
+                (j.css || '') +
+                '</style></head><body>' +
+                (j.html || '') +
+                '<script>' +
+                (j.js || '') +
+                ('</scr' + 'ipt>') +
+                '</body></html>';
+            }
+          } catch (e) {
+            /* not JSON, fine */
+          }
+          // create a blob for the sandbox content
+          const blob = new Blob([assembled], { type: 'text/html' });
+          const blobUrl = URL.createObjectURL(blob);
 
-/* Keep UI in sync when user presses Escape or browser triggers fullscreenchange */
-document.addEventListener('fullscreenchange', ()=>{
-  updateFullscreenButtons()
-})
+          // revoke previous blob if still present (should have been revoked in cleanup but just in case)
+          if (currentBlobUrl && currentBlobUrl !== blobUrl) {
+            try {
+              URL.revokeObjectURL(currentBlobUrl);
+            } catch (e) {}
+          }
+          currentBlobUrl = blobUrl;
+          currentLoad.blobUrl = blobUrl;
 
-// Ensure escape key triggers exit fullscreen and UI sync
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape' && document.fullscreenElement){
-    // browser normally exits fullscreen on Escape, but call exitFullscreen to be sure
-    try{ document.exitFullscreen().catch(()=>{}) }catch(e){}
-    // UI will be updated by fullscreenchange listener
-  }
-})
+          await runStep('deploying', 500, 6);
 
-/* Calendar parse + render */
-function parseICS(ics){
-  const events = []
-  const lines = ics.replace(/\r/g,'').split('\n')
-  let inEvent = false
-  let ev = {}
-  lines.forEach(line=>{
-    if(line.startsWith('BEGIN:VEVENT')){ inEvent = true; ev = {} }
-    else if(line.startsWith('END:VEVENT')){ inEvent = false; events.push(ev); ev = {} }
-    else if(inEvent){
-      const parts = line.split(':')
-      if(parts.length < 2) return
-      const keyRaw = parts[0]
-      const val = parts.slice(1).join(':') || ''
-      const key = keyRaw.split(';')[0]
-      if(key === 'DTSTART') ev.start = val.trim()
-      else if(key === 'DTEND') ev.end = val.trim()
-      else if(key === 'SUMMARY') ev.title = val.trim()
-      else if(key === 'DESCRIPTION') ev.description = val.trim()
-      else if(key === 'LOCATION') ev.location = val.trim()
-      else if(line.startsWith('DTSTART;VALUE=DATE')) ev.start = line.split(':')[1].trim()
-      else if(line.startsWith('DTEND;VALUE=DATE')) ev.end = line.split(':')[1].trim()
-    }
-  })
-  return events.map(e=>{
-    function p(d){
-      if(!d) return null
-      if(/^\d{8}$/.test(d)) return new Date(d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8)+'T00:00:00')
-      if(/^\d{8}T\d{6}/.test(d)) return new Date(d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8)+'T'+d.slice(9,11)+':'+d.slice(11,13)+':'+d.slice(13,15))
-      return new Date(d)
-    }
-    const start = p(e.start)
-    const dateKey = start ? `${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,'0')}-${String(start.getDate()).padStart(2,'0')}` : null
-    return { id: Math.random().toString(36).slice(2,9), title: e.title || 'Event', date: start ? start.toISOString() : null, dateKey, startTime: start? start.toTimeString().slice(0,5): null, endTime: e.end ? (p(e.end)? p(e.end).toTimeString().slice(0,5) : '') : null, description: e.description || '', location: e.location || '', source:'ics' }
-  })
-}
+          // ensure the object exists and attach
+          const obj = document.getElementById('game-object') || createGameObject();
+          if (!obj) {
+            $('#game-error').style.display = 'block';
+            return;
+          }
 
-async function fetchAndMergeICS(){
-  try {
-    const res = await fetch(ICS_URL, { cache: 'no-store' })
-    const txt = await res.text()
-    const parsed = parseICS(txt)
-    calendarEvents = parsed.concat(customEvents.map(c=>({ id:c.id, title:c.title, date:c.date? new Date(c.date).toISOString(): null, dateKey:c.date, startTime:c.startTime||'', endTime:c.endTime||'', description:c.description||'', location:c.location||'', source:'custom' })))
-    calendarEvents.sort((a,b)=> (new Date(a.date||0)) - (new Date(b.date||0)))
-    renderMonth(viewYear, viewMonth)
-    renderUpcoming()
-  } catch(e) {}
-}
+          // attach and show
+          obj.data = blobUrl;
+          obj.style.display = 'block';
+          $('#game-stage').classList.add('loaded');
 
-function mergeCalendarFromCustom(){
-  calendarEvents = calendarEvents.filter(ev=> ev.source === 'ics').concat(customEvents.map(c=>({ id:c.id, title:c.title, date:c.date? new Date(c.date).toISOString(): null, dateKey:c.date, startTime:c.startTime||'', endTime:c.endTime||'', description:c.description||'', location:c.location||'', source:'custom' })))
-  calendarEvents.sort((a,b)=> (new Date(a.date||0)) - (new Date(b.date||0)))
-  renderUpcoming()
-}
+          // set handlers
+          obj.onload = function () {
+            showToast('Game loaded');
+          };
+          obj.onerror = function () {
+            $('#game-error').style.display = 'block';
+          };
 
-function renderUpcoming(){
-  const now = new Date()
-  const upcoming = calendarEvents.filter(e => e.date && new Date(e.date) >= now).sort((a,b)=> new Date(a.date) - new Date(b.date)).slice(0,6)
-  const out = $('#calendar-upcoming'); out.innerHTML = ''
-  if(!upcoming.length){ out.innerHTML = '<div style="color:rgba(255,255,255,0.7)">No upcoming events</div>'; return }
-  upcoming.forEach(ev=>{
-    const el = document.createElement('div'); el.style.display='flex'; el.style.justifyContent='space-between'; el.style.alignItems='center'; el.style.padding='8px'; el.style.borderRadius='8px'; el.style.background='rgba(255,255,255,0.02)'
-    el.innerHTML = '<div><div style="font-weight:900">'+escapeHtml(ev.title)+'</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">'+(new Date(ev.date)).toLocaleString()+'</div></div><div><button class="btn secondary edit-ev" data-id="'+ev.id+'">Edit</button></div>'
-    out.appendChild(el)
-  })
-  $all('.edit-ev').forEach(b=> b.addEventListener('click', function(){ const id = this.getAttribute('data-id'); const ev = customEvents.find(x=> x.id===id); if(ev) openDayModal(ev.date, ev.id) }))
-}
+          // show fullscreen control
+          updateFullscreenButtons();
+          $('#enter-fullscreen').style.display = 'inline-block';
+        } catch (err) {
+          if (err && err.name === 'AbortError') {
+            showToast('Load aborted');
+            return;
+          }
+          $('#game-error').style.display = 'block';
+          console.error('launchGame error', err);
+        }
+      }
 
-/* month helpers */
-function monthStart(y,m){ return new Date(y,m,1) }
-function monthDays(y,m){ return new Date(y,m+1,0).getDate() }
+      /* Cleanup: abort network, clear intervals/timeouts, revoke blob url, remove <object> entirely and recreate placeholder */
+      function cleanupLoad() {
+        if (currentLoad) {
+          currentLoad.aborted = true;
+          try {
+            if (currentLoad.abortController) currentLoad.abortController.abort();
+          } catch (e) {}
+          if (Array.isArray(currentLoad.intervals))
+            currentLoad.intervals.forEach((i) => clearInterval(i));
+          if (Array.isArray(currentLoad.timeouts))
+            currentLoad.timeouts.forEach((t) => clearTimeout(t));
+          currentLoad = null;
+        }
 
-function renderMonth(y,m){
-  viewYear = y; viewMonth = m
-  $('#month-title').textContent = new Date(y,m,1).toLocaleString(undefined,{month:'long',year:'numeric'})
-  const grid = $('#days-grid'); grid.innerHTML = ''
-  const start = monthStart(y,m); const startWeek = start.getDay(); const days = monthDays(y,m)
-  const prevDays = monthDays(y, (m-1<0?11:m-1))
-  for(let i=0;i<startWeek;i++){
-    const d = prevDays - (startWeek - 1) + i
-    const cell = document.createElement('div'); cell.className = 'day-cell inactive'; cell.innerHTML = '<div class="day-number">'+d+'</div>'; grid.appendChild(cell)
-  }
-  for(let d=1; d<=days; d++){
-    const cell = document.createElement('div'); cell.className = 'day-cell'
-    const dateKey = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`
-    const num = document.createElement('div'); num.className='day-number'; num.textContent = d
-    const eventsWrap = document.createElement('div'); eventsWrap.style.marginTop='6px'; eventsWrap.style.width='100%'
-    const evs = calendarEvents.filter(ev => ev.dateKey === dateKey)
-    evs.slice(0,3).forEach(ev=>{
-      const pill = document.createElement('div'); pill.className='event-pill'; pill.textContent = ev.title; eventsWrap.appendChild(pill)
-    })
-    cell.appendChild(num); cell.appendChild(eventsWrap)
-    cell.addEventListener('click', ()=> openDayModal(dateKey))
-    grid.appendChild(cell)
-  }
-  const used = (startWeek + days) % 7; const rem = used ? 7 - used : 0
-  for(let i=0;i<rem;i++){ const cell = document.createElement('div'); cell.className='day-cell inactive'; cell.innerHTML = '<div class="day-number">'+(i+1)+'</div>'; grid.appendChild(cell) }
-  renderUpcoming()
-}
+        // Revoke any blob we created
+        if (currentBlobUrl) {
+          try {
+            URL.revokeObjectURL(currentBlobUrl);
+          } catch (e) {}
+          currentBlobUrl = null;
+        }
 
-/* day modal */
-function openDayModal(dateKey, editId){
-  $('#day-modal-title').textContent = 'Events on ' + dateKey
-  $('#ev-date').value = dateKey
-  $('#ev-title').value = ''; $('#ev-start').value = ''; $('#ev-end').value = ''; $('#ev-location').value = ''; $('#ev-desc').value = ''
-  const list = $('#day-events-list'); list.innerHTML = ''
-  const evs = calendarEvents.filter(ev => ev.dateKey === dateKey)
-  evs.forEach(ev=>{
-    const el = document.createElement('div'); el.style.display='flex'; el.style.justifyContent='space-between'; el.style.alignItems='center'; el.style.padding='8px'; el.style.borderRadius='8px'; el.style.background='rgba(255,255,255,0.02)'; el.style.marginBottom='6px'
-    el.innerHTML = '<div><div style="font-weight:900">'+escapeHtml(ev.title)+'</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">'+ (ev.startTime ? formatShortTime(ev.startTime) + ' - ' + (ev.endTime ? formatShortTime(ev.endTime) : '') : 'All day') +'</div></div><div style="display:flex;gap:8px"><button class="btn secondary edit" data-id="'+ev.id+'">Edit</button><button class="btn secondary del" data-id="'+ev.id+'">Delete</button></div>'
-    list.appendChild(el)
-  })
-  $all('#day-events-list .edit').forEach(b => b.addEventListener('click', function(){ const id = this.getAttribute('data-id'); const ev = customEvents.find(x=> x.id === id); if(ev){ $('#ev-title').value = ev.title; $('#ev-date').value = ev.date; $('#ev-start').value = ev.startTime||''; $('#ev-end').value = ev.endTime||''; $('#ev-location').value = ev.location||''; $('#ev-desc').value = ev.description||''; $('#ev-save').dataset.editId = ev.id } }))
-  $all('#day-events-list .del').forEach(b => b.addEventListener('click', function(){ const id = this.getAttribute('data-id'); if(!confirm('Delete event?')) return; customEvents = customEvents.filter(c => c.id !== id); localStorage.setItem('klein_custom_events', JSON.stringify(customEvents)); fetchAndMergeICS(); renderMonth(viewYear, viewMonth); showToast('Deleted') }))
-  $('#ev-save').dataset.editId = editId || ''
-  openModal('day-modal')
-}
-$('#ev-cancel').addEventListener('click', ()=> closeModal('day-modal'))
-$('#ev-save').addEventListener('click', ()=>{
-  const id = $('#ev-save').dataset.editId || Math.random().toString(36).slice(2,9)
-  const title = $('#ev-title').value.trim() || 'Untitled'
-  const date = $('#ev-date').value
-  const st = $('#ev-start').value
-  const et = $('#ev-end').value
-  const loc = $('#ev-location').value
-  const desc = $('#ev-desc').value
-  if(!date){ alert('Pick a date'); return }
-  const obj = { id, title, date, startTime: st, endTime: et, location: loc, description: desc }
-  const idx = customEvents.findIndex(c => c.id === id)
-  if(idx >= 0) customEvents[idx] = obj; else customEvents.push(obj)
-  localStorage.setItem('klein_custom_events', JSON.stringify(customEvents))
-  fetchAndMergeICS()
-  renderMonth(viewYear, viewMonth)
-  closeModal('day-modal')
-  showToast('Saved')
-})
+        // Remove existing object to force unload of embedded content
+        const obj = document.getElementById('game-object');
+        if (obj) {
+          try {
+            obj.onload = null;
+            obj.onerror = null;
+            obj.data = 'about:blank';
+          } catch (e) {}
+          obj.remove();
+        }
 
-$('#prev-month').addEventListener('click', ()=> { if(viewMonth === 0){ viewMonth = 11; viewYear-- } else viewMonth--; renderMonth(viewYear, viewMonth) })
-$('#next-month').addEventListener('click', ()=> { if(viewMonth === 11){ viewMonth = 0; viewYear++ } else viewMonth++; renderMonth(viewYear, viewMonth) })
-$('#today-month').addEventListener('click', ()=> { const n = new Date(); viewYear = n.getFullYear(); viewMonth = n.getMonth(); renderMonth(viewYear, viewMonth) })
+        // replace with clean placeholder
+        createGameObject();
 
-/* Countdown logic (AM/PM display and until lunch) */
-function updateCountdown(){
-  const now = new Date(); const schedule = buildSchedule()
-  if(!schedule.length){ $('#current-period').textContent = 'Select lunch in Settings'; $('#next-period').textContent = ''; $('#period-progress').style.width = '0%'; $('#time-until-end').textContent = '—'; $('#end-of-school').textContent = ''; return }
-  const startDay = toDate(schoolStart); const endDay = toDate(schoolEnd)
-  if(now < startDay){ $('#current-period').textContent = "School hasn't started"; $('#next-period').textContent = 'Starts in ' + diffStr((startDay-now)/1000); $('#period-progress').style.width = '0%'; $('#time-until-end').textContent = diffStr((endDay-now)/1000); $('#end-of-school').textContent = 'Ends '+formatShortTime(schoolEnd); return }
-  if(now > endDay){ $('#current-period').textContent = 'School has ended'; $('#next-period').textContent = 'Starts tomorrow '+formatShortTime(schoolStart); $('#period-progress').style.width = '100%'; $('#time-until-end').textContent = '—'; $('#end-of-school').textContent = ''; return }
-  let lunchPeriod = null
-  for(const p of schedule) if(p.name.toLowerCase().includes('lunch')) lunchPeriod = p
-  if(lunchPeriod){
-    const ls = toDate(lunchPeriod.start)
-    if(now < ls) $('#lunch-countdown').textContent = 'Until lunch: ' + diffStr((ls-now)/1000)
-    else { const le = toDate(lunchPeriod.end); if(now <= le) $('#lunch-countdown').textContent = 'Lunch ends in: ' + diffStr((le-now)/1000); else $('#lunch-countdown').textContent = 'Lunch is over' }
-  } else { $('#lunch-countdown').textContent = '' }
-  for(let i=0;i<schedule.length;i++){
-    const p = schedule[i]; const s = toDate(p.start); const e = toDate(p.end)
-    if(now >= s && now <= e){
-      const total = (e-s)/1000; const elapsed = (now-s)/1000; const remaining = (e-now)/1000
-      $('#current-period').textContent = 'Now: ' + p.name
-      $('#next-period').textContent = 'Ends in: ' + diffStr(remaining) + (i < schedule.length -1 ? ' | Next: ' + schedule[i+1].name : '')
-      $('#period-progress').style.width = ((elapsed/total) * 100) + '%'
-      $('#time-until-end').textContent = diffStr((endDay-now)/1000)
-      $('#end-of-school').textContent = 'Ends ' + formatShortTime(schoolEnd)
-      return
-    }
-    if(now < s){
-      $('#current-period').textContent = 'Between periods'
-      $('#next-period').textContent = 'Next: ' + p.name + ' in ' + diffStr((s-now)/1000)
-      $('#period-progress').style.width = '0%'
-      $('#time-until-end').textContent = diffStr((endDay-now)/1000)
-      $('#end-of-school').textContent = 'Ends ' + formatShortTime(schoolEnd)
-      return
-    }
-  }
-}
-function buildSchedule(){
-  if(!lunchType) return []
-  const base = [{name:"1st Period",start:"07:10",end:"08:00"},{name:"Passing Period",start:"08:00",end:"08:06",isPassing:true},{name:"2nd Period",start:"08:06",end:"08:56"},{name:"Passing Period",start:"08:56",end:"09:02",isPassing:true},{name:"3rd Period",start:"09:02",end:"09:52"},{name:"Passing Period",start:"09:52",end:"09:58",isPassing:true},{name:"4th Period",start:"09:58",end:"10:48"},{name:"InKlein",start:"10:48",end:"11:18"},{name:"Passing Period",start:"11:18",end:"11:24",isPassing:true}]
-  const lunches = { A:[{name:"A Lunch",start:"11:24",end:"11:48"},{name:"5th Period",start:"11:48",end:"12:43"}], B:[{name:"5th Period",start:"11:24",end:"11:48"},{name:"B Lunch",start:"11:48",end:"12:18"},{name:"5th Period",start:"12:18",end:"12:43"}], C:[{name:"5th Period",start:"11:24",end:"12:18"},{name:"C Lunch",start:"12:18",end:"12:48"}] }
-  const after = [{name:"Passing Period",start:"12:48",end:"12:49",isPassing:true},{name:"6th Period",start:"12:49",end:"13:39"},{name:"Passing Period",start:"13:39",end:"13:45",isPassing:true},{name:"7th Period",start:"13:45",end:"14:35"}]
-  return base.concat(lunches[lunchType]||[]).concat(after)
-}
-function toDate(t){ const p = t.split(':').map(Number); const d = new Date(); d.setHours(p[0]||0, p[1]||0, 0, 0); return d }
-function diffStr(sec){ sec = Math.max(0, Math.floor(sec)); const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = Math.floor(sec%60); return (h? h+'h ':'') + (m? m+'m ':'') + s+'s' }
-function updateScheduleTable(){ const out = $('#modal-schedule-body'); out.innerHTML = ''; const s = buildSchedule(); if(!s.length){ out.innerHTML = '<div style="color:rgba(255,255,255,0.7)">No schedule (select lunch)</div>'; return } s.forEach(p=>{ const div = document.createElement('div'); div.style.display='flex'; div.style.justifyContent='space-between'; div.style.padding='8px'; div.style.borderBottom='1px solid rgba(255,255,255,0.03)'; div.innerHTML = '<div style="font-weight:900">'+escapeHtml(p.name)+'</div><div>'+formatShortTime(p.start)+' — '+formatShortTime(p.end)+'</div>'; out.appendChild(div) }) }
+        // reset UI steps / progress
+        $all('.game-loading-step').forEach((s) => s.classList.remove('active'));
+        $all('#progress-retrieving,#progress-reading,#progress-cooking,#progress-deploying').forEach(
+          (p) => {
+            if (p) p.style.width = '0%';
+          }
+        );
+        $('#server-lines-pre').textContent = '';
+        $('#server-text').textContent = '';
+        $('#game-error').style.display = 'none';
+        $('#enter-fullscreen').style.display = 'none';
+        $('#exit-fullscreen').style.display = 'none';
+        $('#game-stage').classList.remove('loaded');
+      }
 
-/* init */
-function init(){
-  spawnOrbs()
-  attachTabs()
-  attachModalClosers()
-  loadSettingsToUI()
-  renderNotes()
-  loadGames()
-  fetchAndMergeICS()
-  renderMonth(viewYear,viewMonth)
-  setInterval(()=>{ loadClock(); updateCountdown() }, 1000)
-  loadClock()
-  updateCountdown()
-  if(!lunchType) setTimeout(()=> openModal('lunch-modal'), 600)
+      /* Retry */
+      $('#retry-launch').addEventListener('click', () => {
+        cleanupLoad();
+        if (lastGameUrl) launchGame({ gameurl: lastGameUrl, gamename: 'Game' });
+      });
 
-  // ensure game object placeholder exists at start
-  createGameObject()
+      async function runStep(id, totalMs, steps) {
+        const stepEl = $('#step-' + id);
+        const prog = $('#progress-' + id);
+        if (!stepEl || !prog) return;
+        stepEl.classList.add('active');
+        prog.style.width = '0%';
+        let progress = 0;
+        const inc = 100 / steps;
+        const ivMs = Math.max(25, Math.floor(totalMs / steps));
+        return new Promise((resolve) => {
+          const iv = setInterval(() => {
+            if (currentLoad && currentLoad.aborted) {
+              clearInterval(iv);
+              stepEl.classList.remove('active');
+              prog.style.width = '0%';
+              resolve();
+              return;
+            }
+            progress += inc;
+            if (progress > 100) progress = 100;
+            prog.style.width = progress + '%';
+            if (progress >= 100) {
+              clearInterval(iv);
+              const to = setTimeout(() => {
+                stepEl.classList.remove('active');
+                resolve();
+              }, 220);
+              if (currentLoad) currentLoad.timeouts.push(to);
+            }
+          }, ivMs);
+          if (currentLoad) currentLoad.intervals.push(iv);
+          else {
+            // if currentLoad vanished while starting, clear interval
+            setTimeout(() => clearInterval(iv), totalMs + 1000);
+          }
+        });
+      }
 
-  // ensure fullscreen button UI matches current fullscreen state
-  updateFullscreenButtons()
-}
-window.addEventListener('DOMContentLoaded', init)
-</script>
+      /* Fullscreen controls for <object> */
+      $('#enter-fullscreen').addEventListener('click', async () => {
+        const obj = document.getElementById('game-object');
+        if (obj && obj.requestFullscreen) {
+          try {
+            await obj.requestFullscreen();
+          } catch (e) {}
+        }
+        updateFullscreenButtons();
+      });
+      $('#exit-fullscreen').addEventListener('click', async () => {
+        if (document.fullscreenElement) {
+          try {
+            await document.exitFullscreen();
+          } catch (e) {}
+        }
+        updateFullscreenButtons();
+      });
 
-<!-- obfuscated password UI go byebye -->
-</body>
+      function updateFullscreenButtons() {
+        const isFS = !!document.fullscreenElement;
+        if ($('#enter-fullscreen')) $('#enter-fullscreen').style.display = isFS ? 'none' : 'inline-block';
+        if ($('#exit-fullscreen')) $('#exit-fullscreen').style.display = isFS ? 'inline-block' : 'none';
+      }
+
+      /* If modal is closed while fullscreen, exit fullscreen first and then cleanup */
+      async function closeGameModal() {
+        try {
+          if (document.fullscreenElement) await document.exitFullscreen();
+        } catch (e) {}
+        cleanupLoad();
+        closeModal('game-modal');
+      }
+
+      /* Keep UI in sync when user presses Escape or browser triggers fullscreenchange */
+      document.addEventListener('fullscreenchange', () => {
+        updateFullscreenButtons();
+      });
+
+      // Ensure escape key triggers exit fullscreen and UI sync
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.fullscreenElement) {
+          // browser normally exits fullscreen on Escape, but call exitFullscreen to be sure
+          try {
+            document.exitFullscreen().catch(() => {});
+          } catch (e) {}
+          // UI will be updated by fullscreenchange listener
+        }
+      });
+
+      /* Calendar parse + render */
+      function parseICS(ics) {
+        const events = [];
+        const lines = ics.replace(/\r/g, '').split('\n');
+        let inEvent = false;
+        let ev = {};
+        lines.forEach((line) => {
+          if (line.startsWith('BEGIN:VEVENT')) {
+            inEvent = true;
+            ev = {};
+          } else if (line.startsWith('END:VEVENT')) {
+            inEvent = false;
+            events.push(ev);
+            ev = {};
+          } else if (inEvent) {
+            const parts = line.split(':');
+            if (parts.length < 2) return;
+            const keyRaw = parts[0];
+            const val = parts.slice(1).join(':') || '';
+            const key = keyRaw.split(';')[0];
+            if (key === 'DTSTART') ev.start = val.trim();
+            else if (key === 'DTEND') ev.end = val.trim();
+            else if (key === 'SUMMARY') ev.title = val.trim();
+            else if (key === 'DESCRIPTION') ev.description = val.trim();
+            else if (key === 'LOCATION') ev.location = val.trim();
+            else if (line.startsWith('DTSTART;VALUE=DATE')) ev.start = line.split(':')[1].trim();
+            else if (line.startsWith('DTEND;VALUE=DATE')) ev.end = line.split(':')[1].trim();
+          }
+        });
+        return events.map((e) => {
+          function p(d) {
+            if (!d) return null;
+            if (/^\d{8}$/.test(d))
+              return new Date(d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6, 8) + 'T00:00:00');
+            if (/^\d{8}T\d{6}/.test(d))
+              return new Date(
+                d.slice(0, 4) +
+                  '-' +
+                  d.slice(4, 6) +
+                  '-' +
+                  d.slice(6, 8) +
+                  'T' +
+                  d.slice(9, 11) +
+                  ':' +
+                  d.slice(11, 13) +
+                  ':' +
+                  d.slice(13, 15)
+              );
+            return new Date(d);
+          }
+          const start = p(e.start);
+          const dateKey = start
+            ? `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(
+                start.getDate()
+              ).padStart(2, '0')}`
+            : null;
+          return {
+            id: Math.random().toString(36).slice(2, 9),
+            title: e.title || 'Event',
+            date: start ? start.toISOString() : null,
+            dateKey,
+            startTime: start ? start.toTimeString().slice(0, 5) : null,
+            endTime: e.end ? (p(e.end) ? p(e.end).toTimeString().slice(0, 5) : '') : null,
+            description: e.description || '',
+            location: e.location || '',
+            source: 'ics',
+          };
+        });
+      }
+
+      async function fetchAndMergeICS() {
+        try {
+          const res = await fetch(ICS_URL, { cache: 'no-store' });
+          const txt = await res.text();
+          const parsed = parseICS(txt);
+          calendarEvents = parsed.concat(
+            customEvents.map((c) => ({
+              id: c.id,
+              title: c.title,
+              date: c.date ? new Date(c.date).toISOString() : null,
+              dateKey: c.date,
+              startTime: c.startTime || '',
+              endTime: c.endTime || '',
+              description: c.description || '',
+              location: c.location || '',
+              source: 'custom',
+            }))
+          );
+          calendarEvents.sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0));
+          renderMonth(viewYear, viewMonth);
+          renderUpcoming();
+        } catch (e) {}
+      }
+
+      function mergeCalendarFromCustom() {
+        calendarEvents = calendarEvents
+          .filter((ev) => ev.source === 'ics')
+          .concat(
+            customEvents.map((c) => ({
+              id: c.id,
+              title: c.title,
+              date: c.date ? new Date(c.date).toISOString() : null,
+              dateKey: c.date,
+              startTime: c.startTime || '',
+              endTime: c.endTime || '',
+              description: c.description || '',
+              location: c.location || '',
+              source: 'custom',
+            }))
+          );
+        calendarEvents.sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0));
+        renderUpcoming();
+      }
+
+      function renderUpcoming() {
+        const now = new Date();
+        const upcoming = calendarEvents
+          .filter((e) => e.date && new Date(e.date) >= now)
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+          .slice(0, 6);
+        const out = $('#calendar-upcoming');
+        out.innerHTML = '';
+        if (!upcoming.length) {
+          out.innerHTML = '<div style="color:rgba(255,255,255,0.7)">No upcoming events</div>';
+          return;
+        }
+        upcoming.forEach((ev) => {
+          const el = document.createElement('div');
+          el.style.display = 'flex';
+          el.style.justifyContent = 'space-between';
+          el.style.alignItems = 'center';
+          el.style.padding = '8px';
+          el.style.borderRadius = '8px';
+          el.style.background = 'rgba(255,255,255,0.02)';
+          el.innerHTML =
+            '<div><div style="font-weight:900">' +
+            escapeHtml(ev.title) +
+            '</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">' +
+            new Date(ev.date).toLocaleString() +
+            '</div></div><div><button class="btn secondary edit-ev" data-id="' +
+            ev.id +
+            '">Edit</button></div>';
+          out.appendChild(el);
+        });
+        $all('.edit-ev').forEach((b) =>
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const ev = customEvents.find((x) => x.id === id);
+            if (ev) openDayModal(ev.date, ev.id);
+          })
+        );
+      }
+
+      /* month helpers */
+      function monthStart(y, m) {
+        return new Date(y, m, 1);
+      }
+      function monthDays(y, m) {
+        return new Date(y, m + 1, 0).getDate();
+      }
+
+      function renderMonth(y, m) {
+        viewYear = y;
+        viewMonth = m;
+        $('#month-title').textContent = new Date(y, m, 1).toLocaleString(undefined, {
+          month: 'long',
+          year: 'numeric',
+        });
+        const grid = $('#days-grid');
+        grid.innerHTML = '';
+        const start = monthStart(y, m);
+        const startWeek = start.getDay();
+        const days = monthDays(y, m);
+        const prevDays = monthDays(y, m - 1 < 0 ? 11 : m - 1);
+        for (let i = 0; i < startWeek; i++) {
+          const d = prevDays - (startWeek - 1) + i;
+          const cell = document.createElement('div');
+          cell.className = 'day-cell inactive';
+          cell.innerHTML = '<div class="day-number">' + d + '</div>';
+          grid.appendChild(cell);
+        }
+        for (let d = 1; d <= days; d++) {
+          const cell = document.createElement('div');
+          cell.className = 'day-cell';
+          const dateKey = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          const num = document.createElement('div');
+          num.className = 'day-number';
+          num.textContent = d;
+          const eventsWrap = document.createElement('div');
+          eventsWrap.style.marginTop = '6px';
+          eventsWrap.style.width = '100%';
+          const evs = calendarEvents.filter((ev) => ev.dateKey === dateKey);
+          evs.slice(0, 3).forEach((ev) => {
+            const pill = document.createElement('div');
+            pill.className = 'event-pill';
+            pill.textContent = ev.title;
+            eventsWrap.appendChild(pill);
+          });
+          cell.appendChild(num);
+          cell.appendChild(eventsWrap);
+          cell.addEventListener('click', () => openDayModal(dateKey));
+          grid.appendChild(cell);
+        }
+        const used = (startWeek + days) % 7;
+        const rem = used ? 7 - used : 0;
+        for (let i = 0; i < rem; i++) {
+          const cell = document.createElement('div');
+          cell.className = 'day-cell inactive';
+          cell.innerHTML = '<div class="day-number">' + (i + 1) + '</div>';
+          grid.appendChild(cell);
+        }
+        renderUpcoming();
+      }
+
+      /* day modal */
+      function openDayModal(dateKey, editId) {
+        $('#day-modal-title').textContent = 'Events on ' + dateKey;
+        $('#ev-date').value = dateKey;
+        $('#ev-title').value = '';
+        $('#ev-start').value = '';
+        $('#ev-end').value = '';
+        $('#ev-location').value = '';
+        $('#ev-desc').value = '';
+        const list = $('#day-events-list');
+        list.innerHTML = '';
+        const evs = calendarEvents.filter((ev) => ev.dateKey === dateKey);
+        evs.forEach((ev) => {
+          const el = document.createElement('div');
+          el.style.display = 'flex';
+          el.style.justifyContent = 'space-between';
+          el.style.alignItems = 'center';
+          el.style.padding = '8px';
+          el.style.borderRadius = '8px';
+          el.style.background = 'rgba(255,255,255,0.02)';
+          el.style.marginBottom = '6px';
+          el.innerHTML =
+            '<div><div style="font-weight:900">' +
+            escapeHtml(ev.title) +
+            '</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">' +
+            (ev.startTime ? formatShortTime(ev.startTime) + ' - ' + (ev.endTime ? formatShortTime(ev.endTime) : '') : 'All day') +
+            '</div></div><div style="display:flex;gap:8px"><button class="btn secondary edit" data-id="' +
+            ev.id +
+            '">Edit</button><button class="btn secondary del" data-id="' +
+            ev.id +
+            '">Delete</button></div>';
+          list.appendChild(el);
+        });
+        $all('#day-events-list .edit').forEach((b) =>
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const ev = customEvents.find((x) => x.id === id);
+            if (ev) {
+              $('#ev-title').value = ev.title;
+              $('#ev-date').value = ev.date;
+              $('#ev-start').value = ev.startTime || '';
+              $('#ev-end').value = ev.endTime || '';
+              $('#ev-location').value = ev.location || '';
+              $('#ev-desc').value = ev.description || '';
+              $('#ev-save').dataset.editId = ev.id;
+            }
+          })
+        );
+        $all('#day-events-list .del').forEach((b) =>
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            if (!confirm('Delete event?')) return;
+            customEvents = customEvents.filter((c) => c.id !== id);
+            localStorage.setItem('klein_custom_events', JSON.stringify(customEvents));
+            fetchAndMergeICS();
+            renderMonth(viewYear, viewMonth);
+            showToast('Deleted');
+          })
+        );
+        $('#ev-save').dataset.editId = editId || '';
+        openModal('day-modal');
+      }
+      $('#ev-cancel').addEventListener('click', () => closeModal('day-modal'));
+      $('#ev-save').addEventListener('click', () => {
+        const id = $('#ev-save').dataset.editId || Math.random().toString(36).slice(2, 9);
+        const title = $('#ev-title').value.trim() || 'Untitled';
+        const date = $('#ev-date').value;
+        const st = $('#ev-start').value;
+        const et = $('#ev-end').value;
+        const loc = $('#ev-location').value;
+        const desc = $('#ev-desc').value;
+        if (!date) {
+          alert('Pick a date');
+          return;
+        }
+        const obj = { id, title, date, startTime: st, endTime: et, location: loc, description: desc };
+        const idx = customEvents.findIndex((c) => c.id === id);
+        if (idx >= 0) customEvents[idx] = obj;
+        else customEvents.push(obj);
+        localStorage.setItem('klein_custom_events', JSON.stringify(customEvents));
+        fetchAndMergeICS();
+        renderMonth(viewYear, viewMonth);
+        closeModal('day-modal');
+        showToast('Saved');
+      });
+
+      $('#prev-month').addEventListener('click', () => {
+        if (viewMonth === 0) {
+          viewMonth = 11;
+          viewYear--;
+        } else viewMonth--;
+        renderMonth(viewYear, viewMonth);
+      });
+      $('#next-month').addEventListener('click', () => {
+        if (viewMonth === 11) {
+          viewMonth = 0;
+          viewYear++;
+        } else viewMonth++;
+        renderMonth(viewYear, viewMonth);
+      });
+      $('#today-month').addEventListener('click', () => {
+        const n = new Date();
+        viewYear = n.getFullYear();
+        viewMonth = n.getMonth();
+        renderMonth(viewYear, viewMonth);
+      });
+
+      /* Countdown logic (AM/PM display and until lunch) */
+      function updateCountdown() {
+        const now = new Date();
+        const schedule = buildSchedule();
+        if (!schedule.length) {
+          $('#current-period').textContent = 'Select lunch in Settings';
+          $('#next-period').textContent = '';
+          $('#period-progress').style.width = '0%';
+          $('#time-until-end').textContent = '—';
+          $('#end-of-school').textContent = '';
+          return;
+        }
+        const startDay = toDate(schoolStart);
+        const endDay = toDate(schoolEnd);
+        if (now < startDay) {
+          $('#current-period').textContent = "School hasn't started";
+          $('#next-period').textContent = 'Starts in ' + diffStr((startDay - now) / 1000);
+          $('#period-progress').style.width = '0%';
+          $('#time-until-end').textContent = diffStr((endDay - now) / 1000);
+          $('#end-of-school').textContent = 'Ends ' + formatShortTime(schoolEnd);
+          return;
+        }
+        if (now > endDay) {
+          $('#current-period').textContent = 'School has ended';
+          $('#next-period').textContent = 'Starts tomorrow ' + formatShortTime(schoolStart);
+          $('#period-progress').style.width = '100%';
+          $('#time-until-end').textContent = '—';
+          $('#end-of-school').textContent = '';
+          return;
+        }
+        let lunchPeriod = null;
+        for (const p of schedule) if (p.name.toLowerCase().includes('lunch')) lunchPeriod = p;
+        if (lunchPeriod) {
+          const ls = toDate(lunchPeriod.start);
+          if (now < ls) $('#lunch-countdown').textContent = 'Until lunch: ' + diffStr((ls - now) / 1000);
+          else {
+            const le = toDate(lunchPeriod.end);
+            if (now <= le)
+              $('#lunch-countdown').textContent = 'Lunch ends in: ' + diffStr((le - now) / 1000);
+            else $('#lunch-countdown').textContent = 'Lunch is over';
+          }
+        } else {
+          $('#lunch-countdown').textContent = '';
+        }
+        for (let i = 0; i < schedule.length; i++) {
+          const p = schedule[i];
+          const s = toDate(p.start);
+          const e = toDate(p.end);
+          if (now >= s && now <= e) {
+            const total = (e - s) / 1000;
+            const elapsed = (now - s) / 1000;
+            const remaining = (e - now) / 1000;
+            $('#current-period').textContent = 'Now: ' + p.name;
+            $('#next-period').textContent =
+              'Ends in: ' + diffStr(remaining) + (i < schedule.length - 1 ? ' | Next: ' + schedule[i + 1].name : '');
+            $('#period-progress').style.width = (elapsed / total) * 100 + '%';
+            $('#time-until-end').textContent = diffStr((endDay - now) / 1000);
+            $('#end-of-school').textContent = 'Ends ' + formatShortTime(schoolEnd);
+            return;
+          }
+          if (now < s) {
+            $('#current-period').textContent = 'Between periods';
+            $('#next-period').textContent = 'Next: ' + p.name + ' in ' + diffStr((s - now) / 1000);
+            $('#period-progress').style.width = '0%';
+            $('#time-until-end').textContent = diffStr((endDay - now) / 1000);
+            $('#end-of-school').textContent = 'Ends ' + formatShortTime(schoolEnd);
+            return;
+          }
+        }
+      }
+      function buildSchedule() {
+        if (!lunchType) return [];
+        const base = [
+          { name: '1st Period', start: '07:10', end: '08:00' },
+          { name: 'Passing Period', start: '08:00', end: '08:06', isPassing: true },
+          { name: '2nd Period', start: '08:06', end: '08:56' },
+          { name: 'Passing Period', start: '08:56', end: '09:02', isPassing: true },
+          { name: '3rd Period', start: '09:02', end: '09:52' },
+          { name: 'Passing Period', start: '09:52', end: '09:58', isPassing: true },
+          { name: '4th Period', start: '09:58', end: '10:48' },
+          { name: 'InKlein', start: '10:48', end: '11:18' },
+          { name: 'Passing Period', start: '11:18', end: '11:24', isPassing: true },
+        ];
+        const lunches = {
+          A: [
+            { name: 'A Lunch', start: '11:24', end: '11:48' },
+            { name: '5th Period', start: '11:48', end: '12:43' },
+          ],
+          B: [
+            { name: '5th Period', start: '11:24', end: '11:48' },
+            { name: 'B Lunch', start: '11:48', end: '12:18' },
+            { name: '5th Period', start: '12:18', end: '12:43' },
+          ],
+          C: [
+            { name: '5th Period', start: '11:24', end: '12:18' },
+            { name: 'C Lunch', start: '12:18', end: '12:48' },
+          ],
+        };
+        const after = [
+          { name: 'Passing Period', start: '12:48', end: '12:49', isPassing: true },
+          { name: '6th Period', start: '12:49', end: '13:39' },
+          { name: 'Passing Period', start: '13:39', end: '13:45', isPassing: true },
+          { name: '7th Period', start: '13:45', end: '14:35' },
+        ];
+        return base.concat(lunches[lunchType] || []).concat(after);
+      }
+      function toDate(t) {
+        const p = t.split(':').map(Number);
+        const d = new Date();
+        d.setHours(p[0] || 0, p[1] || 0, 0, 0);
+        return d;
+      }
+      function diffStr(sec) {
+        sec = Math.max(0, Math.floor(sec));
+        const h = Math.floor(sec / 3600),
+          m = Math.floor((sec % 3600) / 60),
+          s = Math.floor(sec % 60);
+        return (h ? h + 'h ' : '') + (m ? m + 'm ' : '') + s + 's';
+      }
+      function updateScheduleTable() {
+        const out = $('#modal-schedule-body');
+        out.innerHTML = '';
+        const s = buildSchedule();
+        if (!s.length) {
+          out.innerHTML =
+            '<div style="color:rgba(255,255,255,0.7)">No schedule (select lunch)</div>';
+          return;
+        }
+        s.forEach((p) => {
+          const div = document.createElement('div');
+          div.style.display = 'flex';
+          div.style.justifyContent = 'space-between';
+          div.style.padding = '8px';
+          div.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+          div.innerHTML =
+            '<div style="font-weight:900">' +
+            escapeHtml(p.name) +
+            '</div><div>' +
+            formatShortTime(p.start) +
+            ' — ' +
+            formatShortTime(p.end) +
+            '</div>';
+          out.appendChild(div);
+        });
+      }
+
+      /* init */
+      function init() {
+        spawnOrbs();
+        attachTabs();
+        attachModalClosers();
+        loadSettingsToUI();
+        renderNotes();
+        loadGames();
+        fetchAndMergeICS();
+        renderMonth(viewYear, viewMonth);
+        setInterval(() => {
+          loadClock();
+          updateCountdown();
+        }, 1000);
+        loadClock();
+        updateCountdown();
+        if (!lunchType) setTimeout(() => openModal('lunch-modal'), 600);
+
+        // ensure game object placeholder exists at start
+        createGameObject();
+
+        // ensure fullscreen button UI matches current fullscreen state
+        updateFullscreenButtons();
+      }
+      window.addEventListener('DOMContentLoaded', init);
+    </script>
+    </body>
 </html>
