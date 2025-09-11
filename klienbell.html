@@ -523,7 +523,7 @@ function createGameObject(){
 /* Games list + sandbox (object) */
 async function loadGames(){
   try {
-    const r = await fetch('https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/gameList.json', { cache: 'no-cache' })
+    const r = await fetch('https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/GameList.json', { cache: 'no-cache' })
     games = await r.json()
     renderGames()
   } catch (err) {
