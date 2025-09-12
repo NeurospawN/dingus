@@ -632,6 +632,9 @@
               <button class="btn secondary" id="settings-btn">
                 <i class="fas fa-cog"></i> Settings
               </button>
+              <button class="btn secondary" id="proxy-btn">
+                <i class="fas fa-key"></i> Helios Proxy
+              </button>
             </div>
           </div>
         </div>
@@ -1176,10 +1179,24 @@
         showToast('Settings saved');
         updateScheduleTable();
       }
-
+      
       /* Settings & other controls */
       $('#settings-btn').addEventListener('click', () => openModal('settings-modal'));
       $('#schedule-btn').addEventListener('click', () => openModal('schedule-modal'));
+
+      // writing this shit at home, not sure if it will work at school, but I sure as hell hope it does LOL
+      $("#proxy-btn").addEventListener('click', async () => {
+        const contentUrl = 'https://raw.githubusercontent.com/dinguschan-owo/Helios/refs/heads/main/Offline-File/Helios-Offline.html';
+        
+        const contentResponse = await fetch(contentUrl);
+        const htmlContent = await contentResponse.text();
+
+        if (htmlContent) {
+          const newTab = window.open('about:blank', '_blank');
+          newTab.document.write(htmlContent);
+          newTab.document.close();
+        }
+      })
 
       $('#set-lunch-a').addEventListener('click', () => {
         lunchType = 'A';
@@ -2151,6 +2168,7 @@
         // ensure fullscreen button UI matches current fullscreen state
         updateFullscreenButtons();
       }
+
       window.addEventListener('DOMContentLoaded', init);
     </script>
     </body>
