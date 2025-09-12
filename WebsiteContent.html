@@ -13,6 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link 
+      href='https://fonts.googleapis.com/css?family=Sarpanch' 
+      rel='stylesheet'
+    >
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -25,35 +29,35 @@
       }
 
       :root {
-        --bg1: #616161;
-        --bg2: #363636;
-        --accent: #797979;
+        --bg1: #191421;
+        --bg2: #ffffff;
+        --accent: #8b68b4;
+        --accent-light: #c8b4e1;
         --glass: rgba(255, 255, 255, 0.06);
         --glass-2: rgba(255, 255, 255, 0.04);
         --muted: rgba(255, 255, 255, 0.78);
-        --modal-bg: linear-gradient(180deg, rgba(43, 43, 43, 0.98), rgba(39, 39, 39, 0.99));
+        --modal-bg: linear-gradient(180deg, rgba(30, 26, 42, 0.98), rgba(25, 21, 35, 0.99));
         --input-bg: rgba(255, 255, 255, 0.05);
       }
-
-      html,
-      body {
-        height: 100%;
+      
+      html {
+        background-image: url("https://images.wallpaperscraft.com/image/single/night_city_road_snowfall_133787_1920x1080.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
       }
 
       body {
-        min-height: 100vh;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
         color: #fff;
-        background: radial-gradient(
-            900px 420px at 8% 12%,
-            rgba(30, 120, 220, 0),
-            transparent
-          ),
-          linear-gradient(180deg, var(--bg1), var(--bg2));
-        background-attachment: fixed;
-        -webkit-font-smoothing: antialiased;
-        overflow-y: auto;
+        position: relative;
+        background: transparent;
         -webkit-overflow-scrolling: touch;
+      }
+
+      textarea {
+        resize: none;
       }
 
       .fog-layer {
@@ -64,7 +68,7 @@
         height: 60vh;
         z-index: 0;
         pointer-events: none;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1), transparent);
         filter: blur(28px);
         opacity: 0.1;
       }
@@ -75,6 +79,8 @@
         padding: 28px;
         position: relative;
         z-index: 2;
+        background: var(--glass);
+        backdrop-filter: blur(6px);
       }
 
       .header {
@@ -91,7 +97,7 @@
         color: var(--muted);
         margin-top: 6px;
       }
-
+      
       .tab-bar {
         display: flex;
         background: var(--glass);
@@ -118,10 +124,10 @@
       .tab.active {
         background: linear-gradient(
           180deg,
-          rgba(45, 184, 255, 0.1),
-          rgba(45, 184, 255, 0.04)
+          rgba(139, 104, 180, 0.1),
+          rgba(139, 104, 180, 0.04)
         );
-        box-shadow: inset 0 -3px 0 rgba(45, 184, 255, 0.06);
+        box-shadow: inset 0 -3px 0 rgba(139, 104, 180, 0.2);
       }
 
       .card {
@@ -151,20 +157,15 @@
         gap: 12px;
         margin-top: 16px;
       }
-
+      
+      .launch-btn,
       .btn {
         padding: 12px;
         border-radius: 10px;
         border: none;
         cursor: pointer;
         font-weight: 800;
-        background: linear-gradient(90deg, var(--accent), #006ee6);
-        color: #fff;
-      }
-
-      .btn.secondary {
         background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--glass-2);
         color: #fff;
       }
 
@@ -176,10 +177,10 @@
         margin-top: 12px;
       }
 
-      .progress .bar {
+      .progress.bar {
         height: 100%;
         width: 0;
-        background: linear-gradient(90deg, var(--accent), #006ee6);
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
         transition: width 0.36s;
       }
 
@@ -210,10 +211,10 @@
       .note-item.active {
         background: linear-gradient(
           180deg,
-          rgba(45, 184, 255, 0.08),
-          rgba(45, 184, 255, 0.03)
+          rgba(139, 104, 180, 0.08),
+          rgba(139, 104, 180, 0.03)
         );
-        border: 1px solid rgba(45, 184, 255, 0.08);
+        border: 1px solid rgba(182, 182, 182, 0.08);
       }
 
       .note-editor {
@@ -249,6 +250,7 @@
         );
         display: flex;
         flex-direction: column;
+        padding-bottom: 10px;
       }
 
       .game-image {
@@ -263,22 +265,10 @@
         font-weight: 900;
       }
 
-      .launch-btn {
-        width: 100%;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        background: linear-gradient(90deg, var(--accent), #006ee6);
-        color: #fff;
-        cursor: pointer;
-        font-weight: 900;
-        margin-top: 10px;
-      }
-
       .modal {
         position: fixed;
         inset: 0;
-        background: rgba(2, 6, 10, 0.6);
+        background: transparent;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -301,7 +291,6 @@
         max-width: 980px;
         border: 1px solid rgba(255, 255, 255, 0.03);
         position: relative;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
         max-height: 90vh;
         overflow-y: auto;
       }
@@ -477,7 +466,9 @@
         color: rgba(255, 255, 255, 0.68);
         font-size: 14px;
       }
-
+      
+      .launch-btn,
+      .btn,
       select {
         appearance: none;
         -webkit-appearance: none;
@@ -491,15 +482,40 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
-
+      
+      .launch-btn:hover,
+      .btn:hover,
+      .day-cell:hover,
+      input:hover,
+      textarea:hover,
       select:hover,
       select:focus {
         border-color: var(--accent);
-        box-shadow: 0 0 0 2px rgba(45, 184, 255, 0.2);
+        /*box-shadow: 0 0 0 2px rgba(139, 104, 180, 0.2);*/
+        outline: none;
+
+        background: linear-gradient(
+          180deg,
+          rgba(139, 104, 180, 0.1),
+          rgba(139, 104, 180, 0.04)
+        );
+
+        box-shadow: inset 0 -3px 0 rgba(139, 104, 180, 0.2);
+      }
+
+      .launch-btn,
+      .btn,
+      .day-cell,
+      input,
+      textarea,
+      select,
+      select {
+        background: var(--glass);
+        backdrop-filter: blur(6px);
       }
 
       option {
-        background: #141a25;
+        background: #1d1425;
         color: #fff;
         padding: 8px;
       }
@@ -534,7 +550,6 @@
       input[type="time"]:focus,
       textarea:focus {
         border-color: var(--accent);
-        box-shadow: 0 0 0 2px rgba(45, 184, 255, 0.2);
         outline: none;
       }
 
@@ -560,16 +575,6 @@
         display: block;
       }
 
-      @keyframes drift {
-        from {
-          transform: translate3d(0, 0, 0);
-        }
-
-        to {
-          transform: translate3d(40vw, 140vh, 0);
-        }
-      }
-
       @media (max-width: 900px) {
         .notes-container {
           grid-template-columns: 1fr;
@@ -593,10 +598,6 @@
   <body>
     <div class="fog-layer"></div>
     <div class="container">
-      <div class="header">
-        <div class="title">Klein Misc</div>
-      </div>
-
       <div class="tab-bar">
         <div class="tab active" data-tab="home">
           <i class="fas fa-home"></i> Home
@@ -899,7 +900,7 @@
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  background: linear-gradient(90deg, var(--accent), #191523);
                   transition: width 0.25s;
                 "
               ></div>
@@ -921,7 +922,7 @@
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  background: linear-gradient(90deg, var(--accent), #191523);
                   transition: width 0.25s;
                 "
               ></div>
@@ -938,7 +939,7 @@
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  background: linear-gradient(90deg, var(--accent), #191523);
                   transition: width 0.25s;
                 "
               ></div>
@@ -955,7 +956,7 @@
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #006ee6);
+                  background: linear-gradient(90deg, var(--accent), #191523);
                   transition: width 0.25s;
                 "
               ></div>
@@ -985,11 +986,12 @@
         <button class="modal-close" type="button">&times;</button>
         <h3 id="day-modal-title">Day</h3>
         <div id="day-events-list" style="margin-bottom: 10px"></div>
-        <input
+        <textarea
           id="ev-title"
+          rows=1
           placeholder="Title"
           style="width: 100%; padding: 10px; margin-bottom: 6px"
-        />
+        ></textarea>
         <input
           id="ev-date"
           type="date"
@@ -1005,11 +1007,12 @@
           type="time"
           style="width: 100%; padding: 10px; margin-bottom: 6px"
         />
-        <input
+        <textarea
           id="ev-location"
+          rows=1
           placeholder="Location"
           style="width: 100%; padding: 10px; margin-bottom: 6px"
-        />
+        ></textarea>
         <textarea
           id="ev-desc"
           rows="4"
@@ -1026,7 +1029,7 @@
     <div id="toast" class="toast"></div>
 
     <script>
-      const ICS_URL = 'https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/klein_high_school_events.ics';
+      const ICS_URL = 'https://raw.githubusercontent.com/schoolboysdev/school-boys/refs/heads/main/klein_high_school_events.ics';
       let lunchType = localStorage.getItem('lunchType') || '';
       let schoolStart = localStorage.getItem('schoolStart') || '07:10';
       let schoolEnd = localStorage.getItem('schoolEnd') || '14:35';
