@@ -56,14 +56,6 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      .bg-orbs {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
       .fog-layer {
         position: fixed;
         left: 0;
@@ -599,7 +591,6 @@
   </head>
 
   <body>
-    <div class="bg-orbs" aria-hidden="true"></div>
     <div class="fog-layer"></div>
     <div class="container">
       <div class="header">
@@ -1093,48 +1084,6 @@
           hour: 'numeric',
           minute: '2-digit',
         });
-      }
-
-      /* Background orbs: animate and recycle */
-      function createOrb(i) {
-        const o = document.createElement('div');
-        o.style.position = 'absolute';
-        o.style.borderRadius = '50%';
-        const s = 40 + Math.floor(Math.random() * 220);
-        o.style.width = s + 'px';
-        o.style.height = s + 'px';
-        o.style.left = Math.random() * 120 - 10 + '%';
-        o.style.top = Math.random() * -60 + '%';
-        const colors = [
-          'rgba(45,184,255,0.18)',
-          'rgba(0,122,255,0.14)',
-          'rgba(0,200,150,0.12)',
-          'rgba(255,120,110,0.08)',
-          'rgba(140,80,255,0.06)',
-        ];
-        o.style.background = colors[i % colors.length];
-        o.style.opacity = (0.2 + Math.random() * 0.5).toString();
-        const dur = (12 + Math.random() * 28).toFixed(2) + 's';
-        o.style.animation = 'drift ' + dur + ' linear infinite';
-        o.style.animationDelay = (Math.random() * -6).toFixed(2) + 's';
-        o.style.filter = 'blur(' + (4 + Math.random() * 18) + 'px)';
-        o.style.zIndex = 0;
-        return o;
-      }
-      function spawnOrbs() {
-        const container = document.querySelector('.bg-orbs');
-        container.innerHTML = '';
-        for (let i = 0; i < 28; i++) {
-          container.appendChild(createOrb(i));
-        }
-        setInterval(() => {
-          for (let r = 0; r < 3; r++) {
-            if (container.firstChild) container.removeChild(container.firstChild);
-          }
-          for (let i = 0; i < 3; i++) {
-            container.appendChild(createOrb(Math.floor(Math.random() * 5)));
-          }
-        }, 4200);
       }
 
       /* Tabs and modals */
@@ -2174,7 +2123,6 @@
 
       /* init */
       function init() {
-        spawnOrbs();
         attachTabs();
         attachModalClosers();
         loadSettingsToUI();
