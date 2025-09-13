@@ -30,7 +30,7 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/drive-mad-349899468.png",
+    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/DriveMad.png",
     "gamename": "Drive Mad",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Drive%20Mad.html",
     "gameclass": ["puzzle"]
@@ -102,13 +102,13 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/idle-dice-150x150-195764150.jpg",
+    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/IdleDice.png",
     "gamename": "Idle Dice",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Idle%20Dice.html",
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Jetpack-Joyride-Cover-299803748.png",
+    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/JetpackJoyride.png",
     "gamename": "Jetpack Joyride",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Jetpack%20Joyride.html",
     "gameclass": ["action"]
@@ -132,7 +132,7 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/4JJnGXW1XTkD-aXZEnS8Mqr-oOXLt2DpMLcckqWOwIoey6YoewM57iXv3N5T9B6M7w-122065979.png",
+    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/PixelGun3D.jpg",
     "gamename": "Pixel Gun Survival",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Pixel%20Gun%20Survival.html",
     "gameclass": ["action"]
@@ -180,7 +180,7 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Station+141-236036436.png",
+    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Station141.jpg",
     "gamename": "Station 141",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Station%20141.html",
     "gameclass": ["action"]
