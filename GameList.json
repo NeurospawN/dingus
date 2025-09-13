@@ -150,12 +150,6 @@
     "gameclass": ["action"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/raft-title-2706468923.jpg",
-    "gamename": "Raft",
-    "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Raft.html",
-    "gameclass": ["puzzle"]
-  },
-  {
     "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/riddle-school-2953754017.png",
     "gamename": "Riddle School",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Riddle%20School.html",
