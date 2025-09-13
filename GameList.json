@@ -132,12 +132,6 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/PixelGun3D.jpg",
-    "gamename": "Pixel Gun Survival",
-    "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Pixel%20Gun%20Survival.html",
-    "gameclass": ["action"]
-  },
-  {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/riddle-school-2953754017.png",
     "gamename": "Riddle School",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Riddle%20School.html",
