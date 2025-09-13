@@ -48,24 +48,6 @@
     "gameclass": ["puzzle"]
   },
   {
-    "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/logo-1812066004.png",
-    "gamename": "Crazy Cattle 3D",
-    "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Crazy%20Cattle%203D.html",
-    "gameclass": ["action"]
-  },
-  {
-    "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/81Xs7ZsYvsL-1464353546.png",
-    "gamename": "Crazy Chicken 3D",
-    "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Crazy%20Chicken%203D.html",
-    "gameclass": ["action"]
-  },
-  {
-    "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/Crazy+Kitty+3D-2077301071.png",
-    "gamename": "Crazy Kitty 3D",
-    "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Crazy%20Kitty%203D.html",
-    "gameclass": ["action"]
-  },
-  {
     "gameicon": "https://raw.githubusercontent.com/schoolboysdev/school-boys/main/drive-mad-349899468.png",
     "gamename": "Drive Mad",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Drive%20Mad.html",
