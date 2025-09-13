@@ -49,49 +49,49 @@
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/FIVE-NIGHTS-AT-FREDDYS-3443037364.jpg",
-    "gamename": "FNaF",
+    "gamename": "Five Nights at Freddy's",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/capsule_616x353-3403746796.jpg",
-    "gamename": "FNaF 2",
+    "gamename": "FNAF 2",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's%202.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/08708de0a6534fc7ace6a3a76fa4a0a2294c27484a20d93146f66d392699ee5f-3746830118.jpg",
-    "gamename": "FNaF 3",
+    "gamename": "FNAF 3",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's%203.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/hero-1313706147.jpg",
-    "gamename": "FNaF 4",
+    "gamename": "FNAF 4",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's%204.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/46a698b58605d4777116ce5c4a88139f--halloween-play-1404480857.jpg",
-    "gamename": "FNaF 4: Halloween",
+    "gamename": "FNAF 4: Halloween",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's%204_%20Halloween.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/latest-952412222.png",
-    "gamename": "FNaF: Pizza Simulator",
+    "gamename": "FNAF: Pizza Simulator",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Pizza%20Simulator.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/4b9b2a84f04645b1f394c9afa1721737-3877779934.jpg",
-    "gamename": "FNaF: Sister Location",
+    "gamename": "FNAF: Sister Location",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Sister%20Location.html",
     "gameclass": ["puzzle"]
   },
   {
     "gameicon": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/ultimate-custom-night-614698140.jpg",
-    "gamename": "FNaF: Ultimate Custom Night",
+    "gamename": "FNAF: Ultimate Custom Night",
     "gameurl": "https://raw.githubusercontent.com/NeurospawN/dingus/refs/heads/main/Five%20Nights%20at%20Freddy's_%20Ultimate%20Custom%20Night.html",
     "gameclass": ["puzzle"]
   },
