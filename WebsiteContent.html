@@ -55,19 +55,6 @@
         resize: none;
       }
 
-      .fog-layer {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 60vh;
-        z-index: 0;
-        pointer-events: none;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1), transparent);
-        filter: blur(28px);
-        opacity: 0.1;
-      }
-
       .container {
         max-width: 1200px;
         margin: 24px auto;
@@ -625,7 +612,6 @@
   </head>
 
   <body>
-    <div class="fog-layer"></div>
     <div class="container">
       <div class="tab-bar">
         <div class="tab active" data-tab="home">
