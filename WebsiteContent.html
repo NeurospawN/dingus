@@ -1098,8 +1098,6 @@
       let lastGameUrl = null;
       
       function setBackgroundImage() {
-        console.log("willy!");
-        console.log(backgroundImage);
         if (!backgroundImage) {return;}
 
         function apply() {
@@ -1109,6 +1107,8 @@
         if (backgroundImage == "Default") {
           backgroundImage = defaultBackgroundImage
           apply()
+
+          return;
         }
 
         if (URL.canParse(backgroundImage)) {
