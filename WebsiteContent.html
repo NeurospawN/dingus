@@ -1098,7 +1098,7 @@
       let lastGameUrl = null;
       
       function setBackgroundImage() {
-        console.log(backgroundImage);
+        if (!backgroundImage) {return;}
 
         function apply() {
           document.body.style.backgroundImage = `url('${backgroundImage}')`;
