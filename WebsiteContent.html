@@ -31,28 +31,23 @@
       :root {
         --bg1: #191421;
         --bg2: #ffffff;
-        --accent: #8b68b4;
-        --accent-light: #c8b4e1;
+        --accent: #afafaf;
+        --accent-light: #ffffff;
         --glass: rgba(255, 255, 255, 0.06);
-        --glass-2: rgba(255, 255, 255, 0.04);
+        --glass-2: rgba(0, 0, 0, 0.04);
         --muted: rgba(255, 255, 255, 0.78);
-        --modal-bg: linear-gradient(180deg, rgba(30, 26, 42, 0.98), rgba(25, 21, 35, 0.99));
-        --input-bg: rgba(255, 255, 255, 0.05);
-      }
-      
-      html {
-        background-image: url("https://images.wallpaperscraft.com/image/single/night_city_road_snowfall_133787_1920x1080.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
+        --input-bg: rgba(255, 0, 0, 0.05);
       }
 
       body {
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
         color: #fff;
         position: relative;
-        background: transparent;
+        background-image: url("https://images6.alphacoders.com/890/890497.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
         -webkit-overflow-scrolling: touch;
       }
 
@@ -76,6 +71,7 @@
       .container {
         max-width: 1200px;
         margin: 24px auto;
+        border-radius: 12px;
         padding: 28px;
         position: relative;
         z-index: 2;
@@ -90,7 +86,7 @@
 
       .title {
         font-size: 44px;
-        font-weight: 800;
+        font-weight: 600;
       }
 
       .subtitle {
@@ -100,7 +96,7 @@
       
       .tab-bar {
         display: flex;
-        background: var(--glass);
+        background: transparent;
         border-radius: 12px;
         padding: 6px;
         gap: 6px;
@@ -114,24 +110,38 @@
         flex: 1;
         padding: 12px 14px;
         text-align: center;
-        border-radius: 10px;
         border: none;
         cursor: pointer;
-        font-weight: 800;
+        font-weight: 400;
         color: rgba(255, 255, 255, 0.86);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
         user-select: none;
       }
 
       .tab.active {
-        background: linear-gradient(
+        /*background: linear-gradient(
           180deg,
           rgba(139, 104, 180, 0.1),
           rgba(139, 104, 180, 0.04)
         );
-        box-shadow: inset 0 -3px 0 rgba(139, 104, 180, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 -3px 0 rgba(var(--accent-light), 0.2);
+        border: 1px solid rgba(var(--accent), 0.08);
         border-color: var(--accent);
+        outline: none;*/
+
+        border-color: var(--accent);
+        /*box-shadow: 0 0 0 2px rgba(139, 104, 180, 0.2);*/
         outline: none;
+
+        background: linear-gradient(
+          180deg,
+          rgba(var(--accent), 0),
+          rgba(var(--accent), 0)
+        );
+
+        box-shadow: inset 0 -3px 0 rgba(var(--accent-light), 0.2);
       }
 
       .card {
@@ -145,21 +155,31 @@
 
       .live-clock {
         font-size: 64px;
-        font-weight: 900;
+        font-weight: 600;
         text-align: center;
+
+        /*personal reminder: this is what makes this shit glow*/
+        background: rgba(255, 255, 255, .9);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        text-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
       }
 
       .date-display {
         text-align: center;
         color: var(--muted);
         margin-top: 6px;
-      }
+      } 
 
       .action-buttons {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 12px;
         margin-top: 16px;
+        font-weight: 400;
       }
       
       .launch-btn,
@@ -168,23 +188,24 @@
         border-radius: 10px;
         border: none;
         cursor: pointer;
-        font-weight: 800;
+        font-weight: 400;
         background: rgba(255, 255, 255, 0.03);
         color: #fff;
       }
 
       .progress {
         height: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
         overflow: hidden;
         margin-top: 12px;
       }
 
-      .progress.bar {
+      .bar {
         height: 100%;
         width: 0;
-        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        border-radius: 6px;
+        background-color: rgba(255,255,255,0.5);
         transition: width 0.36s;
       }
 
@@ -215,10 +236,10 @@
       .note-item.active {
         background: linear-gradient(
           180deg,
-          rgba(139, 104, 180, 0.08),
-          rgba(139, 104, 180, 0.03)
+          rgba(186, 186, 186, 0.08),
+          rgba(186, 186, 186, 0.03)
         );
-        border: 1px solid rgba(182, 182, 182, 0.08);
+        border: 1px solid rgba(var(--accent), 0.08);
       }
 
       .note-editor {
@@ -266,7 +287,7 @@
       }
 
       .game-title {
-        font-weight: 900;
+        font-weight: 600;
       }
 
       .modal {
@@ -288,7 +309,8 @@
       }
 
       .modal-content {
-        background: var(--modal-bg);
+        background: var(--glass);
+        backdrop-filter: blur(12px);
         border-radius: 12px;
         padding: 20px;
         width: 96%;
@@ -391,7 +413,7 @@
       }
 
       .weekday {
-        font-weight: 800;
+        font-weight: 200;
         text-align: center;
         color: rgba(255, 255, 255, 0.78);
         padding: 6px;
@@ -403,6 +425,7 @@
         background: rgba(255, 255, 255, 0.02);
         position: relative;
         cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -411,23 +434,24 @@
         transition: all 0.2s ease;
       }
 
-      .day-cell:hover {
+      /*.day-cell:hover {
         background: rgba(255, 255, 255, 0.05);
         transform: translateY(-2px);
-      }
+      }*/
 
       .day-cell.inactive {
         opacity: 0.28;
       }
 
       .day-number {
-        font-weight: 800;
+        font-weight: 400;
       }
 
       .event-pill {
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.02);
         padding: 6px;
-        border-radius: 999px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 12px;
         margin-top: auto;
         overflow: hidden;
@@ -441,7 +465,8 @@
         left: 50%;
         transform: translateX(-50%);
         bottom: 24px;
-        background: rgba(10, 12, 14, 0.95);
+        background: var(--glass);
+        backdrop-filter: blur(6px);
         padding: 10px 14px;
         border-radius: 10px;
         color: #fff;
@@ -461,7 +486,7 @@
         margin-bottom: 12px;
       }
 
-      .select-wrapper .select-caret {
+      .select-wrapper.select-caret {
         position: absolute;
         right: 12px;
         top: 50%;
@@ -471,12 +496,12 @@
         font-size: 14px;
       }
       
+      .tab,
       .launch-btn,
       .btn,
       select {
         appearance: none;
         -webkit-appearance: none;
-        background: var(--input-bg);
         color: #fff;
         padding: 12px;
         border-radius: 8px;
@@ -488,6 +513,7 @@
       }
       
       .launch-btn:hover,
+      .tab:hover,
       .btn:hover,
       .day-cell:hover,
       input:hover,
@@ -500,11 +526,11 @@
 
         background: linear-gradient(
           180deg,
-          rgba(139, 104, 180, 0.1),
-          rgba(139, 104, 180, 0.04)
+          rgba(var(--accent), 0),
+          rgba(var(--accent), 0)
         );
 
-        box-shadow: inset 0 -3px 0 rgba(139, 104, 180, 0.2);
+        box-shadow: inset 0 -3px 0 rgba(var(--accent-light), 0.2);
       }
 
       .launch-btn,
@@ -531,7 +557,7 @@
         background: rgba(255, 255, 255, 0.03);
         color: #fff;
         cursor: pointer;
-        font-weight: 800;
+        font-weight: 600;
       }
 
       input[type="text"],
@@ -542,7 +568,6 @@
         padding: 12px;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        background: var(--input-bg);
         color: #fff;
         font-size: 14px;
         margin-bottom: 10px;
@@ -558,14 +583,14 @@
       }
 
       label {
-        font-weight: 800;
+        font-weight: 600;
         display: block;
         margin-bottom: 6px;
         color: rgba(255, 255, 255, 0.9);
       }
 
       .modal h3 {
-        font-weight: 900;
+        font-weight: 600;
         margin-bottom: 16px;
         font-size: 20px;
         color: #fff;
@@ -626,13 +651,13 @@
             <div class="live-clock" id="clock">12:00:00 PM</div>
             <div class="date-display" id="date">Monday, January 1, 2023</div>
             <div class="action-buttons">
-              <button class="btn secondary" id="schedule-btn">
+              <button class="btn" id="schedule-btn">
                 <i class="fas fa-table"></i> View Schedule
               </button>
-              <button class="btn secondary" id="settings-btn">
+              <button class="btn" id="settings-btn">
                 <i class="fas fa-cog"></i> Settings
               </button>
-              <button class="btn secondary" id="proxy-btn">
+              <button class="btn" id="proxy-btn">
                 <i class="fas fa-key"></i> Helios Proxy
               </button>
             </div>
@@ -642,11 +667,11 @@
 
       <div id="schedule-tab" class="tab-content">
         <div class="card">
-          <h3 style="font-weight: 900; margin-bottom: 12px">Schedule Countdown</h3>
+          <h3 style="font-weight: 600; margin-bottom: 12px">Schedule Countdown</h3>
           <div style="display: flex; gap: 12px; flex-wrap: wrap">
             <div style="flex: 1; min-width: 300px">
               <div style="padding: 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.02)">
-                <div style="font-weight: 900; font-size: 20px" id="current-period">
+                <div style="font-weight: 600; font-size: 20px" id="current-period">
                   Loading...
                 </div>
                 <div style="color: var(--muted); margin-top: 6px" id="next-period">
@@ -667,7 +692,7 @@
                 "
               >
                 <div style="font-size: 12px; color: var(--muted)">School day</div>
-                <div style="font-weight: 900; font-size: 26px; margin-top: 8px" id="time-until-end">
+                <div style="font-weight: 600; font-size: 26px; margin-top: 8px" id="time-until-end">
                   —
                 </div>
                 <div style="color: var(--muted); margin-top: 6px" id="end-of-school">
@@ -681,7 +706,7 @@
           </div>
           <div style="margin-top: 12px">
             <button class="btn" id="open-full-schedule">
-              <i class="fas fa-list"></i> View Full Schedule
+              <i class="fas fa-list"></i> View Entire Schedule
             </button>
           </div>
         </div>
@@ -699,7 +724,7 @@
                   margin-bottom: 8px;
                 "
               >
-                <div style="font-weight: 900">Your Notes</div>
+                <div style="font-weight: 600">Your Notes</div>
                 <button class="btn" id="new-note-btn">
                   <i class="fas fa-plus"></i> New
                 </button>
@@ -735,7 +760,7 @@
                 "
               ></textarea>
               <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px">
-                <button class="btn secondary" id="cancel-note">Cancel</button>
+                <button class="btn" id="cancel-note">Cancel</button>
                 <button class="btn" id="save-note">Save</button>
               </div>
             </div>
@@ -746,7 +771,7 @@
       <div id="games-tab" class="tab-content">
         <div class="card">
           <div style="display: flex; justify-content: space-between; align-items: center">
-            <h3 style="font-weight: 900; margin-bottom: 8px">Games</h3>
+            <h3 style="font-weight: 600; margin-bottom: 8px">Games</h3>
             <div>
               <button
                 class="fullscreen-btn"
@@ -767,16 +792,16 @@
             <div class="calendar-month">
               <div style="display: flex; justify-content: space-between; align-items: center">
                 <div>
-                  <div id="month-title" style="font-weight: 900"></div>
+                  <div id="month-title" style="font-weight: 600"></div>
                   <div style="color: var(--muted); font-size: 13px">
                     Click a day to add/edit events
                   </div>
                 </div>
                 <div style="display: flex; gap: 8px">
-                  <button class="btn secondary" id="prev-month">
+                  <button class="btn" id="prev-month">
                     <i class="fas fa-chevron-left"></i>
                   </button>
-                  <button class="btn secondary" id="next-month">
+                  <button class="btn" id="next-month">
                     <i class="fas fa-chevron-right"></i>
                   </button>
                   <button class="btn" id="today-month">Today</button>
@@ -794,7 +819,7 @@
               <div class="month-grid" id="days-grid" style="margin-top: 8px"></div>
             </div>
             <div style="flex: 1; min-width: 260px">
-              <div style="font-weight: 900; margin-bottom: 8px">Upcoming</div>
+              <div style="font-weight: 600; margin-bottom: 8px">Upcoming</div>
               <div id="calendar-upcoming" style="display: flex; flex-direction: column; gap: 8px"></div>
             </div>
           </div>
@@ -820,18 +845,49 @@
         <h3 style="margin-bottom: 12px">Settings</h3>
         <div style="display: grid; gap: 10px">
           <div class="select-wrapper">
-            <label style="font-weight: 800; display: block; margin-bottom: 6px">Lunch</label>
+            <label style="font-weight: 600; display: block; margin-bottom: 6px">Lunch</label>
             <select id="lunch-select">
               <option value="">Not set</option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
             </select>
-            <div class="select-caret">▾</div>
+          </div>
+          <div class="select-wrapper">
+            <label style="font-weight: 600; display: block; margin-bottom: 6px">Background Image (Image URL)</label>
+            <input
+                type="text"
+                id="background-url-input"
+                value="Default"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 8px;
+                  color: #fff;
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                "
+              />
+            </select>
+          </div>
+          <div class="select-wrapper">
+            <label style="font-weight: 600; display: block; margin-bottom: 6px">UI Accent</label>
+            <input
+                type="color"
+                id="theme-color-picker"
+                value="Default"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 8px;
+                  color: #fff;
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                "
+              />
+            </select>
           </div>
           <div style="display: flex; gap: 8px">
             <div style="flex: 1">
-              <label style="font-weight: 800">Start</label>
+              <label style="font-weight: 600">School Timeframe</label>
               <input
                 type="time"
                 id="start-time"
@@ -840,14 +896,13 @@
                   width: 100%;
                   padding: 10px;
                   border-radius: 8px;
-                  background: var(--input-bg);
                   color: #fff;
                   border: 1px solid rgba(255, 255, 255, 0.08);
                 "
               />
             </div>
             <div style="flex: 1">
-              <label style="font-weight: 800">End</label>
+              <label style="font-weight: 600">End</label>
               <input
                 type="time"
                 id="end-time"
@@ -856,7 +911,6 @@
                   width: 100%;
                   padding: 10px;
                   border-radius: 8px;
-                  background: var(--input-bg);
                   color: #fff;
                   border: 1px solid rgba(255, 255, 255, 0.08);
                 "
@@ -865,8 +919,8 @@
           </div>
           <div style="display: flex; gap: 8px">
             <button class="btn" id="save-settings">Save</button>
-            <button class="btn secondary" id="export-btn">Export</button>
-            <button class="btn secondary" id="import-btn">Import</button>
+            <button class="btn" id="export-btn">Export</button>
+            <button class="btn" id="import-btn">Import</button>
             <input id="import-file" type="file" accept=".json,.ics" style="display: none" />
           </div>
         </div>
@@ -876,7 +930,7 @@
     <div class="modal" id="schedule-modal">
       <div class="modal-content">
         <button class="modal-close" type="button">&times;</button>
-        <h3 style="margin-bottom: 12px">Full Schedule</h3>
+        <h3 style="margin-bottom: 12px">Schedule</h3>
         <div id="modal-schedule-body"></div>
       </div>
     </div>
@@ -885,7 +939,7 @@
       <div class="modal-content" style="position: relative; height: 86vh; max-width: 1200px">
         <button class="modal-close" type="button">&times;</button>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
-          <div style="font-weight: 900">Game Sandbox</div>
+          <div style="font-weight: 600">Game Sandbox</div>
           <div style="display: flex; gap: 8px; align-items: center">
             <button class="fullscreen-btn" id="enter-fullscreen" style="display: none">
               <i class="fas fa-expand"></i> Fullscreen
@@ -900,15 +954,16 @@
             <div style="font-size: 28px; color: var(--accent)">
               <i class="fas fa-cloud-download-alt"></i>
             </div>
-            <div style="font-weight: 900; margin-top: 8px">Retrieving...</div>
-            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+            <div style="font-weight: 600; margin-top: 8px">Retrieving...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; margin-top: 8px">
               <div
                 id="progress-retrieving"
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #191523);
+                  background: var(--accent);
                   transition: width 0.25s;
+                  border-radius: 10px;
                 "
               ></div>
             </div>
@@ -917,20 +972,21 @@
             <div style="font-size: 28px; color: var(--accent)">
               <i class="fas fa-server"></i>
             </div>
-            <div id="server-text" style="font-weight: 900; margin-top: 8px">
+            <div id="server-text" style="font-weight: 600; margin-top: 8px">
               Reading...
             </div>
             <div class="server-lines" id="server-lines" style="max-height: 160px; overflow: auto">
               <pre id="server-lines-pre" style="margin: 0"></pre>
             </div>
-            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; margin-top: 8px">
               <div
                 id="progress-reading"
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #191523);
+                  background: var(--accent);
                   transition: width 0.25s;
+                  border-radius: 10px;
                 "
               ></div>
             </div>
@@ -939,15 +995,16 @@
             <div style="font-size: 28px; color: var(--accent)">
               <i class="fas fa-utensils"></i>
             </div>
-            <div style="font-weight: 900; margin-top: 8px">Assembling sandbox...</div>
-            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+            <div style="font-weight: 600; margin-top: 8px">Assembling sandbox...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; margin-top: 8px">
               <div
                 id="progress-cooking"
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #191523);
+                  background: var(--accent);
                   transition: width 0.25s;
+                  border-radius: 10px;
                 "
               ></div>
             </div>
@@ -956,15 +1013,16 @@
             <div style="font-size: 28px; color: var(--accent)">
               <i class="fas fa-rocket"></i>
             </div>
-            <div style="font-weight: 900; margin-top: 8px">Deploying...</div>
-            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 999px; margin-top: 8px">
+            <div style="font-weight: 600; margin-top: 8px">Deploying...</div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.03); border-radius: 10px; margin-top: 8px">
               <div
                 id="progress-deploying"
                 style="
                   height: 100%;
                   width: 0;
-                  background: linear-gradient(90deg, var(--accent), #191523);
+                  background: var(--accent);
                   transition: width 0.25s;
+                  border-radius: 10px;
                 "
               ></div>
             </div>
@@ -979,7 +1037,7 @@
             <div style="font-size: 28px; margin-bottom: 8px">
               <i class="fas fa-exclamation-circle"></i>
             </div>
-            <div style="font-weight: 900">Game failed to load</div>
+            <div style="font-weight: 600">Game failed to load</div>
             <div style="margin-top: 12px">
               <button class="btn" id="retry-launch">Retry</button>
             </div>
@@ -1027,7 +1085,7 @@
           style="width: 100%; padding: 10px; margin-bottom: 8px"
         ></textarea>
         <div style="display: flex; justify-content: flex-end; gap: 8px">
-          <button class="btn secondary" id="ev-cancel">Cancel</button>
+          <button class="btn" id="ev-cancel">Cancel</button>
           <button class="btn" id="ev-save">Save</button>
         </div>
       </div>
@@ -1040,6 +1098,9 @@
       let lunchType = localStorage.getItem('lunchType') || '';
       let schoolStart = localStorage.getItem('schoolStart') || '07:10';
       let schoolEnd = localStorage.getItem('schoolEnd') || '14:35';
+      let backgroundImage = localStorage.getItem('backgroundImage');
+      let themeColor = localStorage.getItem('themeColor');
+      let defaultBackgroundImage = "https://images6.alphacoders.com/890/890497.jpg";
       let notes = JSON.parse(localStorage.getItem('notes') || '[]');
       let customEvents = JSON.parse(localStorage.getItem('klein_custom_events') || '[]');
       let calendarEvents = [];
@@ -1049,6 +1110,38 @@
       let currentLoad = null;
       let currentBlobUrl = null;
       let lastGameUrl = null;
+      
+      function setBackgroundImage() {
+        function apply() {
+          document.body.style.backgroundImage = `url('${backgroundImage}')`;
+        }
+
+        if (backgroundImage == "Default") {
+          backgroundImage = defaultBackgroundImage
+          apply()
+        }
+
+        if (URL.canParse(backgroundImage)) {
+          apply()
+        }else{
+          showToast("Background Failed to Load (Invalid URL)");
+        }
+      }
+
+      function setThemeColor() {
+        function hexToRgb(hex) {
+          var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+          } : null;
+        }
+
+        let colorToApply = hexToRgb(themeColor);
+
+        document.documentElement.style.setProperty("--glass",`rgba(${colorToApply.r},${colorToApply.g},${colorToApply.b},0.06)`);
+      }
 
       function $(s) {
         return document.querySelector(s);
@@ -1164,25 +1257,53 @@
           schoolEnd = localStorage.getItem('schoolEnd');
           $('#end-time').value = schoolEnd;
         }
+        if (localStorage.getItem('backgroundImage')) {
+          backgroundImage = localStorage.getItem('backgroundImage');
+          $('#background-url-input').value = backgroundImage;
+        }
+        if (localStorage.getItem('themeColor')) {
+          themeColor = localStorage.getItem('themeColor');
+          $('#theme-color-picker').value = themeColor;
+        }
       }
+
       function saveSettings() {
         const sel = $('#lunch-select').value;
         if (sel) {
           lunchType = sel;
           localStorage.setItem('lunchType', sel);
+          showToast("Set Lunch To "+sel);
         }
         schoolStart = $('#start-time').value;
         schoolEnd = $('#end-time').value;
+        backgroundImage = $('#background-url-input').value;
+        themeColor = $('#theme-color-picker').value;
         localStorage.setItem('schoolStart', schoolStart);
         localStorage.setItem('schoolEnd', schoolEnd);
+        localStorage.setItem('backgroundImage', backgroundImage);
+        localStorage.setItem('themeColor',themeColor);
+
+        setThemeColor();
+        setBackgroundImage();
         closeModal('settings-modal');
-        showToast('Settings saved');
+        showToast('Saved Settings');
         updateScheduleTable();
       }
       
+      function openScheduleModal() {
+        const element = document.getElementById('modal-schedule-body');
+        const isEmpty = element.childNodes.length == 0;
+        
+        if (isEmpty){
+          updateScheduleTable();
+        }
+
+        openModal('schedule-modal');
+      }
+
       /* Settings & other controls */
       $('#settings-btn').addEventListener('click', () => openModal('settings-modal'));
-      $('#schedule-btn').addEventListener('click', () => openModal('schedule-modal'));
+      $('#schedule-btn').addEventListener('click', () => openScheduleModal());
 
       // writing this shit at home, not sure if it will work at school, but I sure as hell hope it does LOL
       $("#proxy-btn").addEventListener('click', async () => {
@@ -1221,7 +1342,7 @@
       });
 
       $('#save-settings').addEventListener('click', saveSettings);
-      $('#open-full-schedule').addEventListener('click', () => openModal('schedule-modal'));
+      $('#open-full-schedule').addEventListener('click', () => openScheduleModal());
 
       /* Notes */
       $('#new-note-btn').addEventListener('click', () => {
@@ -1235,7 +1356,7 @@
         notes.push({ title: t, content: c, date: new Date().toISOString() });
         localStorage.setItem('notes', JSON.stringify(notes));
         renderNotes();
-        showToast('Saved');
+        showToast('Saved Note');
       });
       $('#cancel-note').addEventListener('click', () => {
         $('#note-title').value = '';
@@ -1303,8 +1424,8 @@
 
       /* Import/export/ICS */
       $('#export-btn').addEventListener('click', () => {
-        const payload = { notes, customEvents, lunchType, schoolStart, schoolEnd };
-        const b = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const payload = {notes, customEvents, lunchType, schoolStart, schoolEnd, backgroundImage, themeColor};
+        const b = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
         const u = URL.createObjectURL(b);
         const a = document.createElement('a');
         a.href = u;
@@ -1429,7 +1550,7 @@
 
       async function launchGame(g) {
         if (!g || !g.gameurl) {
-          showToast('No game URL');
+          showToast('No Game URL');
           return;
         }
         lastGameUrl = g.gameurl;
@@ -1514,7 +1635,7 @@
 
           // set handlers
           obj.onload = function () {
-            showToast('Game loaded');
+            showToast('Game Loaded');
           };
           obj.onerror = function () {
             $('#game-error').style.display = 'block';
@@ -1525,7 +1646,7 @@
           $('#enter-fullscreen').style.display = 'inline-block';
         } catch (err) {
           if (err && err.name === 'AbortError') {
-            showToast('Load aborted');
+            showToast('Load Aborted');
             return;
           }
           $('#game-error').style.display = 'block';
@@ -1813,11 +1934,11 @@
           el.style.borderRadius = '8px';
           el.style.background = 'rgba(255,255,255,0.02)';
           el.innerHTML =
-            '<div><div style="font-weight:900">' +
+            '<div><div style="font-weight:600">' +
             escapeHtml(ev.title) +
             '</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">' +
             new Date(ev.date).toLocaleString() +
-            '</div></div><div><button class="btn secondary edit-ev" data-id="' +
+            '</div></div><div><button class="btn edit-ev" data-id="' +
             ev.id +
             '">Edit</button></div>';
           out.appendChild(el);
@@ -1826,7 +1947,12 @@
           b.addEventListener('click', function () {
             const id = this.getAttribute('data-id');
             const ev = customEvents.find((x) => x.id === id);
-            if (ev) openDayModal(ev.date, ev.id);
+            console.log(ev);
+            if (ev) {
+              openDayModal(ev.date, ev.id);
+            }else{
+              showToast("Failed to Fetch JSON Event Data");
+            };
           })
         );
       }
@@ -1914,13 +2040,13 @@
           el.style.background = 'rgba(255,255,255,0.02)';
           el.style.marginBottom = '6px';
           el.innerHTML =
-            '<div><div style="font-weight:900">' +
+            '<div><div style="font-weight:600">' +
             escapeHtml(ev.title) +
             '</div><div style="font-size:13px;color:rgba(255,255,255,0.74)">' +
             (ev.startTime ? formatShortTime(ev.startTime) + ' - ' + (ev.endTime ? formatShortTime(ev.endTime) : '') : 'All day') +
-            '</div></div><div style="display:flex;gap:8px"><button class="btn secondary edit" data-id="' +
+            '</div></div><div style="display:flex;gap:8px"><button class="btn edit" data-id="' +
             ev.id +
-            '">Edit</button><button class="btn secondary del" data-id="' +
+            '">Edit</button><button class="btn del" data-id="' +
             ev.id +
             '">Delete</button></div>';
           list.appendChild(el);
@@ -1948,7 +2074,7 @@
             localStorage.setItem('klein_custom_events', JSON.stringify(customEvents));
             fetchAndMergeICS();
             renderMonth(viewYear, viewMonth);
-            showToast('Deleted');
+            showToast('Deleted Event');
           })
         );
         $('#ev-save').dataset.editId = editId || '';
@@ -1975,7 +2101,7 @@
         fetchAndMergeICS();
         renderMonth(viewYear, viewMonth);
         closeModal('day-modal');
-        showToast('Saved');
+        showToast('Saved Event');
       });
 
       $('#prev-month').addEventListener('click', () => {
@@ -2033,7 +2159,7 @@
         for (const p of schedule) if (p.name.toLowerCase().includes('lunch')) lunchPeriod = p;
         if (lunchPeriod) {
           const ls = toDate(lunchPeriod.start);
-          if (now < ls) $('#lunch-countdown').textContent = 'Until lunch: ' + diffStr((ls - now) / 1000);
+          if (now < ls) $('#lunch-countdown').textContent = 'Time until lunch: ' + diffStr((ls - now) / 1000);
           else {
             const le = toDate(lunchPeriod.end);
             if (now <= le)
@@ -2070,7 +2196,6 @@
         }
       }
       function buildSchedule() {
-        if (!lunchType) return [];
         const base = [
           { name: '1st Period', start: '07:10', end: '08:00' },
           { name: 'Passing Period', start: '08:00', end: '08:06', isPassing: true },
@@ -2103,7 +2228,9 @@
           { name: 'Passing Period', start: '13:39', end: '13:45', isPassing: true },
           { name: '7th Period', start: '13:45', end: '14:35' },
         ];
-        return base.concat(lunches[lunchType] || []).concat(after);
+        const selectedLunch = lunches[lunchType] ?? []; 
+        const result = base.concat(selectedLunch).concat(after);
+        return result;
       }
       function toDate(t) {
         const p = t.split(':').map(Number);
@@ -2118,7 +2245,28 @@
           s = Math.floor(sec % 60);
         return (h ? h + 'h ' : '') + (m ? m + 'm ' : '') + s + 's';
       }
-      function updateScheduleTable() {
+      function updateScheduleTable(){ 
+        schoolStart ??= localStorage.getItem(nameof(schoolStart));
+        schoolEnd ??= localStorage.getItem(nameof(schoolEnd));
+        const timeToNumber = (value) => {
+          const multipliers = [60,1];
+          let parts = value.split(":");
+          parts = [parts[0], ...(parts[1].split(" "))];
+          parts[1] += (parts[2] == "PM" ? 12 : 0);
+          parts = parts.slice(0,1);
+          const minutes = parts
+            .map((value, index) => value * multipliers[index])
+            .reduce((previous, current) => (previous ?? 0)+(current ?? 0));
+          return minutes;
+        };
+        
+        const startTime = schoolStart;
+        const endTime = schoolEnd;
+        const minTime = timeToNumber(startTime);
+        const maxTime = timeToNumber(endTime);
+        const dayDuration = maxTime - minTime;
+        const getTimePercentage = (time) => (timeToNumber(time) - minTime)/dayDuration;
+        const schoolStartNumber = schoolStart.split(":").red
         const out = $('#modal-schedule-body');
         out.innerHTML = '';
         const s = buildSchedule();
@@ -2128,14 +2276,18 @@
           return;
         }
         s.forEach((p) => {
+          const startPercentage = getTimePercentage(p.start);
+          const endPercentage = getTimePercentage(p.end);
+          const deltaPercentage = endPercentage-startPercentage;
           const div = document.createElement('div');
           div.style.display = 'flex';
           div.style.justifyContent = 'space-between';
           div.style.padding = '8px';
           div.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
           div.innerHTML =
-            '<div style="font-weight:900">' +
+            '<div style="font-weight:600">' +
             escapeHtml(p.name) +
+            `<div style="background-color:rgba(100,100,200,.3);position:absolute;right:calc(${(1-endPercentage)*100}%-200px);left:calc(150px+${startPercentage*100}%);"></div>` +
             '</div><div>' +
             formatShortTime(p.start) +
             ' — ' +
@@ -2150,6 +2302,8 @@
         attachTabs();
         attachModalClosers();
         loadSettingsToUI();
+        setThemeColor();
+        setBackgroundImage();
         renderNotes();
         loadGames();
         fetchAndMergeICS();
@@ -2161,7 +2315,7 @@
         loadClock();
         updateCountdown();
         if (!lunchType) setTimeout(() => openModal('lunch-modal'), 600);
-
+        
         // ensure game object placeholder exists at start
         createGameObject();
 
