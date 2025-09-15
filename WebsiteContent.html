@@ -1086,7 +1086,7 @@
       let schoolEnd = localStorage.getItem('schoolEnd') || '14:35';
       let backgroundImage = localStorage.getItem('backgroundImage');
       let themeColor = localStorage.getItem('themeColor');
-      let defaultBackgroundImage = "https://github.com/NeurospawN/dingus/blob/8b4fd9b7b2f767b0ddfb9622dcecbb32ff189506/DefaultBackground.jpg";
+      let defaultBackgroundImage = "https://raw.github.com/NeurospawN/dingus/refs/heads/main/DefaultBackground.jpg";
       let notes = JSON.parse(localStorage.getItem('notes') || '[]');
       let customEvents = JSON.parse(localStorage.getItem('klein_custom_events') || '[]');
       let calendarEvents = [];
@@ -1104,7 +1104,7 @@
           document.body.style.backgroundImage = `url('${backgroundImage}')`;
         }
 
-        if (backgroundImage == "Default") {
+        if (backgroundImage.toUpperCase() == "DEFAULT") {
           backgroundImage = defaultBackgroundImage
           apply();
 
@@ -1264,7 +1264,6 @@
         if (sel) {
           lunchType = sel;
           localStorage.setItem('lunchType', sel);
-          showToast("Set Lunch To "+sel);
         }
         schoolStart = $('#start-time').value;
         schoolEnd = $('#end-time').value;
@@ -1317,6 +1316,7 @@
         closeModal('lunch-modal');
         showToast('A Lunch');
         updateScheduleTable();
+        $('#lunch-select').value = lunchType;
       });
       $('#set-lunch-b').addEventListener('click', () => {
         lunchType = 'B';
@@ -1324,6 +1324,7 @@
         closeModal('lunch-modal');
         showToast('B Lunch');
         updateScheduleTable();
+        $('#lunch-select').value = lunchType;
       });
       $('#set-lunch-c').addEventListener('click', () => {
         lunchType = 'C';
@@ -1331,6 +1332,7 @@
         closeModal('lunch-modal');
         showToast('C Lunch');
         updateScheduleTable();
+        $('#lunch-select').value = lunchType;
       });
 
       $('#save-settings').addEventListener('click', saveSettings);
