@@ -1104,7 +1104,7 @@
           document.body.style.backgroundImage = `url('${backgroundImage}')`;
         }
 
-        if (backgroundImage.toUpperCase() == "DEFAULT") {
+        if (backgroundImage.toUpperCase() == ("DEFAULT" || "")) {
           backgroundImage = defaultBackgroundImage
           apply();
 
