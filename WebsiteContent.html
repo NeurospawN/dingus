@@ -1227,6 +1227,7 @@
         const now = new Date();
         $('#clock').textContent = formatClock(now);
         $('#date').textContent = now.toLocaleDateString(undefined, {
+          timeZone: 'America/Chicago',
           weekday: 'long',
           month: 'long',
           day: 'numeric',
@@ -1309,12 +1310,12 @@
           newTab.document.close();
         }
       })
-
+      
       $('#set-lunch-a').addEventListener('click', () => {
         lunchType = 'A';
         localStorage.setItem('lunchType', 'A');
         closeModal('lunch-modal');
-        showToast('A Lunch');
+        showToast('You\'re In A Lunch');
         updateScheduleTable();
         $('#lunch-select').value = lunchType;
       });
@@ -1322,7 +1323,7 @@
         lunchType = 'B';
         localStorage.setItem('lunchType', 'B');
         closeModal('lunch-modal');
-        showToast('B Lunch');
+        showToast('You\'re In B Lunch');
         updateScheduleTable();
         $('#lunch-select').value = lunchType;
       });
@@ -1330,7 +1331,7 @@
         lunchType = 'C';
         localStorage.setItem('lunchType', 'C');
         closeModal('lunch-modal');
-        showToast('C Lunch');
+        showToast('You\'re In C Lunch');
         updateScheduleTable();
         $('#lunch-select').value = lunchType;
       });
@@ -2121,7 +2122,7 @@
 
       /* Countdown logic (AM/PM display and until lunch) */
       function updateCountdown() {
-        const now = new Date();
+        let now = new Date();
         const schedule = buildSchedule();
         if (!schedule.length) {
           $('#current-period').textContent = 'Select lunch in Settings';
