@@ -43,7 +43,7 @@
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
         color: #fff;
         position: relative;
-        background-image: url("https://images6.alphacoders.com/890/890497.jpg");
+        background-image: url("https://raw.github.com/NeurospawN/dingus/refs/heads/main/DefaultBackground.jpg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -159,7 +159,7 @@
         text-align: center;
         color: var(--muted);
         margin-top: 6px;
-      } 
+      }
 
       .action-buttons {
         display: grid;
@@ -1086,7 +1086,7 @@
       let schoolEnd = localStorage.getItem('schoolEnd') || '14:35';
       let backgroundImage = localStorage.getItem('backgroundImage');
       let themeColor = localStorage.getItem('themeColor');
-      let defaultBackgroundImage = "https://images6.alphacoders.com/890/890497.jpg";
+      let defaultBackgroundImage = "https://github.com/NeurospawN/dingus/blob/8b4fd9b7b2f767b0ddfb9622dcecbb32ff189506/DefaultBackground.jpg";
       let notes = JSON.parse(localStorage.getItem('notes') || '[]');
       let customEvents = JSON.parse(localStorage.getItem('klein_custom_events') || '[]');
       let calendarEvents = [];
@@ -1097,8 +1097,8 @@
       let currentBlobUrl = null;
       let lastGameUrl = null;
       
-      function setBackgroundImage() {
-        if (!backgroundImage) {return;}
+      function applyBackgroundImage() {
+        if (!backgroundImage) return;
 
         function apply() {
           document.body.style.backgroundImage = `url('${backgroundImage}')`;
@@ -1106,20 +1106,20 @@
 
         if (backgroundImage == "Default") {
           backgroundImage = defaultBackgroundImage
-          apply()
+          apply();
 
           return;
         }
 
         if (URL.canParse(backgroundImage)) {
-          apply()
+          apply();
         }else{
           showToast("Background Failed to Load (Invalid URL)");
         }
       }
 
-      function setThemeColor() {
-        if (!themeColor) {return;}
+      function applyThemeColor() {
+        if (!themeColor) return;
 
         function hexToRgb(hex) {
           var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -1275,8 +1275,8 @@
         localStorage.setItem('backgroundImage', backgroundImage);
         localStorage.setItem('themeColor',themeColor);
 
-        setThemeColor();
-        setBackgroundImage();
+        applyThemeColor();
+        applyBackgroundImage();
         closeModal('settings-modal');
         showToast('Saved Settings');
         updateScheduleTable();
@@ -2294,8 +2294,8 @@
         attachTabs();
         attachModalClosers();
         loadSettingsToUI();
-        setThemeColor();
-        setBackgroundImage();
+        applyThemeColor();
+        applyBackgroundImage();
         renderNotes();
         loadGames();
         fetchAndMergeICS();
