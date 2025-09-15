@@ -612,6 +612,11 @@
   </head>
 
   <body>
+    <audio id="hoverSound" src="https://raw.github.com/NeurospawN/dingus/refs/heads/main/hover.mp3" preload="auto"></audio>
+    <audio id="clickSound" src="https://raw.github.com/NeurospawN/dingus/refs/heads/main/click.mp3" preload="auto"></audio>
+    <audio id="closeSound" src="https://raw.github.com/NeurospawN/dingus/refs/heads/main/close.mp3" preload="auto"></audio>
+    <audio id="notifSound" src="https://raw.github.com/NeurospawN/dingus/refs/heads/main/notif.mp3" preload="auto"></audio>
+    
     <div class="container">
       <div class="tab-bar">
         <div class="tab active" data-tab="home">
@@ -1097,6 +1102,12 @@
       let currentBlobUrl = null;
       let lastGameUrl = null;
       
+      function playSound(soundId) {
+        const audio = document.getElementById(soundId);
+        if (!audio) {console.log(`SoundId ${soundId} not found!`); return;}
+        audio.play();
+      }
+
       function applyBackgroundImage() {
         if (!backgroundImage) return;
 
@@ -1146,6 +1157,8 @@
         el.textContent = t;
         el.classList.add('show');
         setTimeout(() => el.classList.remove('show'), 2800);
+
+        playSound("notifSound");
       }
       function escapeHtml(s) {
         return String(s || '').replace(
@@ -1218,6 +1231,7 @@
             if (!root) return;
             if (root.id === 'game-modal') closeGameModal();
             else root.classList.remove('active');
+            playSound("clickSound");
           })
         );
       }
@@ -1292,6 +1306,13 @@
 
         openModal('schedule-modal');
       }
+
+      $all('*').forEach(element => {
+        element.addEventListener('click', () => {
+          if (element.nodeName !== "BUTTON" && element.className != "tab") return;
+          playSound('clickSound')
+        })
+      });
 
       /* Settings & other controls */
       $('#settings-btn').addEventListener('click', () => openModal('settings-modal'));
